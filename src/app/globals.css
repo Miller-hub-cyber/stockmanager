@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --fonte-display: "Archivo";
+  --fonte-corpo: "IBM Plex Sans";
+  --fonte-dado: "IBM Plex Mono";
+}
+
+html, body { height: 100%; }
+body { background: #F1F4F6; color: #1B2026; font-family: var(--fonte-corpo), system-ui, sans-serif; }
+
+/* foco visivel em todo elemento interativo */
+:focus-visible { outline: 2px solid #177A8F; outline-offset: 2px; border-radius: 6px; }
+
+/* numeros tabulares em dado e quantidade */
+.dado { font-family: var(--fonte-dado), monospace; font-variant-numeric: tabular-nums; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

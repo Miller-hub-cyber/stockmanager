@@ -1,0 +1,14 @@
+{
+  "name": "StockManager",
+  "short_name": "StockManager",
+  "description": "Controle de estoque operacional",
+  "start_url": "/operacao/saida",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#14181D",
+  "theme_color": "#0F5563",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

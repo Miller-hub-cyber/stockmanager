@@ -1,0 +1,8 @@
+{
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "files.associations": { "*.sql": "sql" },
+  "[sql]": { "editor.formatOnSave": false },
+  "tailwindCSS.experimental.classRegex": [["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]],
+  "search.exclude": { "**/node_modules": true, "**/.next": true }
+}

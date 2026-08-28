@@ -1,0 +1,37 @@
+{
+  "name": "stockmanager",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Controle de estoque operacional interno para empresa de logistica",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "vitest run",
+    "types": "supabase gen types typescript --project-id SEU_PROJECT_ID > src/types/database.ts"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.12.5",
+    "@supabase/supabase-js": "^2.45.0",
+    "@zxing/browser": "^0.1.5",
+    "lucide-react": "^0.454.0",
+    "next": "14.2.15",
+    "next-pwa": "^5.6.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.15",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.14",
+    "typescript": "^5.6",
+    "vitest": "^4.1.11"
+  }
+}
