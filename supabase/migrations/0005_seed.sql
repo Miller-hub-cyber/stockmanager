@@ -52,11 +52,14 @@ insert into itens (empresa_id, sku, nome, tipo, categoria_id, fornecedor_id, uni
 
 -- Estoque inicial entra como movimentacao, nunca como update em saldos.
 insert into movimentacoes (empresa_id, item_id, deposito_id, tipo, quantidade, custo_unitario, motivo)
-select '11111111-1111-1111-1111-111111111111', i.id,
-       '22222222-2222-2222-2222-222222222221', 'entrada',
-       (array[12,3,84,0,6,28,7,46])[row_number() over (order by i.sku)],
-       (array[48.90,132.50,22.40,4.20,289.00,14.30,128.00,37.90])[row_number() over (order by i.sku)],
-       'Inventario inicial'
-  from itens i
- where i.empresa_id = '11111111-1111-1111-1111-111111111111'
-   and (array[12,3,84,0,6,28,7,46])[row_number() over (order by i.sku)] > 0;
+select empresa_id, id, deposito_id, 'entrada', quantidade, custo_unitario, 'Inventario inicial'
+  from (
+    select i.empresa_id,
+           i.id,
+           '22222222-2222-2222-2222-222222222221'::uuid as deposito_id,
+           (array[12,3,84,0,6,28,7,46])[row_number() over (order by i.sku)] as quantidade,
+           (array[48.90,132.50,22.40,4.20,289.00,14.30,128.00,37.90])[row_number() over (order by i.sku)] as custo_unitario
+      from itens i
+     where i.empresa_id = '11111111-1111-1111-1111-111111111111'
+  ) s
+ where quantidade > 0;
