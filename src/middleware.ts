@@ -2,7 +2,7 @@ import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import type { Database } from "@/types/database";
 
-const CAMINHOS_PUBLICOS = ["/login", "/design", "/prototipo", "/manifest.json"];
+const CAMINHOS_PUBLICOS = ["/login", "/design", "/manifest.json"];
 
 function ehCaminhoPublico(pathname: string): boolean {
   if (pathname.startsWith("/icons/")) return true;
