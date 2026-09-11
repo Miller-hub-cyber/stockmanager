@@ -503,6 +503,7 @@ export interface Database {
       inventario_itens: {
         Row: {
           id: string;
+          empresa_id: string;
           inventario_id: string;
           item_id: string;
           qtd_sistema: number;
@@ -511,6 +512,7 @@ export interface Database {
         };
         Insert: {
           id?: string;
+          empresa_id: string;
           inventario_id: string;
           item_id: string;
           qtd_sistema: number;
@@ -518,6 +520,7 @@ export interface Database {
         };
         Update: {
           id?: string;
+          empresa_id?: string;
           inventario_id?: string;
           item_id?: string;
           qtd_sistema?: number;
