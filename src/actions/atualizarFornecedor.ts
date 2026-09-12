@@ -18,6 +18,7 @@ export async function atualizarFornecedor(
     cnpj: formData.get("cnpj"),
     telefone: formData.get("telefone"),
     email: formData.get("email"),
+    endereco: formData.get("endereco"),
     prazoEntregaDias: formData.get("prazoEntregaDias"),
   });
   if (!validado.success) {
@@ -29,6 +30,7 @@ export async function atualizarFornecedor(
     cnpj: validado.data.cnpj ?? null,
     telefone: validado.data.telefone ?? null,
     email: validado.data.email ?? null,
+    endereco: validado.data.endereco ?? null,
     prazo_entrega_dias: validado.data.prazoEntregaDias,
   });
   if (!resultado.sucesso) return resultado;

@@ -73,6 +73,7 @@ export const esquemaFornecedor = z.object({
     (v) => (v === "" ? undefined : v),
     z.string().email("E-mail invalido").optional()
   ),
+  endereco: opcional(200),
   prazoEntregaDias: z.coerce.number().int().nonnegative().default(7),
 });
 

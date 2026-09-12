@@ -14,6 +14,7 @@ interface Fornecedor {
   cnpj: string | null;
   telefone: string | null;
   email: string | null;
+  endereco: string | null;
   prazo_entrega_dias: number;
 }
 
@@ -43,6 +44,12 @@ export function FormularioFornecedor({ fornecedor }: { fornecedor?: Fornecedor }
         />
       </div>
       <Campo id="email" name="email" type="email" rotulo="E-mail (opcional)" defaultValue={fornecedor?.email ?? ""} />
+      <Campo
+        id="endereco"
+        name="endereco"
+        rotulo="Endereço (opcional)"
+        defaultValue={fornecedor?.endereco ?? ""}
+      />
       <Campo
         id="prazoEntregaDias"
         name="prazoEntregaDias"

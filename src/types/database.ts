@@ -127,6 +127,7 @@ export interface Database {
           cnpj: string | null;
           telefone: string | null;
           email: string | null;
+          endereco: string | null;
           prazo_entrega_dias: number;
           ativo: boolean;
         };
@@ -137,6 +138,7 @@ export interface Database {
           cnpj?: string | null;
           telefone?: string | null;
           email?: string | null;
+          endereco?: string | null;
           prazo_entrega_dias?: number;
           ativo?: boolean;
         };
@@ -147,6 +149,7 @@ export interface Database {
           cnpj?: string | null;
           telefone?: string | null;
           email?: string | null;
+          endereco?: string | null;
           prazo_entrega_dias?: number;
           ativo?: boolean;
         };

@@ -9,7 +9,7 @@ export default async function PaginaEditarFornecedor({ params }: { params: { id:
   const [{ data: fornecedor }, { data: documentos }] = await Promise.all([
     supabase
       .from("fornecedores")
-      .select("id, nome, cnpj, telefone, email, prazo_entrega_dias")
+      .select("id, nome, cnpj, telefone, email, endereco, prazo_entrega_dias")
       .eq("id", params.id)
       .single(),
     supabase
