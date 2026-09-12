@@ -77,6 +77,32 @@ export const esquemaFornecedor = z.object({
   prazoEntregaDias: z.coerce.number().int().nonnegative().default(7),
 });
 
+/** Aceita numero com virgula decimal (padrao pt-BR/Excel) alem de ponto. */
+const numeroPtBr = () =>
+  z.preprocess(
+    (v) => (typeof v === "string" ? v.replace(",", ".") : v),
+    z.coerce.number().nonnegative("Numero invalido")
+  );
+
+export const esquemaLinhaImportacaoItem = z.object({
+  sku: z.string().min(1, "SKU obrigatorio").max(40),
+  nome: z.string().min(1, "Nome obrigatorio").max(160),
+  unidade: z.string().min(1, "Unidade obrigatoria").max(6),
+  tipo: z.preprocess(
+    (v) => (v === "" || v === undefined ? "consumivel" : v),
+    z.enum(["peca", "consumivel", "epi", "ferramenta", "pneu", "lubrificante", "outro"], {
+      errorMap: () => ({ message: "Tipo invalido" }),
+    })
+  ),
+  categoria: opcional(80),
+  fornecedor: opcional(160),
+  estoqueMinimo: numeroPtBr(),
+  pontoPedido: numeroPtBr(),
+  codigoBarras: opcional(64),
+  saldoInicial: numeroPtBr(),
+  custoInicial: numeroPtBr(),
+});
+
 export const esquemaVeiculo = z.object({
   placa: z.string().min(5, "Informe a placa").max(10),
   modelo: opcional(80),

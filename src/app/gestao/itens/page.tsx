@@ -63,8 +63,15 @@ export default async function PaginaItens({ searchParams }: Props) {
           <h1 className="font-display text-tela text-tinta">Itens</h1>
           <p className="mt-1 font-corpo text-sm text-bruma">Catálogo de peças, insumos e EPIs.</p>
         </div>
-        <div className="w-40">
-          <Botao href="/gestao/itens/novo">Novo item</Botao>
+        <div className="flex gap-3">
+          <div className="w-40">
+            <Botao variante="secundario" href="/gestao/itens/importar">
+              Importar CSV
+            </Botao>
+          </div>
+          <div className="w-40">
+            <Botao href="/gestao/itens/novo">Novo item</Botao>
+          </div>
         </div>
       </div>
 
