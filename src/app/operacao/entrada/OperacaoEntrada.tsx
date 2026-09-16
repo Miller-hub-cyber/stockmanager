@@ -163,7 +163,7 @@ export function OperacaoEntrada({ depositoId, fornecedores }: OperacaoEntradaPro
 
       {selecionado && (
         <div className="flex-shrink-0 border-t border-grafite bg-carbono p-4">
-          <Botao tamanho="grande" onClick={confirmar} carregando={enviando} icone={<TrendingUp size={20} />}>
+          <Botao tamanho="grande" onClick={confirmar} carregando={enviando} icone={<TrendingUp size={22} />}>
             {enviando ? "Registrando..." : "Registrar entrada"}
           </Botao>
         </div>

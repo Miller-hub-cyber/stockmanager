@@ -14,7 +14,7 @@ export function Chip({ ativo = false, escuro = false, children, className, ...pr
       type="button"
       aria-pressed={ativo}
       className={cn(
-        "h-12 flex-shrink-0 whitespace-nowrap rounded-full border px-4 font-corpo text-sm font-medium transition-colors duration-150",
+        "h-12 flex-shrink-0 whitespace-nowrap rounded-full border px-4 font-corpo text-[15px] font-semibold transition-colors duration-150",
         ativo
           ? "border-petroleo bg-petroleo text-white"
           : escuro

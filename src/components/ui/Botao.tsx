@@ -40,8 +40,8 @@ export function Botao({
   ...props
 }: BotaoProps) {
   const classes = cn(
-    "flex w-full items-center justify-center gap-2 rounded font-display font-semibold transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-40",
-    tamanho === "grande" ? "h-rodape px-5 text-[17px]" : "h-10 px-4 text-sm",
+    "flex w-full items-center justify-center gap-2.5 rounded font-display transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-40",
+    tamanho === "grande" ? "h-rodape px-5 text-[19px] font-bold tracking-tight" : "h-10 px-4 text-sm font-semibold",
     carregando && "animate-pulse",
     estilosVariante[variante](escuro),
     className
