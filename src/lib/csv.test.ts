@@ -32,4 +32,20 @@ describe("paraCsv", () => {
     const csv = paraCsv([{ sku: "FLT-0042", nome: null }], colunas);
     expect(csv).toContain("FLT-0042;");
   });
+
+  it("neutraliza campo que comeca com = + - ou @ para nao virar formula no Excel", () => {
+    const csv = paraCsv(
+      [
+        { sku: "A", nome: "=CMD('/c calc')" },
+        { sku: "B", nome: "+1+1" },
+        { sku: "C", nome: "-1+1" },
+        { sku: "D", nome: "@SUM(A1)" },
+      ],
+      colunas
+    );
+    expect(csv).toContain("A;'=CMD('/c calc')");
+    expect(csv).toContain("B;'+1+1");
+    expect(csv).toContain("C;'-1+1");
+    expect(csv).toContain("D;'@SUM(A1)");
+  });
 });

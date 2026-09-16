@@ -3,9 +3,19 @@ interface ColunaCsv {
   rotulo: string;
 }
 
+/**
+ * Campo que comeca com =, +, - ou @ e interpretado como formula pelo Excel/
+ * Sheets ao abrir o CSV (formula injection). Prefixa com apostrofo pra forcar
+ * leitura como texto — mesma mitigacao usada por exportadores de CSV em geral.
+ */
+function neutralizarFormula(valor: string): string {
+  return /^[=+\-@]/.test(valor) ? `'${valor}` : valor;
+}
+
 function escaparCampoCsv(valor: string): string {
-  if (/[;"\n]/.test(valor)) return `"${valor.replace(/"/g, '""')}"`;
-  return valor;
+  const neutralizado = neutralizarFormula(valor);
+  if (/[;"\n]/.test(neutralizado)) return `"${neutralizado.replace(/"/g, '""')}"`;
+  return neutralizado;
 }
 
 /**
