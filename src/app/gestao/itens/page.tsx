@@ -61,7 +61,7 @@ export default async function PaginaItens({ searchParams }: Props) {
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="font-display text-tela text-tinta">Itens</h1>
-          <p className="mt-1 font-corpo text-sm text-bruma">Catálogo de peças, insumos e EPIs.</p>
+          <p className="mt-1 font-corpo text-sm text-bruma-texto">Catálogo de peças, insumos e EPIs.</p>
         </div>
         <div className="flex gap-3">
           <div className="w-40">
@@ -107,7 +107,7 @@ export default async function PaginaItens({ searchParams }: Props) {
       </form>
 
       {lista.length === 0 ? (
-        <div className="rounded border border-giz bg-white p-8 text-center font-corpo text-sm text-bruma">
+        <div className="rounded border border-giz bg-white p-8 text-center font-corpo text-sm text-bruma-texto">
           Nenhum item encontrado. Tente alterar os filtros ou{" "}
           <Link href="/gestao/itens/novo" className="text-petroleo hover:underline">
             cadastre um novo item
@@ -142,11 +142,11 @@ export default async function PaginaItens({ searchParams }: Props) {
             const estado = estadoItem(saldo, item.estoque_minimo, item.ponto_pedido);
             return (
               <TabelaLinha key={item.id}>
-                <TabelaCelula mono className="max-w-[100px] flex-none text-bruma">
+                <TabelaCelula mono className="max-w-[100px] flex-none text-bruma-texto">
                   {item.sku}
                 </TabelaCelula>
                 <TabelaCelula>{item.nome}</TabelaCelula>
-                <TabelaCelula className="max-w-[130px] flex-none text-bruma">
+                <TabelaCelula className="max-w-[130px] flex-none text-bruma-texto">
                   {item.categoria_id ? (mapaCategorias.get(item.categoria_id) ?? "—") : "—"}
                 </TabelaCelula>
                 <TabelaCelula align="direita" mono className="max-w-[110px] flex-none">
@@ -157,8 +157,9 @@ export default async function PaginaItens({ searchParams }: Props) {
                 </TabelaCelula>
                 <TabelaCelula align="direita" className="max-w-[110px] flex-none">
                   <PontoEstado
-                    cor={item.ativo ? estado.cor : cores.carmim}
+                    cor={item.ativo ? estado.cor : cores.bruma}
                     texto={item.ativo ? estado.texto : "Inativo"}
+                    estado={item.ativo ? estado.estado : "inativo"}
                   />
                 </TabelaCelula>
                 <TabelaCelula align="direita" className="max-w-[160px] flex-none">

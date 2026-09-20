@@ -76,7 +76,7 @@ export function OperacaoEntrada({ depositoId, fornecedores }: OperacaoEntradaPro
           <BuscaItem depositoId={depositoId} onSelecionar={setSelecionado} />
         ) : (
           <div className="flex flex-col gap-5">
-            <button onClick={limpar} className="flex items-center gap-1.5 font-corpo text-sm text-bruma">
+            <button onClick={limpar} className="flex items-center gap-1.5 font-corpo text-sm text-bruma-luz">
               <ArrowLeft size={16} /> Trocar item
             </button>
 
@@ -92,11 +92,11 @@ export function OperacaoEntrada({ depositoId, fornecedores }: OperacaoEntradaPro
             />
 
             <div>
-              <p className="mb-2.5 font-display text-rotulo uppercase text-bruma">Quantidade</p>
+              <p className="mb-2.5 font-display text-rotulo uppercase text-bruma-luz">Quantidade</p>
               <div className="flex items-center gap-4">
                 <button
                   onClick={() => setQuantidadeSelecionada((q) => Math.max(1, q - 1))}
-                  className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded border border-grafite bg-aco"
+                  className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded border border-bruma bg-aco"
                 >
                   <Minus size={22} className="text-white" />
                 </button>
@@ -104,11 +104,11 @@ export function OperacaoEntrada({ depositoId, fornecedores }: OperacaoEntradaPro
                   <span className="font-display text-[44px] font-bold leading-none text-white">
                     {quantidadeSelecionada}
                   </span>
-                  <span className="font-dado text-sm text-bruma">{selecionado.unidade}</span>
+                  <span className="font-dado text-sm text-bruma-luz">{selecionado.unidade}</span>
                 </div>
                 <button
                   onClick={() => setQuantidadeSelecionada((q) => q + 1)}
-                  className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded border border-grafite bg-aco"
+                  className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded border border-bruma bg-aco"
                 >
                   <Plus size={22} className="text-white" />
                 </button>
@@ -116,21 +116,21 @@ export function OperacaoEntrada({ depositoId, fornecedores }: OperacaoEntradaPro
             </div>
 
             <div>
-              <p className="mb-2.5 font-display text-rotulo uppercase text-bruma">Custo unitário da compra</p>
+              <p className="mb-2.5 font-display text-rotulo uppercase text-bruma-luz">Custo unitário da compra</p>
               <input
                 value={custoUnitario}
                 onChange={(e) => setCustoUnitario(e.target.value)}
                 placeholder={selecionado.custoMedio.toFixed(2).replace(".", ",")}
                 inputMode="decimal"
-                className="h-14 w-full rounded border border-grafite bg-aco px-3.5 font-dado text-base text-white outline-none"
+                className="h-14 w-full rounded border border-bruma bg-aco px-3.5 font-dado text-base text-white outline-none"
               />
-              <p className="mt-2 font-corpo text-xs text-bruma">
+              <p className="mt-2 font-corpo text-xs text-bruma-luz">
                 Custo médio atual: {brl(selecionado.custoMedio)}. A entrada recalcula o custo médio ponderado.
               </p>
             </div>
 
             <div>
-              <p className="mb-2.5 font-display text-rotulo uppercase text-bruma">Fornecedor · opcional</p>
+              <p className="mb-2.5 font-display text-rotulo uppercase text-bruma-luz">Fornecedor · opcional</p>
               <div className="flex flex-wrap gap-2">
                 {fornecedores.map((f) => (
                   <Chip
@@ -143,18 +143,18 @@ export function OperacaoEntrada({ depositoId, fornecedores }: OperacaoEntradaPro
                   </Chip>
                 ))}
                 {fornecedores.length === 0 && (
-                  <p className="font-corpo text-sm text-bruma">Nenhum fornecedor cadastrado.</p>
+                  <p className="font-corpo text-sm text-bruma-luz">Nenhum fornecedor cadastrado.</p>
                 )}
               </div>
             </div>
 
             <div>
-              <p className="mb-2.5 font-display text-rotulo uppercase text-bruma">Nota fiscal · opcional</p>
+              <p className="mb-2.5 font-display text-rotulo uppercase text-bruma-luz">Nota fiscal · opcional</p>
               <input
                 value={numeroNf}
                 onChange={(e) => setNumeroNf(e.target.value)}
                 placeholder="Número da NF"
-                className="h-14 w-full rounded border border-grafite bg-aco px-3.5 font-dado text-base text-white outline-none placeholder:text-bruma"
+                className="h-14 w-full rounded border border-bruma bg-aco px-3.5 font-dado text-base text-white outline-none placeholder:text-bruma-luz"
               />
             </div>
           </div>

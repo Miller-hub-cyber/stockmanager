@@ -17,7 +17,7 @@ export default async function PaginaDepositos() {
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="font-display text-tela text-tinta">Depósitos</h1>
-          <p className="mt-1 font-corpo text-sm text-bruma">Locais de armazenamento do estoque.</p>
+          <p className="mt-1 font-corpo text-sm text-bruma-texto">Locais de armazenamento do estoque.</p>
         </div>
         <div className="w-40">
           <Botao href="/gestao/cadastros/depositos/novo">Novo depósito</Botao>
@@ -25,7 +25,7 @@ export default async function PaginaDepositos() {
       </div>
 
       {lista.length === 0 ? (
-        <div className="rounded border border-giz bg-white p-8 text-center font-corpo text-sm text-bruma">
+        <div className="rounded border border-giz bg-white p-8 text-center font-corpo text-sm text-bruma-texto">
           Nenhum depósito cadastrado.{" "}
           <Link href="/gestao/cadastros/depositos/novo" className="text-petroleo hover:underline">
             Cadastre o primeiro
@@ -47,11 +47,12 @@ export default async function PaginaDepositos() {
           {lista.map((deposito) => (
             <TabelaLinha key={deposito.id}>
               <TabelaCelula>{deposito.nome}</TabelaCelula>
-              <TabelaCelula className="text-bruma">{deposito.descricao ?? "—"}</TabelaCelula>
+              <TabelaCelula className="text-bruma-texto">{deposito.descricao ?? "—"}</TabelaCelula>
               <TabelaCelula align="direita" className="max-w-[100px] flex-none">
                 <PontoEstado
-                  cor={deposito.ativo ? cores.musgo : cores.carmim}
+                  cor={deposito.ativo ? cores.musgo : cores.bruma}
                   texto={deposito.ativo ? "Ativo" : "Inativo"}
+                  estado={deposito.ativo ? "normal" : "inativo"}
                 />
               </TabelaCelula>
               <TabelaCelula align="direita" className="max-w-[180px] flex-none">

@@ -45,10 +45,10 @@ export default async function PaginaEditarFornecedor({ params }: { params: { id:
         <h1 className="font-display text-tela text-tinta">{fornecedor.nome}</h1>
 
         <div className="mt-6">
-          <span className="font-display text-rotulo uppercase text-bruma">Últimas entradas</span>
+          <span className="font-display text-rotulo uppercase text-bruma-texto">Últimas entradas</span>
           <div className="mt-2 flex flex-col gap-2">
             {(entradas ?? []).length === 0 && (
-              <p className="rounded border border-giz bg-white p-4 font-corpo text-sm text-bruma">
+              <p className="rounded border border-giz bg-white p-4 font-corpo text-sm text-bruma-texto">
                 Nenhuma entrada com nota fiscal registrada para este fornecedor ainda.
               </p>
             )}
@@ -62,7 +62,7 @@ export default async function PaginaEditarFornecedor({ params }: { params: { id:
                 >
                   <div className="min-w-0">
                     <div className="truncate font-corpo text-sm text-tinta">{item?.nome ?? "Item"}</div>
-                    <div className="font-dado text-xs text-bruma">
+                    <div className="font-dado text-xs text-bruma-texto">
                       {quantidade(e.quantidade)} {item?.unidade}
                       {documento?.numero_nf ? ` · NF ${documento.numero_nf}` : ""}
                       {documento?.data ? ` · ${formatarData(documento.data)}` : ""}

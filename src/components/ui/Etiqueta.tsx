@@ -48,7 +48,7 @@ export function Etiqueta({
       className={cn(
         "rounded border p-3.5 transition-colors duration-150",
         escuro ? "bg-aco" : "bg-white",
-        ativo ? "border-petroleo-claro" : escuro ? "border-grafite" : "border-giz",
+        ativo ? "border-petroleo-claro" : "border-bruma",
         onClick && "cursor-pointer"
       )}
     >
@@ -60,7 +60,7 @@ export function Etiqueta({
       >
         {nome}
       </div>
-      <div className="mt-0.5 font-dado text-denso text-bruma">{sku}</div>
+      <div className={cn("mt-0.5 font-dado text-denso", escuro ? "text-bruma-luz" : "text-bruma-texto")}>{sku}</div>
       <div className="mt-3 flex items-end justify-between gap-3">
         <div className="flex items-baseline gap-2">
           <span
@@ -71,9 +71,11 @@ export function Etiqueta({
           >
             {quantidade(saldo)}
           </span>
-          <span className="font-dado text-denso text-bruma">{unidade}</span>
+          <span className={cn("font-dado text-denso", escuro ? "text-bruma-luz" : "text-bruma-texto")}>
+            {unidade}
+          </span>
         </div>
-        <PontoEstado cor={estado.cor} texto={estado.texto} />
+        <PontoEstado cor={estado.cor} texto={estado.texto} estado={estado.estado} escuro={escuro} />
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ export default async function PaginaConsumoVeiculo() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="font-display text-tela text-tinta">Consumo por veículo</h1>
-          <p className="mt-1 font-corpo text-sm text-bruma">Custo de material por placa e por mês.</p>
+          <p className="mt-1 font-corpo text-sm text-bruma-texto">Custo de material por placa e por mês.</p>
         </div>
         <div className="w-36">
           <Botao href="/gestao/relatorios/consumo-veiculo/exportar" variante="secundario">
@@ -28,7 +28,7 @@ export default async function PaginaConsumoVeiculo() {
 
       <div className="mt-6">
         {lista.length === 0 ? (
-          <div className="rounded border border-giz bg-white p-8 text-center font-corpo text-sm text-bruma">
+          <div className="rounded border border-giz bg-white p-8 text-center font-corpo text-sm text-bruma-texto">
             Nenhuma saída vinculada a veículo ainda.
           </div>
         ) : (
@@ -53,7 +53,7 @@ export default async function PaginaConsumoVeiculo() {
                 <TabelaCelula mono className="max-w-[110px] flex-none">
                   {linha.placa}
                 </TabelaCelula>
-                <TabelaCelula className="text-bruma">{linha.modelo ?? "—"}</TabelaCelula>
+                <TabelaCelula className="text-bruma-texto">{linha.modelo ?? "—"}</TabelaCelula>
                 <TabelaCelula mono className="max-w-[100px] flex-none">
                   {mesAno(linha.mes)}
                 </TabelaCelula>

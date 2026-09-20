@@ -13,7 +13,7 @@ export function ConsultaItem({ depositoId }: { depositoId: string }) {
       <div className="flex flex-col gap-3">
         <button
           onClick={() => setSelecionado(null)}
-          className="flex items-center gap-1.5 self-start font-corpo text-sm text-bruma"
+          className="flex items-center gap-1.5 self-start font-corpo text-sm text-bruma-luz"
         >
           <ArrowLeft size={16} /> Buscar outro item
         </button>

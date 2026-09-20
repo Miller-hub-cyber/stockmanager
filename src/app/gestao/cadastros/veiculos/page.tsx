@@ -18,7 +18,7 @@ export default async function PaginaVeiculos() {
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="font-display text-tela text-tinta">Veículos</h1>
-          <p className="mt-1 font-corpo text-sm text-bruma">Frota usada como destino de saída.</p>
+          <p className="mt-1 font-corpo text-sm text-bruma-texto">Frota usada como destino de saída.</p>
         </div>
         <div className="w-40">
           <Botao href="/gestao/cadastros/veiculos/novo">Novo veículo</Botao>
@@ -26,7 +26,7 @@ export default async function PaginaVeiculos() {
       </div>
 
       {lista.length === 0 ? (
-        <div className="rounded border border-giz bg-white p-8 text-center font-corpo text-sm text-bruma">
+        <div className="rounded border border-giz bg-white p-8 text-center font-corpo text-sm text-bruma-texto">
           Nenhum veículo cadastrado.{" "}
           <Link href="/gestao/cadastros/veiculos/novo" className="text-petroleo hover:underline">
             Cadastre o primeiro
@@ -55,14 +55,15 @@ export default async function PaginaVeiculos() {
               <TabelaCelula mono className="max-w-[100px] flex-none">
                 {veiculo.placa}
               </TabelaCelula>
-              <TabelaCelula className="text-bruma">{veiculo.modelo ?? "—"}</TabelaCelula>
+              <TabelaCelula className="text-bruma-texto">{veiculo.modelo ?? "—"}</TabelaCelula>
               <TabelaCelula align="direita" mono className="max-w-[130px] flex-none">
                 {quantidade(veiculo.km_atual)} km
               </TabelaCelula>
               <TabelaCelula align="direita" className="max-w-[100px] flex-none">
                 <PontoEstado
-                  cor={veiculo.ativo ? cores.musgo : cores.carmim}
+                  cor={veiculo.ativo ? cores.musgo : cores.bruma}
                   texto={veiculo.ativo ? "Ativo" : "Inativo"}
+                  estado={veiculo.ativo ? "normal" : "inativo"}
                 />
               </TabelaCelula>
               <TabelaCelula align="direita" className="max-w-[180px] flex-none">

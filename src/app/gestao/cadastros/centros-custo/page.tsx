@@ -17,7 +17,7 @@ export default async function PaginaCentrosCusto() {
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="font-display text-tela text-tinta">Centros de custo</h1>
-          <p className="mt-1 font-corpo text-sm text-bruma">Setores usados como destino de saída.</p>
+          <p className="mt-1 font-corpo text-sm text-bruma-texto">Setores usados como destino de saída.</p>
         </div>
         <div className="w-52">
           <Botao href="/gestao/cadastros/centros-custo/novo">Novo centro de custo</Botao>
@@ -25,7 +25,7 @@ export default async function PaginaCentrosCusto() {
       </div>
 
       {lista.length === 0 ? (
-        <div className="rounded border border-giz bg-white p-8 text-center font-corpo text-sm text-bruma">
+        <div className="rounded border border-giz bg-white p-8 text-center font-corpo text-sm text-bruma-texto">
           Nenhum centro de custo cadastrado.{" "}
           <Link href="/gestao/cadastros/centros-custo/novo" className="text-petroleo hover:underline">
             Cadastre o primeiro
@@ -49,13 +49,14 @@ export default async function PaginaCentrosCusto() {
           {lista.map((centro) => (
             <TabelaLinha key={centro.id}>
               <TabelaCelula>{centro.nome}</TabelaCelula>
-              <TabelaCelula mono className="max-w-[100px] flex-none text-bruma">
+              <TabelaCelula mono className="max-w-[100px] flex-none text-bruma-texto">
                 {centro.codigo ?? "—"}
               </TabelaCelula>
               <TabelaCelula align="direita" className="max-w-[100px] flex-none">
                 <PontoEstado
-                  cor={centro.ativo ? cores.musgo : cores.carmim}
+                  cor={centro.ativo ? cores.musgo : cores.bruma}
                   texto={centro.ativo ? "Ativo" : "Inativo"}
+                  estado={centro.ativo ? "normal" : "inativo"}
                 />
               </TabelaCelula>
               <TabelaCelula align="direita" className="max-w-[180px] flex-none">

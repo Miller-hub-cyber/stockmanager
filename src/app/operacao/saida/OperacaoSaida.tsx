@@ -107,7 +107,7 @@ export function OperacaoSaida({ depositoId, veiculos, centrosCusto, funcionarios
           <BuscaItem depositoId={depositoId} onSelecionar={setSelecionado} />
         ) : (
           <div className="flex flex-col gap-5">
-            <button onClick={limpar} className="flex items-center gap-1.5 font-corpo text-sm text-bruma">
+            <button onClick={limpar} className="flex items-center gap-1.5 font-corpo text-sm text-bruma-luz">
               <ArrowLeft size={16} /> Trocar item
             </button>
 
@@ -123,11 +123,11 @@ export function OperacaoSaida({ depositoId, veiculos, centrosCusto, funcionarios
             />
 
             <div>
-              <p className="mb-2.5 font-display text-rotulo uppercase text-bruma">Quantidade</p>
+              <p className="mb-2.5 font-display text-rotulo uppercase text-bruma-luz">Quantidade</p>
               <div className="flex items-center gap-4">
                 <button
                   onClick={() => setQuantidadeSelecionada((q) => Math.max(1, q - 1))}
-                  className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded border border-grafite bg-aco"
+                  className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded border border-bruma bg-aco"
                 >
                   <Minus size={22} className="text-white" />
                 </button>
@@ -135,11 +135,11 @@ export function OperacaoSaida({ depositoId, veiculos, centrosCusto, funcionarios
                   <span className="font-display text-[44px] font-bold leading-none text-white">
                     {quantidadeSelecionada}
                   </span>
-                  <span className="font-dado text-sm text-bruma">{selecionado.unidade}</span>
+                  <span className="font-dado text-sm text-bruma-luz">{selecionado.unidade}</span>
                 </div>
                 <button
                   onClick={() => setQuantidadeSelecionada((q) => q + 1)}
-                  className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded border border-grafite bg-aco"
+                  className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded border border-bruma bg-aco"
                 >
                   <Plus size={22} className="text-white" />
                 </button>
@@ -147,7 +147,7 @@ export function OperacaoSaida({ depositoId, veiculos, centrosCusto, funcionarios
             </div>
 
             <div>
-              <p className="mb-2.5 font-display text-rotulo uppercase text-bruma">Destino · obrigatório</p>
+              <p className="mb-2.5 font-display text-rotulo uppercase text-bruma-luz">Destino · obrigatório</p>
               <div className="flex flex-wrap gap-2">
                 {veiculos.map((v) => (
                   <Chip
@@ -180,7 +180,7 @@ export function OperacaoSaida({ depositoId, veiculos, centrosCusto, funcionarios
                   </Chip>
                 ))}
                 {veiculos.length + centrosCusto.length + funcionarios.length === 0 && (
-                  <p className="font-corpo text-sm text-bruma">
+                  <p className="font-corpo text-sm text-bruma-luz">
                     Nenhum veículo, centro de custo ou funcionário cadastrado.
                   </p>
                 )}
@@ -188,14 +188,14 @@ export function OperacaoSaida({ depositoId, veiculos, centrosCusto, funcionarios
 
               {destino?.tipo === "veiculo" && (
                 <div className="mt-4">
-                  <p className="mb-2.5 font-display text-rotulo uppercase text-bruma">
+                  <p className="mb-2.5 font-display text-rotulo uppercase text-bruma-luz">
                     Quilometragem atual · opcional
                   </p>
                   <input
                     value={km}
                     onChange={(e) => setKm(e.target.value)}
                     inputMode="numeric"
-                    className="h-14 w-full rounded border border-grafite bg-aco px-3.5 font-dado text-base text-white outline-none"
+                    className="h-14 w-full rounded border border-bruma bg-aco px-3.5 font-dado text-base text-white outline-none"
                   />
                 </div>
               )}

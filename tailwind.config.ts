@@ -2,8 +2,10 @@ import type { Config } from "tailwindcss";
 
 /**
  * Tokens do StockManager.
- * Nao adicione cor fora desta lista. Ambar e carmim sao exclusivos
+ * Nao adicione familia de cor fora desta lista. Ambar e carmim sao exclusivos
  * de estado do estoque e nunca decoram elemento neutro.
+ * Subchaves: DEFAULT = icone, borda, barra | texto = texto em fundo claro |
+ * luz = texto em fundo escuro | fundo = badge em contexto claro.
  */
 const config: Config = {
   content: ["./src/**/*.{ts,tsx}"],
@@ -13,14 +15,14 @@ const config: Config = {
         carbono: "#14181D",
         aco: "#212933",
         grafite: "#3A4450",
-        petroleo: { DEFAULT: "#0F5563", claro: "#177A8F" },
-        ambar: "#F5A524",
-        carmim: "#D64545",
-        musgo: "#3F8F6F",
+        petroleo: { DEFAULT: "#0F5563", claro: "#177A8F", luz: "#4FB3C8" },
+        ambar: { DEFAULT: "#F5A524", texto: "#8A5A00", fundo: "#FBEBCB" },
+        carmim: { DEFAULT: "#D64545", texto: "#B03030", fundo: "#F6DADA", luz: "#E57373" },
+        musgo: { DEFAULT: "#3F8F6F", texto: "#2F6F55", fundo: "#D8EBE3", luz: "#5DB38F" },
         nevoa: "#F1F4F6",
         giz: "#DDE3E8",
         tinta: "#1B2026",
-        bruma: "#6C7885",
+        bruma: { DEFAULT: "#6C7885", texto: "#5A6573", luz: "#8A96A3" },
       },
       fontFamily: {
         display: ["var(--fonte-display)", "system-ui", "sans-serif"],

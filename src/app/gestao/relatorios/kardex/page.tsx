@@ -26,7 +26,7 @@ export default async function PaginaKardex({ searchParams }: Props) {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="font-display text-tela text-tinta">Kardex por item</h1>
-          <p className="mt-1 font-corpo text-sm text-bruma">Histórico completo de entradas e saídas.</p>
+          <p className="mt-1 font-corpo text-sm text-bruma-texto">Histórico completo de entradas e saídas.</p>
         </div>
         {itemId && (
           <div className="w-36">
@@ -60,7 +60,7 @@ export default async function PaginaKardex({ searchParams }: Props) {
       {itemId && (
         <div className="mt-6">
           {lista.length === 0 ? (
-            <div className="rounded border border-giz bg-white p-8 text-center font-corpo text-sm text-bruma">
+            <div className="rounded border border-giz bg-white p-8 text-center font-corpo text-sm text-bruma-texto">
               Nenhuma movimentação registrada para este item.
             </div>
           ) : (
@@ -85,18 +85,18 @@ export default async function PaginaKardex({ searchParams }: Props) {
               </TabelaCabecalho>
               {lista.map((l) => (
                 <TabelaLinha key={l.id}>
-                  <TabelaCelula mono className="max-w-[140px] flex-none text-bruma">
+                  <TabelaCelula mono className="max-w-[140px] flex-none text-bruma-texto">
                     {dataHora(l.criado_em)}
                   </TabelaCelula>
                   <TabelaCelula className="max-w-[90px] flex-none capitalize">{l.tipo}</TabelaCelula>
-                  <TabelaCelula className="text-bruma">{l.destino ?? "—"}</TabelaCelula>
+                  <TabelaCelula className="text-bruma-texto">{l.destino ?? "—"}</TabelaCelula>
                   <TabelaCelula align="direita" mono className="max-w-[100px] flex-none">
                     {quantidade(l.quantidade)}
                   </TabelaCelula>
                   <TabelaCelula align="direita" mono className="max-w-[110px] flex-none">
                     {brl(l.valor)}
                   </TabelaCelula>
-                  <TabelaCelula className="max-w-[120px] flex-none text-bruma">{l.usuario ?? "—"}</TabelaCelula>
+                  <TabelaCelula className="max-w-[120px] flex-none text-bruma-texto">{l.usuario ?? "—"}</TabelaCelula>
                 </TabelaLinha>
               ))}
             </Tabela>

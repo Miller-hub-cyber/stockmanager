@@ -136,7 +136,7 @@ export function FormularioItem({ item, categorias, fornecedores }: FormularioIte
         />
       </div>
       {item && (
-        <p className="font-corpo text-xs text-bruma">
+        <p className="font-corpo text-xs text-bruma-texto">
           Custo médio atual: {brl(item.custo_medio)}. Recalculado automaticamente a cada entrada — não é
           editável aqui.
         </p>

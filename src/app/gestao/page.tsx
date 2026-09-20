@@ -70,7 +70,7 @@ export default async function PaginaGestao() {
   return (
     <main className="p-6 sm:p-8">
       <h1 className="font-display text-tela text-tinta">Painel</h1>
-      <p className="mt-1 font-corpo text-sm text-bruma">
+      <p className="mt-1 font-corpo text-sm text-bruma-texto">
         {usuario ? `Bom dia, ${usuario.nome.split(" ")[0]}.` : ""} Situação do estoque agora.
       </p>
 
@@ -93,14 +93,14 @@ export default async function PaginaGestao() {
       <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
         <div className="rounded border border-giz bg-white p-[18px] lg:col-span-2">
           <div className="flex items-center justify-between">
-            <span className="font-display text-rotulo uppercase text-bruma">Precisa de reposição</span>
+            <span className="font-display text-rotulo uppercase text-bruma-texto">Precisa de reposição</span>
             <Link href="/gestao/compras" className="font-corpo text-xs text-petroleo hover:underline">
               Ver todos
             </Link>
           </div>
           <div className="mt-3">
             {alertas.length === 0 && (
-              <p className="py-2 font-corpo text-sm text-bruma">Nenhum item no ponto de reposição.</p>
+              <p className="py-2 font-corpo text-sm text-bruma-texto">Nenhum item no ponto de reposição.</p>
             )}
             {alertas.slice(0, 6).map((item) => {
               const cor =
@@ -114,7 +114,7 @@ export default async function PaginaGestao() {
                     <PontoEstado cor={cor} />
                     <div className="min-w-0">
                       <div className="truncate font-corpo text-sm text-tinta">{item.nome}</div>
-                      <div className="font-dado text-xs text-bruma">{item.sku}</div>
+                      <div className="font-dado text-xs text-bruma-texto">{item.sku}</div>
                     </div>
                   </div>
                   <div className="whitespace-nowrap font-dado text-sm text-tinta">
@@ -127,10 +127,10 @@ export default async function PaginaGestao() {
         </div>
 
         <div className="rounded border border-giz bg-white p-[18px]">
-          <span className="font-display text-rotulo uppercase text-bruma">Custo por veículo (mês)</span>
+          <span className="font-display text-rotulo uppercase text-bruma-texto">Custo por veículo (mês)</span>
           <div className="mt-3">
             {consumoVeiculoMesAtual.length === 0 && (
-              <p className="py-2 font-corpo text-sm text-bruma">Nenhuma saída vinculada a veículo este mês.</p>
+              <p className="py-2 font-corpo text-sm text-bruma-texto">Nenhuma saída vinculada a veículo este mês.</p>
             )}
             {consumoVeiculoMesAtual.map((c) => (
               <div key={c.placa} className="py-2">
@@ -151,17 +151,17 @@ export default async function PaginaGestao() {
       </div>
 
       <div className="mt-4 rounded border border-giz bg-white p-[18px]">
-        <span className="font-display text-rotulo uppercase text-bruma">Produtos mais movimentados (mês)</span>
+        <span className="font-display text-rotulo uppercase text-bruma-texto">Produtos mais movimentados (mês)</span>
         <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-5">
           {topItensIds.length === 0 && (
-            <p className="py-2 font-corpo text-sm text-bruma">Nenhuma saída registrada este mês.</p>
+            <p className="py-2 font-corpo text-sm text-bruma-texto">Nenhuma saída registrada este mês.</p>
           )}
           {topItensIds.map(([id, valor]) => {
             const item = mapaItensNomes.get(id);
             return (
               <div key={id} className="rounded border border-giz p-3">
                 <div className="truncate font-corpo text-sm text-tinta">{item?.nome ?? "Item"}</div>
-                <div className="font-dado text-xs text-bruma">{item?.sku}</div>
+                <div className="font-dado text-xs text-bruma-texto">{item?.sku}</div>
                 <div className="mt-1.5 font-dado text-sm text-petroleo">{brl(valor)}</div>
               </div>
             );

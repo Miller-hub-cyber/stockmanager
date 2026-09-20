@@ -67,19 +67,19 @@ export default async function PaginaConsulta() {
   return (
     <div className="flex-1 overflow-auto p-4">
       <div>
-        <p className="mb-2.5 font-display text-rotulo uppercase text-bruma">Consultar item</p>
+        <p className="mb-2.5 font-display text-rotulo uppercase text-bruma-luz">Consultar item</p>
         {deposito ? (
           <ConsultaItem depositoId={deposito.id} />
         ) : (
-          <p className="font-corpo text-sm text-bruma">Nenhum depósito cadastrado.</p>
+          <p className="font-corpo text-sm text-bruma-luz">Nenhum depósito cadastrado.</p>
         )}
       </div>
 
       <div className="mt-7">
-        <p className="mb-2.5 font-display text-rotulo uppercase text-bruma">Movimentações recentes</p>
+        <p className="mb-2.5 font-display text-rotulo uppercase text-bruma-luz">Movimentações recentes</p>
         <div className="flex flex-col gap-2">
           {lista.length === 0 && (
-            <p className="font-corpo text-sm text-bruma">Nenhuma movimentação registrada ainda.</p>
+            <p className="font-corpo text-sm text-bruma-luz">Nenhuma movimentação registrada ainda.</p>
           )}
           {lista.map((m) => {
             const item = mapaItens.get(m.item_id);
@@ -101,25 +101,25 @@ export default async function PaginaConsulta() {
                     <div className="truncate font-corpo text-sm text-white">
                       {item?.nome ?? "Item removido"}
                     </div>
-                    <div className="mt-0.5 truncate font-dado text-xs text-bruma">
+                    <div className="mt-0.5 truncate font-dado text-xs text-bruma-luz">
                       {item?.sku}
                       {destino ? ` · ${destino}` : ""} · {mapaUsuarios.get(m.usuario_id ?? "") ?? "—"}
                     </div>
-                    <div className="mt-0.5 font-dado text-[11px] text-bruma">{dataHora(m.criado_em)}</div>
+                    <div className="mt-0.5 font-dado text-[11px] text-bruma-luz">{dataHora(m.criado_em)}</div>
                   </div>
                   <div className="flex-shrink-0 text-right">
-                    <div className={`font-dado text-sm ${saida ? "text-carmim" : "text-musgo"}`}>
+                    <div className={`font-dado text-sm ${saida ? "text-carmim-luz" : "text-musgo-luz"}`}>
                       {saida ? "−" : "+"}
                       {formatarQuantidade(m.quantidade)} {item?.unidade}
                     </div>
-                    <div className="font-dado text-xs text-bruma">{brl(m.quantidade * m.custo_unitario)}</div>
+                    <div className="font-dado text-xs text-bruma-luz">{brl(m.quantidade * m.custo_unitario)}</div>
                   </div>
                 </div>
                 <div className="mt-2 flex items-center justify-between">
                   {jaEstornada ? (
-                    <span className="font-corpo text-xs text-bruma">Estornada</span>
+                    <span className="font-corpo text-xs text-bruma-luz">Estornada</span>
                   ) : ehEstorno ? (
-                    <span className="font-corpo text-xs text-bruma">Estorno</span>
+                    <span className="font-corpo text-xs text-bruma-luz">Estorno</span>
                   ) : (
                     <span />
                   )}

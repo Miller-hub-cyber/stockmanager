@@ -26,7 +26,7 @@ export function MenuLateral() {
             href={href}
             className={cn(
               "flex h-10 items-center gap-3 rounded px-3 font-corpo text-sm transition-colors duration-150",
-              ativo ? "bg-petroleo text-white" : "text-bruma hover:bg-white/5"
+              ativo ? "bg-petroleo text-white" : "text-bruma-texto hover:bg-white/5"
             )}
           >
             <Icone size={17} />

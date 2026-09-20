@@ -46,10 +46,10 @@ export default async function PaginaEditarVeiculo({ params }: { params: { id: st
         </div>
 
         <div className="mt-6">
-          <span className="font-display text-rotulo uppercase text-bruma">Últimas movimentações</span>
+          <span className="font-display text-rotulo uppercase text-bruma-texto">Últimas movimentações</span>
           <div className="mt-2 flex flex-col gap-2">
             {recentes.length === 0 && (
-              <p className="rounded border border-giz bg-white p-4 font-corpo text-sm text-bruma">
+              <p className="rounded border border-giz bg-white p-4 font-corpo text-sm text-bruma-texto">
                 Nenhuma saída registrada para este veículo ainda.
               </p>
             )}
@@ -62,7 +62,7 @@ export default async function PaginaEditarVeiculo({ params }: { params: { id: st
                 >
                   <div className="min-w-0">
                     <div className="truncate font-corpo text-sm text-tinta">{item?.nome ?? "Item"}</div>
-                    <div className="font-dado text-xs text-bruma">
+                    <div className="font-dado text-xs text-bruma-texto">
                       {quantidade(m.quantidade)} {item?.unidade} · {dataHora(m.criado_em)}
                     </div>
                   </div>

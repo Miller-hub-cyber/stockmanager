@@ -21,8 +21,8 @@ const estilosVariante: Record<VarianteBotao, (escuro: boolean) => string> = {
   primario: () => "bg-petroleo text-white hover:bg-petroleo-claro",
   secundario: (escuro) =>
     escuro
-      ? "border border-grafite bg-transparent text-white hover:bg-white/5"
-      : "border border-giz bg-transparent text-tinta hover:bg-nevoa",
+      ? "border border-bruma bg-transparent text-white hover:bg-white/5"
+      : "border border-bruma bg-transparent text-tinta hover:bg-nevoa",
   perigo: () => "bg-carmim text-white hover:opacity-90",
 };
 

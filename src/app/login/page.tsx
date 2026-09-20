@@ -13,7 +13,7 @@ export default function PaginaLogin() {
           <h1 className="font-display text-2xl font-bold text-white">
             Stock<span className="text-petroleo-claro">Manager</span>
           </h1>
-          <p className="mt-2 font-corpo text-sm text-bruma">Controle inteligente de estoque</p>
+          <p className="mt-2 font-corpo text-sm text-bruma-luz">Controle inteligente de estoque</p>
         </div>
         <FormularioLogin />
       </div>

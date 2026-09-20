@@ -16,7 +16,7 @@ export default async function PaginaItensParados() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="font-display text-tela text-tinta">Itens parados</h1>
-          <p className="mt-1 font-corpo text-sm text-bruma">Estoque com saldo, sem saída há mais de 90 dias.</p>
+          <p className="mt-1 font-corpo text-sm text-bruma-texto">Estoque com saldo, sem saída há mais de 90 dias.</p>
         </div>
         <div className="w-36">
           <Botao href="/gestao/relatorios/itens-parados/exportar" variante="secundario">
@@ -27,7 +27,7 @@ export default async function PaginaItensParados() {
 
       <div className="mt-6">
         {lista.length === 0 ? (
-          <div className="rounded border border-giz bg-white p-8 text-center font-corpo text-sm text-bruma">
+          <div className="rounded border border-giz bg-white p-8 text-center font-corpo text-sm text-bruma-texto">
             Nenhum item parado. Todo o estoque teve saída nos últimos 90 dias.
           </div>
         ) : (
@@ -52,7 +52,7 @@ export default async function PaginaItensParados() {
             </TabelaCabecalho>
             {lista.map((item) => (
               <TabelaLinha key={item.id}>
-                <TabelaCelula mono className="max-w-[100px] flex-none text-bruma">
+                <TabelaCelula mono className="max-w-[100px] flex-none text-bruma-texto">
                   {item.sku}
                 </TabelaCelula>
                 <TabelaCelula>{item.nome}</TabelaCelula>

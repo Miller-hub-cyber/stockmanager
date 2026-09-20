@@ -12,7 +12,7 @@ export default async function PaginaCategorias() {
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="font-display text-tela text-tinta">Categorias</h1>
-          <p className="mt-1 font-corpo text-sm text-bruma">Agrupam os itens do estoque.</p>
+          <p className="mt-1 font-corpo text-sm text-bruma-texto">Agrupam os itens do estoque.</p>
         </div>
         <div className="w-40">
           <Botao href="/gestao/cadastros/categorias/novo">Nova categoria</Botao>
@@ -20,7 +20,7 @@ export default async function PaginaCategorias() {
       </div>
 
       {lista.length === 0 ? (
-        <div className="rounded border border-giz bg-white p-8 text-center font-corpo text-sm text-bruma">
+        <div className="rounded border border-giz bg-white p-8 text-center font-corpo text-sm text-bruma-texto">
           Nenhuma categoria cadastrada.{" "}
           <Link href="/gestao/cadastros/categorias/novo" className="text-petroleo hover:underline">
             Cadastre a primeira

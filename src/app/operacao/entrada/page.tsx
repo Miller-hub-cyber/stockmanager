@@ -12,7 +12,7 @@ export default async function PaginaEntrada() {
   if (!deposito) {
     return (
       <div className="flex flex-1 items-center justify-center p-8 text-center">
-        <p className="font-corpo text-sm text-bruma">
+        <p className="font-corpo text-sm text-bruma-luz">
           Nenhum depósito cadastrado. Cadastre um depósito em Gestão antes de registrar movimentações.
         </p>
       </div>

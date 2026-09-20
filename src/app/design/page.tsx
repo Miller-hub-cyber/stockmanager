@@ -43,7 +43,7 @@ export default function PaginaDesign() {
   return (
     <div className="min-h-screen bg-nevoa p-8">
       <h1 className="font-display text-tela text-tinta">Design system</h1>
-      <p className="mt-2 max-w-2xl font-corpo text-corpo text-bruma">
+      <p className="mt-2 max-w-2xl font-corpo text-corpo text-bruma-texto">
         Componentes base do StockManager. Cada um consome os tokens de{" "}
         <code className="font-dado text-denso">tailwind.config.ts</code>, nunca cor ou tamanho fixo fora da
         lista definida em <code className="font-dado text-denso">docs/design-system.md</code>.
@@ -124,9 +124,10 @@ export default function PaginaDesign() {
 
         <Secao titulo="Ponto de estado">
           <div className="flex flex-wrap gap-6">
-            <PontoEstado cor={cores.musgo} texto="Normal" />
-            <PontoEstado cor={cores.ambar} texto="Abaixo do mínimo" />
-            <PontoEstado cor={cores.carmim} texto="Esgotado" />
+            <PontoEstado cor={cores.musgo} texto="Normal" estado="normal" />
+            <PontoEstado cor={cores.ambar} texto="Abaixo do mínimo" estado="alerta" />
+            <PontoEstado cor={cores.carmim} texto="Esgotado" estado="critico" />
+            <PontoEstado cor={cores.bruma} texto="Inativo" estado="inativo" />
           </div>
         </Secao>
 
@@ -146,7 +147,7 @@ export default function PaginaDesign() {
             </TabelaCabecalho>
             {ITENS_EXEMPLO.map((item) => (
               <TabelaLinha key={item.sku}>
-                <TabelaCelula mono className="max-w-[100px] flex-none text-bruma">
+                <TabelaCelula mono className="max-w-[100px] flex-none text-bruma-texto">
                   {item.sku}
                 </TabelaCelula>
                 <TabelaCelula>{item.nome}</TabelaCelula>
@@ -154,7 +155,10 @@ export default function PaginaDesign() {
                   {item.saldo} {item.unidade}
                 </TabelaCelula>
                 <TabelaCelula align="direita" className="max-w-[70px] flex-none">
-                  <PontoEstado cor={estadoItem(item.saldo, item.minimo, item.pontoPedido).cor} />
+                  {(() => {
+                    const est = estadoItem(item.saldo, item.minimo, item.pontoPedido);
+                    return <PontoEstado cor={est.cor} estado={est.estado} />;
+                  })()}
                 </TabelaCelula>
               </TabelaLinha>
             ))}
@@ -217,7 +221,7 @@ export default function PaginaDesign() {
           <div className="relative h-72 max-w-md overflow-hidden rounded border border-grafite bg-carbono">
             <TelaResultado resultado={resultado} aoFechar={() => setResultado(null)} />
             {!resultado && (
-              <div className="flex h-full items-center justify-center font-corpo text-sm text-bruma">
+              <div className="flex h-full items-center justify-center font-corpo text-sm text-bruma-luz">
                 Clique em um botão acima
               </div>
             )}

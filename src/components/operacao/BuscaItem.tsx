@@ -145,23 +145,23 @@ export function BuscaItem({ depositoId, onSelecionar }: BuscaItemProps) {
         <div className="relative flex-1">
           <Search
             size={18}
-            className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-bruma"
+            className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-bruma-luz"
           />
           <input
             value={termo}
             onChange={(e) => setTermo(e.target.value)}
             placeholder="Buscar item ou SKU"
-            className="h-14 w-full rounded border border-grafite bg-aco pl-11 pr-4 font-corpo text-[15px] text-white outline-none placeholder:text-bruma"
+            className="h-14 w-full rounded border border-bruma bg-aco pl-11 pr-4 font-corpo text-[15px] text-white outline-none placeholder:text-bruma-luz"
           />
         </div>
       </div>
 
-      {avisoScan && <p className="font-corpo text-xs text-carmim">{avisoScan}</p>}
+      {avisoScan && <p className="font-corpo text-xs text-carmim-luz">{avisoScan}</p>}
 
       <div className="flex flex-col gap-2">
-        {carregando && <p className="font-corpo text-sm text-bruma">Buscando...</p>}
+        {carregando && <p className="font-corpo text-sm text-bruma-luz">Buscando...</p>}
         {!carregando && resultados.length === 0 && (
-          <p className="py-2 font-corpo text-sm text-bruma">
+          <p className="py-2 font-corpo text-sm text-bruma-luz">
             Nenhum item encontrado. Verifique o SKU ou cadastre o item na gestão.
           </p>
         )}

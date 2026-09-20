@@ -57,7 +57,7 @@ export function TelaResultado({ resultado, aoFechar }: TelaResultadoProps) {
       <div className="mt-5 font-display text-[28px] font-bold leading-tight text-white">
         {resultado.titulo}
       </div>
-      <div className="mt-2.5 max-w-[380px] font-corpo text-base text-white/90">{resultado.detalhe}</div>
+      <div className="mt-2.5 max-w-[380px] font-corpo text-base text-white">{resultado.detalhe}</div>
       {!resultado.ok && (
         <div className="mt-7 w-[200px]">
           <Botao variante="secundario" escuro onClick={aoFechar}>

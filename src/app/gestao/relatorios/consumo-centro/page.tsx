@@ -17,7 +17,7 @@ export default async function PaginaConsumoCentro() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="font-display text-tela text-tinta">Consumo por centro de custo</h1>
-          <p className="mt-1 font-corpo text-sm text-bruma">Distribuição do gasto entre setores, por mês.</p>
+          <p className="mt-1 font-corpo text-sm text-bruma-texto">Distribuição do gasto entre setores, por mês.</p>
         </div>
         <div className="w-36">
           <Botao href="/gestao/relatorios/consumo-centro/exportar" variante="secundario">
@@ -28,7 +28,7 @@ export default async function PaginaConsumoCentro() {
 
       <div className="mt-6">
         {lista.length === 0 ? (
-          <div className="rounded border border-giz bg-white p-8 text-center font-corpo text-sm text-bruma">
+          <div className="rounded border border-giz bg-white p-8 text-center font-corpo text-sm text-bruma-texto">
             Nenhuma saída vinculada a centro de custo ainda.
           </div>
         ) : (

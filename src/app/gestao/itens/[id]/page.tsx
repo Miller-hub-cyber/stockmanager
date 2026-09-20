@@ -38,9 +38,9 @@ export default async function PaginaEditarItem({ params }: { params: { id: strin
       <div className="mx-auto max-w-2xl">
         <div className="flex items-center gap-3">
           <h1 className="font-display text-tela text-tinta">{item.nome}</h1>
-          <PontoEstado cor={estado.cor} texto={estado.texto} />
+          <PontoEstado cor={estado.cor} texto={estado.texto} estado={estado.estado} />
         </div>
-        <p className="mt-1 font-dado text-sm text-bruma">{item.sku}</p>
+        <p className="mt-1 font-dado text-sm text-bruma-texto">{item.sku}</p>
 
         <div className="mt-5 grid grid-cols-3 gap-3">
           <Indicador rotulo="Estoque atual" valor={`${quantidade(saldoTotal)} ${item.unidade}`} />
@@ -49,10 +49,10 @@ export default async function PaginaEditarItem({ params }: { params: { id: strin
         </div>
 
         <div className="mt-6">
-          <span className="font-display text-rotulo uppercase text-bruma">Movimentações recentes</span>
+          <span className="font-display text-rotulo uppercase text-bruma-texto">Movimentações recentes</span>
           <div className="mt-2 flex flex-col gap-2">
             {linhasKardex.length === 0 && (
-              <p className="rounded border border-giz bg-white p-4 font-corpo text-sm text-bruma">
+              <p className="rounded border border-giz bg-white p-4 font-corpo text-sm text-bruma-texto">
                 Nenhuma movimentação registrada para este item ainda.
               </p>
             )}
@@ -65,17 +65,17 @@ export default async function PaginaEditarItem({ params }: { params: { id: strin
                 >
                   <div className="min-w-0">
                     <div className="font-corpo text-sm capitalize text-tinta">{l.tipo}</div>
-                    <div className="font-dado text-xs text-bruma">
+                    <div className="font-dado text-xs text-bruma-texto">
                       {l.destino ? `${l.destino} · ` : ""}
                       {l.usuario ?? "—"} · {dataHora(l.criado_em)}
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className={`font-dado text-sm ${saida ? "text-carmim" : "text-musgo"}`}>
+                    <div className={`font-dado text-sm ${saida ? "text-carmim-texto" : "text-musgo-texto"}`}>
                       {saida ? "−" : "+"}
                       {quantidade(l.quantidade)} {item.unidade}
                     </div>
-                    <div className="font-dado text-xs text-bruma">{brl(l.valor)}</div>
+                    <div className="font-dado text-xs text-bruma-texto">{brl(l.valor)}</div>
                   </div>
                 </div>
               );

@@ -18,8 +18,8 @@ export function Chip({ ativo = false, escuro = false, children, className, ...pr
         ativo
           ? "border-petroleo bg-petroleo text-white"
           : escuro
-            ? "border-grafite bg-aco text-white"
-            : "border-giz bg-white text-tinta",
+            ? "border-bruma bg-aco text-white"
+            : "border-bruma bg-white text-tinta",
         className
       )}
       {...props}

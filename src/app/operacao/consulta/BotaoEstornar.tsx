@@ -27,11 +27,11 @@ export function BotaoEstornar({ movimentacaoId }: { movimentacaoId: string }) {
       <button
         onClick={aoClicar}
         disabled={enviando}
-        className="font-corpo text-xs text-carmim hover:underline disabled:opacity-50"
+        className="font-corpo text-xs text-carmim-luz hover:underline disabled:opacity-50"
       >
         {enviando ? "Estornando..." : "Estornar"}
       </button>
-      {erro && <span className="max-w-[160px] text-right font-corpo text-[11px] text-carmim">{erro}</span>}
+      {erro && <span className="max-w-[160px] text-right font-corpo text-[11px] text-carmim-luz">{erro}</span>}
     </div>
   );
 }

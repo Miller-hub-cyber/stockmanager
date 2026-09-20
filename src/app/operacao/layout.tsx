@@ -20,7 +20,7 @@ export default async function LayoutOperacao({ children }: { children: React.Rea
                 </span>
               </div>
               <form action={logout}>
-                <button type="submit" className="font-dado text-xs text-bruma hover:text-white">
+                <button type="submit" className="font-dado text-xs text-bruma-luz hover:text-white">
                   {usuario.nome.split(" ")[0]} · Sair
                 </button>
               </form>

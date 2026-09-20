@@ -24,7 +24,7 @@ export function AbasOperacao() {
             href={href}
             className={cn(
               "flex flex-1 flex-col items-center justify-center gap-1 border-b-2 py-2.5 font-display text-rotulo uppercase transition-colors duration-150",
-              ativo ? "border-petroleo-claro bg-petroleo/15 text-white" : "border-transparent text-bruma"
+              ativo ? "border-petroleo-claro bg-petroleo/15 text-white" : "border-transparent text-bruma-luz"
             )}
           >
             <Icone size={19} strokeWidth={2.3} />

@@ -35,7 +35,7 @@ export function FormularioImportarItens({ depositos }: { depositos: Deposito[] }
       </Seletor>
 
       <div className="flex flex-col gap-2">
-        <label htmlFor="arquivo" className="font-display text-rotulo uppercase text-bruma">
+        <label htmlFor="arquivo" className="font-display text-rotulo uppercase text-bruma-texto">
           Arquivo CSV
         </label>
         <input

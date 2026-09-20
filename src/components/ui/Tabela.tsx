@@ -48,7 +48,7 @@ export function TabelaCelula({
         align === "direita" && "text-right",
         mono ? "font-dado" : "font-corpo",
         cabecalho
-          ? "font-display text-[11px] font-semibold uppercase tracking-[0.06em] text-bruma"
+          ? "font-display text-[11px] font-semibold uppercase tracking-[0.06em] text-bruma-texto"
           : "text-sm text-tinta",
         className
       )}

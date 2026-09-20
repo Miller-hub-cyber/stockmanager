@@ -30,22 +30,35 @@ Não use: gradiente colorido, glassmorphism, sombra difusa grande, ilustração 
 
 ### Paleta
 
-Defina exatamente estes tokens no Tailwind. Não invente cor fora desta lista.
+Defina exatamente estes tokens no Tailwind. Não invente família de cor fora desta lista.
 
 | Token | Hex | Uso |
 |---|---|---|
 | `carbono` | `#14181D` | Fundo da área de operação |
 | `aco` | `#212933` | Superfície elevada sobre carbono, cabeçalho da gestão |
-| `grafite` | `#3A4450` | Bordas e divisórias no escuro |
+| `grafite` | `#3A4450` | Bordas e divisórias estruturais no escuro (não interativas) |
 | `petroleo` | `#0F5563` | Cor de marca, ação primária, estados ativos |
-| `petroleo-claro` | `#177A8F` | Hover e foco da ação primária |
-| `ambar` | `#F5A524` | Alerta operacional: abaixo do ponto de reposição |
-| `carmim` | `#D64545` | Bloqueio e erro: saldo insuficiente, item esgotado |
-| `musgo` | `#3F8F6F` | Confirmação de sucesso |
+| `petroleo-claro` | `#177A8F` | Hover da ação primária, destaque de logo |
+| `petroleo-luz` | `#4FB3C8` | Foco e link em contexto escuro; `petroleo-claro` reprova 3:1 contra `aco` |
+| `ambar` | `#F5A524` | Ícone/borda de alerta em contexto **escuro** (reprova texto/ícone em fundo claro) |
+| `ambar-texto` | `#8A5A00` | Texto/ícone de alerta em contexto claro |
+| `ambar-fundo` | `#FBEBCB` | Fundo de badge de alerta em contexto claro |
+| `carmim` | `#D64545` | Bloqueio, erro, ícone/borda de estado crítico nos dois contextos |
+| `carmim-texto` | `#B03030` | Texto de estado crítico em contexto claro |
+| `carmim-luz` | `#E57373` | Texto de estado crítico em contexto escuro |
+| `carmim-fundo` | `#F6DADA` | Fundo de badge crítico em contexto claro |
+| `musgo` | `#3F8F6F` | Confirmação de sucesso, ícone/borda nos dois contextos |
+| `musgo-texto` | `#2F6F55` | Texto de sucesso em contexto claro |
+| `musgo-luz` | `#5DB38F` | Texto de sucesso em contexto escuro |
+| `musgo-fundo` | `#D8EBE3` | Fundo de badge de sucesso em contexto claro |
 | `nevoa` | `#F1F4F6` | Fundo da área de gestão |
-| `giz` | `#DDE3E8` | Bordas e divisórias no claro |
+| `giz` | `#DDE3E8` | Bordas e divisórias estruturais no claro (não interativas) |
 | `tinta` | `#1B2026` | Texto principal sobre fundo claro |
-| `bruma` | `#6C7885` | Texto secundário nos dois modos |
+| `bruma` | `#6C7885` | Ícone/borda de estado inativo; borda de campo e card clicável nos dois contextos |
+| `bruma-texto` | `#5A6573` | Texto secundário em contexto claro — `bruma` sozinho reprova 4.5:1 |
+| `bruma-luz` | `#8A96A3` | Texto secundário em contexto escuro — `bruma` sozinho reprova 4.5:1 |
+
+Subchaves: `DEFAULT` é ícone, borda e barra; `texto` é texto em fundo claro; `luz` é texto em fundo escuro; `fundo` é badge em contexto claro.
 
 Regra de dominância: `petroleo` é a cor da marca e aparece em toda ação primária. `ambar` e `carmim` são exclusivos de estado do estoque e nunca decoram nada. Se você usar âmbar em um botão que não seja de alerta, está errado.
 
@@ -88,7 +101,7 @@ Escala de tipo:
 
 O numeral do saldo é sempre o maior elemento do bloco, com a unidade em rótulo pequeno ao lado, como mostrador de balança. O ponto colorido de estado fica sempre à direita, na mesma posição, em todas as telas. Quem usa aprende a ler o estado pela posição, não pela leitura.
 
-Estados do ponto: `musgo` normal, `ambar` abaixo do ponto de reposição, `carmim` esgotado.
+Estados do ponto: `musgo` normal (ícone `CircleCheck`), `ambar` abaixo do ponto de reposição (ícone `TriangleAlert`), `carmim` esgotado (ícone `OctagonX`), `bruma` inativo (ícone `Archive`). O ícone substitui o ponto colorido quando o estado é conhecido; nunca depende só da cor, o texto ao lado é a alternativa acessível.
 
 **Confirmação de tela cheia.** Após registrar uma saída, o resultado ocupa a tela inteira por 1,4 segundo em `musgo` com o nome do item e a quantidade em corpo grande, depois volta sozinho para a busca. O almoxarife confirma o acerto de longe, sem ler. Em caso de erro, o mesmo padrão em `carmim` com a mensagem do que aconteceu, sem retorno automático.
 
@@ -171,7 +184,7 @@ Português do Brasil, frase em caixa baixa exceto rótulos de seção, verbo no 
 
 ### Piso de qualidade
 
-Antes de considerar qualquer tela pronta: responsiva até 360px de largura, foco de teclado visível em `petroleo-claro` com anel de 2px, contraste mínimo 4.5:1 em texto, área de toque de 48px em toda a operação, e a tela de saída inteira funcionando com uma única mão.
+Antes de considerar qualquer tela pronta: responsiva até 360px de largura, foco de teclado visível em `petroleo-luz` com anel de 2px (passa 3:1 tanto em fundo claro quanto escuro; `petroleo-claro` não passa contra `aco`), contraste mínimo 4.5:1 em texto normal e 3:1 em texto grande/ícone/borda de campo, área de toque de 48px em toda a operação, e a tela de saída inteira funcionando com uma única mão.
 
 ### Ordem de execução
 

@@ -17,7 +17,7 @@ export default async function PaginaValorEstoque() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="font-display text-tela text-tinta">Valor imobilizado</h1>
-          <p className="mt-1 font-corpo text-sm text-bruma">Saldo multiplicado pelo custo médio, por categoria.</p>
+          <p className="mt-1 font-corpo text-sm text-bruma-texto">Saldo multiplicado pelo custo médio, por categoria.</p>
         </div>
         <div className="w-36">
           <Botao href="/gestao/relatorios/valor-estoque/exportar" variante="secundario">
@@ -28,7 +28,7 @@ export default async function PaginaValorEstoque() {
 
       <div className="mt-6">
         {lista.length === 0 ? (
-          <div className="rounded border border-giz bg-white p-8 text-center font-corpo text-sm text-bruma">
+          <div className="rounded border border-giz bg-white p-8 text-center font-corpo text-sm text-bruma-texto">
             Nenhum item ativo com saldo cadastrado.
           </div>
         ) : (

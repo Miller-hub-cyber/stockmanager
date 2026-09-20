@@ -26,11 +26,16 @@ const fundos: Record<TipoAviso, { claro: string; escuro: string }> = {
   sucesso: { claro: "bg-musgo/5", escuro: "bg-musgo/15" },
 };
 
-const coresIcone: Record<TipoAviso, string> = {
-  info: "text-petroleo",
-  alerta: "text-ambar",
-  erro: "text-carmim",
-  sucesso: "text-musgo",
+/**
+ * petroleo e ambar (DEFAULT) reprovam 3:1 no contexto oposto ao que foram
+ * calibrados (petroleo é escuro demais para ícone em fundo escuro, ambar é
+ * claro demais para ícone em fundo claro); erro e sucesso passam nos dois.
+ */
+const coresIcone: Record<TipoAviso, { claro: string; escuro: string }> = {
+  info: { claro: "text-petroleo", escuro: "text-petroleo-luz" },
+  alerta: { claro: "text-ambar-texto", escuro: "text-ambar" },
+  erro: { claro: "text-carmim", escuro: "text-carmim" },
+  sucesso: { claro: "text-musgo", escuro: "text-musgo" },
 };
 
 const icones: Record<TipoAviso, LucideIcon> = {
@@ -51,12 +56,20 @@ export function Aviso({ tipo = "info", titulo, children, escuro = false }: Aviso
         escuro ? fundos[tipo].escuro : fundos[tipo].claro
       )}
     >
-      <Icone size={18} className={cn("mt-0.5 flex-shrink-0", coresIcone[tipo])} aria-hidden="true" />
+      <Icone
+        size={18}
+        className={cn("mt-0.5 flex-shrink-0", escuro ? coresIcone[tipo].escuro : coresIcone[tipo].claro)}
+        aria-hidden="true"
+      />
       <div>
         <div className={cn("font-display text-sm font-semibold", escuro ? "text-white" : "text-tinta")}>
           {titulo}
         </div>
-        {children && <div className="mt-1 font-corpo text-sm text-bruma">{children}</div>}
+        {children && (
+          <div className={cn("mt-1 font-corpo text-sm", escuro ? "text-bruma-luz" : "text-bruma-texto")}>
+            {children}
+          </div>
+        )}
       </div>
     </div>
   );

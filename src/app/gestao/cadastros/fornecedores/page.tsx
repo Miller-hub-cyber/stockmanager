@@ -17,7 +17,7 @@ export default async function PaginaFornecedores() {
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="font-display text-tela text-tinta">Fornecedores</h1>
-          <p className="mt-1 font-corpo text-sm text-bruma">Origem das entradas de estoque.</p>
+          <p className="mt-1 font-corpo text-sm text-bruma-texto">Origem das entradas de estoque.</p>
         </div>
         <div className="w-48">
           <Botao href="/gestao/cadastros/fornecedores/novo">Novo fornecedor</Botao>
@@ -25,7 +25,7 @@ export default async function PaginaFornecedores() {
       </div>
 
       {lista.length === 0 ? (
-        <div className="rounded border border-giz bg-white p-8 text-center font-corpo text-sm text-bruma">
+        <div className="rounded border border-giz bg-white p-8 text-center font-corpo text-sm text-bruma-texto">
           Nenhum fornecedor cadastrado.{" "}
           <Link href="/gestao/cadastros/fornecedores/novo" className="text-petroleo hover:underline">
             Cadastre o primeiro
@@ -52,7 +52,7 @@ export default async function PaginaFornecedores() {
           {lista.map((fornecedor) => (
             <TabelaLinha key={fornecedor.id}>
               <TabelaCelula>{fornecedor.nome}</TabelaCelula>
-              <TabelaCelula className="max-w-[150px] flex-none text-bruma">
+              <TabelaCelula className="max-w-[150px] flex-none text-bruma-texto">
                 {fornecedor.telefone ?? fornecedor.email ?? "—"}
               </TabelaCelula>
               <TabelaCelula align="direita" mono className="max-w-[120px] flex-none">
@@ -60,8 +60,9 @@ export default async function PaginaFornecedores() {
               </TabelaCelula>
               <TabelaCelula align="direita" className="max-w-[100px] flex-none">
                 <PontoEstado
-                  cor={fornecedor.ativo ? cores.musgo : cores.carmim}
+                  cor={fornecedor.ativo ? cores.musgo : cores.bruma}
                   texto={fornecedor.ativo ? "Ativo" : "Inativo"}
+                  estado={fornecedor.ativo ? "normal" : "inativo"}
                 />
               </TabelaCelula>
               <TabelaCelula align="direita" className="max-w-[180px] flex-none">

@@ -19,7 +19,10 @@ export const Seletor = forwardRef<HTMLSelectElement, SeletorProps>(function Sele
   return (
     <div className="flex flex-col gap-2">
       {rotulo && (
-        <label htmlFor={id} className="font-display text-rotulo uppercase text-bruma">
+        <label
+          htmlFor={id}
+          className={cn("font-display text-rotulo uppercase", escuro ? "text-bruma-luz" : "text-bruma-texto")}
+        >
           {rotulo}
         </label>
       )}
@@ -31,8 +34,8 @@ export const Seletor = forwardRef<HTMLSelectElement, SeletorProps>(function Sele
           className={cn(
             "w-full appearance-none rounded border font-corpo outline-none transition-colors duration-150",
             escuro
-              ? "h-acao border-grafite bg-aco pl-3.5 pr-10 text-[15px] text-white"
-              : "h-[42px] border-giz bg-white pl-3 pr-9 text-sm text-tinta",
+              ? "h-acao border-bruma bg-aco pl-3.5 pr-10 text-[15px] text-white"
+              : "h-[42px] border-bruma bg-white pl-3 pr-9 text-sm text-tinta",
             erro && "border-carmim",
             className
           )}
@@ -42,11 +45,16 @@ export const Seletor = forwardRef<HTMLSelectElement, SeletorProps>(function Sele
         </select>
         <ChevronDown
           size={16}
-          className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-bruma"
+          className={cn(
+            "pointer-events-none absolute right-3 top-1/2 -translate-y-1/2",
+            escuro ? "text-bruma-luz" : "text-bruma-texto"
+          )}
           aria-hidden="true"
         />
       </div>
-      {erro && <span className="text-xs text-carmim">{erro}</span>}
+      {erro && (
+        <span className={cn("text-xs", escuro ? "text-carmim-luz" : "text-carmim-texto")}>{erro}</span>
+      )}
     </div>
   );
 });

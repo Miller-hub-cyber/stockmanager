@@ -65,7 +65,7 @@ export function LeitorCodigoBarras({ onDetectado, onFechar }: LeitorCodigoBarras
       {erro ? (
         <p className="mt-4 max-w-md text-center font-corpo text-sm text-carmim">{erro}</p>
       ) : (
-        <p className="mt-4 max-w-md text-center font-corpo text-sm text-bruma">
+        <p className="mt-4 max-w-md text-center font-corpo text-sm text-bruma-luz">
           Aponte a câmera para o código de barras do item.
         </p>
       )}
