@@ -1,7 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-import { esquemaEntrada } from "@/lib/validacao";
+import { esquemaEntradaLote } from "@/lib/validacao";
 import { traduzirErro } from "@/lib/formato";
 import { obterUsuarioAtual } from "@/lib/sessao";
 
@@ -10,21 +10,22 @@ export interface ResultadoMovimentacao {
   erro?: string;
 }
 
-export async function registrarEntrada(dados: unknown): Promise<ResultadoMovimentacao> {
+/** Registra varios itens na mesma entrada: um documento (NF) e uma movimentacao por item, no mesmo lote. */
+export async function registrarEntradaLote(dados: unknown): Promise<ResultadoMovimentacao> {
   const usuario = await obterUsuarioAtual();
   if (!usuario) return { sucesso: false, erro: "Sessao expirada. Faca login novamente." };
   if (!["admin", "gestor", "almoxarife"].includes(usuario.perfil)) {
     return { sucesso: false, erro: "Voce nao tem permissao para registrar entrada." };
   }
 
-  const validado = esquemaEntrada.safeParse(dados);
+  const validado = esquemaEntradaLote.safeParse(dados);
   if (!validado.success) {
     return { sucesso: false, erro: validado.error.issues[0]?.message ?? "Dados invalidos." };
   }
 
   const supabase = createClient();
 
-  // Nota fiscal informada -> cria o documento antes e vincula a movimentacao a ele.
+  // Nota fiscal informada -> cria um unico documento para o lote e vincula todas as linhas a ele.
   let documentoId: string | null = null;
   if (validado.data.numeroNf) {
     const { data: documento, error: erroDocumento } = await supabase
@@ -44,16 +45,19 @@ export async function registrarEntrada(dados: unknown): Promise<ResultadoMovimen
     documentoId = documento.id;
   }
 
-  const { error } = await supabase.from("movimentacoes").insert({
+  const linhas = validado.data.itens.map((item) => ({
     empresa_id: usuario.empresaId,
-    item_id: validado.data.itemId,
+    item_id: item.itemId,
     deposito_id: validado.data.depositoId,
-    tipo: "entrada",
-    quantidade: validado.data.quantidade,
-    custo_unitario: validado.data.custoUnitario,
+    tipo: "entrada" as const,
+    quantidade: item.quantidade,
+    custo_unitario: item.custoUnitario,
     documento_id: documentoId,
+    veiculo_id: validado.data.veiculoId ?? null,
     usuario_id: usuario.id,
-  });
+  }));
+
+  const { error } = await supabase.from("movimentacoes").insert(linhas);
 
   if (error) return { sucesso: false, erro: traduzirErro(error.message) };
   return { sucesso: true };

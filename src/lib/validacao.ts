@@ -29,8 +29,52 @@ export const esquemaEntrada = z.object({
   quantidade: z.coerce.number().positive(),
   custoUnitario: z.coerce.number().nonnegative(),
   fornecedorId: z.string().uuid().nullable().optional(),
+  // Etiqueta informativa (para qual frota o lote se destina). Nao aciona regra de saldo/negocio.
+  veiculoId: z.string().uuid().nullable().optional(),
   numeroNf: z.string().max(60).optional(),
 });
+
+const itemEntradaLote = z.object({
+  itemId: z.string().uuid(),
+  quantidade: z.coerce.number().positive("Informe uma quantidade maior que zero"),
+  custoUnitario: z.coerce.number().nonnegative(),
+});
+
+/** Varios itens na mesma entrada: fornecedor, veiculo e NF sao unicos para o lote todo. */
+export const esquemaEntradaLote = z.object({
+  depositoId: z.string().uuid(),
+  fornecedorId: z.string().uuid().nullable().optional(),
+  veiculoId: z.string().uuid().nullable().optional(),
+  numeroNf: z.string().max(60).optional(),
+  itens: z.array(itemEntradaLote).min(1, "Adicione ao menos um item"),
+});
+
+const itemSaidaLote = z.object({
+  itemId: z.string().uuid(),
+  quantidade: z.coerce.number().positive("Informe uma quantidade maior que zero"),
+});
+
+/** Varios itens na mesma saida: destino e km sao unicos para o lote todo. */
+export const esquemaSaidaLote = z
+  .object({
+    depositoId: z.string().uuid(),
+    centroCustoId: z.string().uuid().nullable().optional(),
+    veiculoId: z.string().uuid().nullable().optional(),
+    // Numero de frota/placa digitado na hora, quando o veiculo ainda nao esta cadastrado.
+    // Resolvido para um veiculoId de verdade em registrarSaidaLote (fn_obter_ou_criar_veiculo).
+    veiculoPlaca: z.string().trim().min(1).max(20).optional(),
+    funcionarioId: z.string().uuid().nullable().optional(),
+    // Nome do mecanico digitado na hora, quando ele ainda nao esta cadastrado.
+    // Resolvido para um funcionarioId de verdade em registrarSaidaLote (fn_obter_ou_criar_funcionario).
+    funcionarioNome: z.string().trim().min(1).max(120).optional(),
+    kmVeiculo: z.coerce.number().nonnegative().nullable().optional(),
+    motivo: z.string().max(200).optional(),
+    itens: z.array(itemSaidaLote).min(1, "Adicione ao menos um item"),
+  })
+  .refine(
+    (d) => Boolean(d.centroCustoId || d.veiculoId || d.veiculoPlaca || d.funcionarioId || d.funcionarioNome),
+    { message: "Toda saida precisa de um destino: veiculo, setor ou funcionario." }
+  );
 
 export const esquemaItem = z.object({
   sku: z.string().min(2, "Informe o SKU").max(40),

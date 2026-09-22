@@ -31,6 +31,12 @@ export function traduzirErro(mensagem: string): string {
     return "Toda saida precisa de um destino: veiculo, setor ou funcionario.";
   if (mensagem.includes("SALDO_DERIVADO"))
     return "O saldo resulta das movimentacoes e nao pode ser editado.";
+  if (mensagem.includes("PLACA_INVALIDA"))
+    return "Informe o numero da frota ou placa.";
+  if (mensagem.includes("NOME_INVALIDO"))
+    return "Informe o nome do mecanico.";
+  if (mensagem.includes("SEM_PERMISSAO"))
+    return "Voce nao tem permissao para esta acao.";
   if (mensagem.includes("duplicate key value violates unique constraint")) {
     if (mensagem.includes("itens_empresa_id_sku_key")) return "Ja existe um item cadastrado com esse SKU.";
     if (mensagem.includes("veiculos_empresa_id_placa_key"))
