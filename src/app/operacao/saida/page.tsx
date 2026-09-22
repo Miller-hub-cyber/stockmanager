@@ -4,11 +4,10 @@ import { OperacaoSaida } from "./OperacaoSaida";
 export default async function PaginaSaida() {
   const supabase = createClient();
 
-  const [{ data: deposito }, { data: veiculos }, { data: centros }, { data: funcionarios }] = await Promise.all([
+  const [{ data: deposito }, { data: veiculos }, { data: centros }] = await Promise.all([
     supabase.from("depositos").select("id, nome").eq("ativo", true).order("nome").limit(1).maybeSingle(),
     supabase.from("veiculos").select("id, placa").eq("ativo", true).order("placa"),
     supabase.from("centros_custo").select("id, nome").eq("ativo", true).order("nome"),
-    supabase.from("funcionarios").select("id, nome").eq("ativo", true).order("nome"),
   ]);
 
   if (!deposito) {
@@ -21,12 +20,5 @@ export default async function PaginaSaida() {
     );
   }
 
-  return (
-    <OperacaoSaida
-      depositoId={deposito.id}
-      veiculos={veiculos ?? []}
-      centrosCusto={centros ?? []}
-      funcionarios={funcionarios ?? []}
-    />
-  );
+  return <OperacaoSaida depositoId={deposito.id} veiculos={veiculos ?? []} centrosCusto={centros ?? []} />;
 }
