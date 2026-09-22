@@ -624,6 +624,18 @@ export interface Database {
         };
         Returns: string;
       };
+      fn_obter_ou_criar_veiculo: {
+        Args: {
+          p_placa: string;
+        };
+        Returns: string;
+      };
+      fn_obter_ou_criar_funcionario: {
+        Args: {
+          p_nome: string;
+        };
+        Returns: string;
+      };
     };
     Enums: {
       tipo_item: "peca" | "consumivel" | "epi" | "ferramenta" | "pneu" | "lubrificante" | "outro";
