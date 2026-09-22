@@ -40,11 +40,16 @@ export function TabelaCelula({
   cabecalho = false,
   className,
 }: TabelaCelulaProps) {
+  // Colunas de largura fixa vêm com "w-[Npx] flex-none" no className do chamador.
+  // Só aplicamos flex-1 (coluna flexível) quando a coluna não define sua própria largura,
+  // senão as duas regras de "flex" disputam a mesma propriedade e o alinhamento quebra.
+  const larguraFixa = className?.includes("flex-none") ?? false;
   return (
     <div
       role={cabecalho ? "columnheader" : "cell"}
       className={cn(
-        "flex-1 truncate px-1",
+        "truncate px-1",
+        !larguraFixa && "min-w-0 flex-1",
         align === "direita" && "text-right",
         mono ? "font-dado" : "font-corpo",
         cabecalho

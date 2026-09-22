@@ -36,30 +36,30 @@ export default async function PaginaCentrosCusto() {
         <Tabela>
           <TabelaCabecalho>
             <TabelaCelula cabecalho>Nome</TabelaCelula>
-            <TabelaCelula cabecalho mono className="max-w-[100px] flex-none">
+            <TabelaCelula cabecalho mono className="w-[100px] flex-none">
               Código
             </TabelaCelula>
-            <TabelaCelula cabecalho align="direita" className="max-w-[100px] flex-none">
+            <TabelaCelula cabecalho align="direita" className="w-[100px] flex-none">
               Status
             </TabelaCelula>
-            <TabelaCelula cabecalho align="direita" className="max-w-[180px] flex-none">
+            <TabelaCelula cabecalho align="direita" className="w-[180px] flex-none">
               Ações
             </TabelaCelula>
           </TabelaCabecalho>
           {lista.map((centro) => (
             <TabelaLinha key={centro.id}>
               <TabelaCelula>{centro.nome}</TabelaCelula>
-              <TabelaCelula mono className="max-w-[100px] flex-none text-bruma-texto">
+              <TabelaCelula mono className="w-[100px] flex-none text-bruma-texto">
                 {centro.codigo ?? "—"}
               </TabelaCelula>
-              <TabelaCelula align="direita" className="max-w-[100px] flex-none">
+              <TabelaCelula align="direita" className="w-[100px] flex-none">
                 <PontoEstado
                   cor={centro.ativo ? cores.musgo : cores.bruma}
                   texto={centro.ativo ? "Ativo" : "Inativo"}
                   estado={centro.ativo ? "normal" : "inativo"}
                 />
               </TabelaCelula>
-              <TabelaCelula align="direita" className="max-w-[180px] flex-none">
+              <TabelaCelula align="direita" className="w-[180px] flex-none">
                 <div className="flex items-center justify-end gap-3">
                   <Link
                     href={`/gestao/cadastros/centros-custo/${centro.id}`}
@@ -68,7 +68,7 @@ export default async function PaginaCentrosCusto() {
                     Editar
                   </Link>
                   {centro.ativo && (
-                    <form action={desativarCentroCusto.bind(null, centro.id)} className="w-24">
+                    <form action={desativarCentroCusto.bind(null, centro.id)}>
                       <BotaoConfirmar mensagem={`Desativar o centro de custo "${centro.nome}"?`}>
                         Desativar
                       </BotaoConfirmar>

@@ -37,10 +37,10 @@ export default async function PaginaDepositos() {
           <TabelaCabecalho>
             <TabelaCelula cabecalho>Nome</TabelaCelula>
             <TabelaCelula cabecalho>Descrição</TabelaCelula>
-            <TabelaCelula cabecalho align="direita" className="max-w-[100px] flex-none">
+            <TabelaCelula cabecalho align="direita" className="w-[100px] flex-none">
               Status
             </TabelaCelula>
-            <TabelaCelula cabecalho align="direita" className="max-w-[180px] flex-none">
+            <TabelaCelula cabecalho align="direita" className="w-[180px] flex-none">
               Ações
             </TabelaCelula>
           </TabelaCabecalho>
@@ -48,14 +48,14 @@ export default async function PaginaDepositos() {
             <TabelaLinha key={deposito.id}>
               <TabelaCelula>{deposito.nome}</TabelaCelula>
               <TabelaCelula className="text-bruma-texto">{deposito.descricao ?? "—"}</TabelaCelula>
-              <TabelaCelula align="direita" className="max-w-[100px] flex-none">
+              <TabelaCelula align="direita" className="w-[100px] flex-none">
                 <PontoEstado
                   cor={deposito.ativo ? cores.musgo : cores.bruma}
                   texto={deposito.ativo ? "Ativo" : "Inativo"}
                   estado={deposito.ativo ? "normal" : "inativo"}
                 />
               </TabelaCelula>
-              <TabelaCelula align="direita" className="max-w-[180px] flex-none">
+              <TabelaCelula align="direita" className="w-[180px] flex-none">
                 <div className="flex items-center justify-end gap-3">
                   <Link
                     href={`/gestao/cadastros/depositos/${deposito.id}`}
@@ -64,7 +64,7 @@ export default async function PaginaDepositos() {
                     Editar
                   </Link>
                   {deposito.ativo && (
-                    <form action={desativarDeposito.bind(null, deposito.id)} className="w-24">
+                    <form action={desativarDeposito.bind(null, deposito.id)}>
                       <BotaoConfirmar mensagem={`Desativar o depósito "${deposito.nome}"?`}>
                         Desativar
                       </BotaoConfirmar>

@@ -34,33 +34,33 @@ export default async function PaginaConsumoVeiculo() {
         ) : (
           <Tabela>
             <TabelaCabecalho>
-              <TabelaCelula cabecalho mono className="max-w-[110px] flex-none">
+              <TabelaCelula cabecalho mono className="w-[110px] flex-none">
                 Placa
               </TabelaCelula>
               <TabelaCelula cabecalho>Modelo</TabelaCelula>
-              <TabelaCelula cabecalho className="max-w-[100px] flex-none">
+              <TabelaCelula cabecalho className="w-[100px] flex-none">
                 Mês
               </TabelaCelula>
-              <TabelaCelula cabecalho align="direita" className="max-w-[90px] flex-none">
+              <TabelaCelula cabecalho align="direita" className="w-[90px] flex-none">
                 Saídas
               </TabelaCelula>
-              <TabelaCelula cabecalho align="direita" className="max-w-[130px] flex-none">
+              <TabelaCelula cabecalho align="direita" className="w-[130px] flex-none">
                 Custo total
               </TabelaCelula>
             </TabelaCabecalho>
             {lista.map((linha) => (
               <TabelaLinha key={`${linha.veiculo_id}-${linha.mes}`}>
-                <TabelaCelula mono className="max-w-[110px] flex-none">
+                <TabelaCelula mono className="w-[110px] flex-none">
                   {linha.placa}
                 </TabelaCelula>
                 <TabelaCelula className="text-bruma-texto">{linha.modelo ?? "—"}</TabelaCelula>
-                <TabelaCelula mono className="max-w-[100px] flex-none">
+                <TabelaCelula mono className="w-[100px] flex-none">
                   {mesAno(linha.mes)}
                 </TabelaCelula>
-                <TabelaCelula align="direita" mono className="max-w-[90px] flex-none">
+                <TabelaCelula align="direita" mono className="w-[90px] flex-none">
                   {linha.movimentos}
                 </TabelaCelula>
-                <TabelaCelula align="direita" mono className="max-w-[130px] flex-none">
+                <TabelaCelula align="direita" mono className="w-[130px] flex-none">
                   {brl(linha.custo_total)}
                 </TabelaCelula>
               </TabelaLinha>

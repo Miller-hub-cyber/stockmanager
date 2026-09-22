@@ -134,27 +134,27 @@ export default function PaginaDesign() {
         <Secao titulo="Tabela">
           <Tabela>
             <TabelaCabecalho>
-              <TabelaCelula cabecalho className="max-w-[100px] flex-none">
+              <TabelaCelula cabecalho className="w-[100px] flex-none">
                 SKU
               </TabelaCelula>
               <TabelaCelula cabecalho>Item</TabelaCelula>
               <TabelaCelula cabecalho align="direita">
                 Saldo
               </TabelaCelula>
-              <TabelaCelula cabecalho align="direita" className="max-w-[70px] flex-none">
+              <TabelaCelula cabecalho align="direita" className="w-[70px] flex-none">
                 Estado
               </TabelaCelula>
             </TabelaCabecalho>
             {ITENS_EXEMPLO.map((item) => (
               <TabelaLinha key={item.sku}>
-                <TabelaCelula mono className="max-w-[100px] flex-none text-bruma-texto">
+                <TabelaCelula mono className="w-[100px] flex-none text-bruma-texto">
                   {item.sku}
                 </TabelaCelula>
                 <TabelaCelula>{item.nome}</TabelaCelula>
                 <TabelaCelula align="direita" mono>
                   {item.saldo} {item.unidade}
                 </TabelaCelula>
-                <TabelaCelula align="direita" className="max-w-[70px] flex-none">
+                <TabelaCelula align="direita" className="w-[70px] flex-none">
                   {(() => {
                     const est = estadoItem(item.saldo, item.minimo, item.pontoPedido);
                     return <PontoEstado cor={est.cor} estado={est.estado} />;

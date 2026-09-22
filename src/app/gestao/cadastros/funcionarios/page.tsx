@@ -36,36 +36,36 @@ export default async function PaginaFuncionarios() {
         <Tabela>
           <TabelaCabecalho>
             <TabelaCelula cabecalho>Nome</TabelaCelula>
-            <TabelaCelula cabecalho mono className="max-w-[110px] flex-none">
+            <TabelaCelula cabecalho mono className="w-[110px] flex-none">
               Matrícula
             </TabelaCelula>
-            <TabelaCelula cabecalho className="max-w-[140px] flex-none">
+            <TabelaCelula cabecalho className="w-[140px] flex-none">
               Função
             </TabelaCelula>
-            <TabelaCelula cabecalho align="direita" className="max-w-[100px] flex-none">
+            <TabelaCelula cabecalho align="direita" className="w-[100px] flex-none">
               Status
             </TabelaCelula>
-            <TabelaCelula cabecalho align="direita" className="max-w-[180px] flex-none">
+            <TabelaCelula cabecalho align="direita" className="w-[180px] flex-none">
               Ações
             </TabelaCelula>
           </TabelaCabecalho>
           {lista.map((funcionario) => (
             <TabelaLinha key={funcionario.id}>
               <TabelaCelula>{funcionario.nome}</TabelaCelula>
-              <TabelaCelula mono className="max-w-[110px] flex-none text-bruma-texto">
+              <TabelaCelula mono className="w-[110px] flex-none text-bruma-texto">
                 {funcionario.matricula ?? "—"}
               </TabelaCelula>
-              <TabelaCelula className="max-w-[140px] flex-none text-bruma-texto">
+              <TabelaCelula className="w-[140px] flex-none text-bruma-texto">
                 {funcionario.funcao ?? "—"}
               </TabelaCelula>
-              <TabelaCelula align="direita" className="max-w-[100px] flex-none">
+              <TabelaCelula align="direita" className="w-[100px] flex-none">
                 <PontoEstado
                   cor={funcionario.ativo ? cores.musgo : cores.bruma}
                   texto={funcionario.ativo ? "Ativo" : "Inativo"}
                   estado={funcionario.ativo ? "normal" : "inativo"}
                 />
               </TabelaCelula>
-              <TabelaCelula align="direita" className="max-w-[180px] flex-none">
+              <TabelaCelula align="direita" className="w-[180px] flex-none">
                 <div className="flex items-center justify-end gap-3">
                   <Link
                     href={`/gestao/cadastros/funcionarios/${funcionario.id}`}
@@ -74,7 +74,7 @@ export default async function PaginaFuncionarios() {
                     Editar
                   </Link>
                   {funcionario.ativo && (
-                    <form action={desativarFuncionario.bind(null, funcionario.id)} className="w-24">
+                    <form action={desativarFuncionario.bind(null, funcionario.id)}>
                       <BotaoConfirmar mensagem={`Desativar o funcionário "${funcionario.nome}"?`}>
                         Desativar
                       </BotaoConfirmar>

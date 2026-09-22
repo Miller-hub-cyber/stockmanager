@@ -117,23 +117,23 @@ export default async function PaginaItens({ searchParams }: Props) {
       ) : (
         <Tabela>
           <TabelaCabecalho>
-            <TabelaCelula cabecalho mono className="max-w-[100px] flex-none">
+            <TabelaCelula cabecalho mono className="w-[100px] flex-none">
               SKU
             </TabelaCelula>
             <TabelaCelula cabecalho>Item</TabelaCelula>
-            <TabelaCelula cabecalho className="max-w-[130px] flex-none">
+            <TabelaCelula cabecalho className="w-[130px] flex-none">
               Categoria
             </TabelaCelula>
-            <TabelaCelula cabecalho align="direita" className="max-w-[110px] flex-none">
+            <TabelaCelula cabecalho align="direita" className="w-[110px] flex-none">
               Saldo
             </TabelaCelula>
-            <TabelaCelula cabecalho align="direita" className="max-w-[110px] flex-none">
+            <TabelaCelula cabecalho align="direita" className="w-[110px] flex-none">
               Custo médio
             </TabelaCelula>
-            <TabelaCelula cabecalho align="direita" className="max-w-[110px] flex-none">
+            <TabelaCelula cabecalho align="direita" className="w-[110px] flex-none">
               Estado
             </TabelaCelula>
-            <TabelaCelula cabecalho align="direita" className="max-w-[160px] flex-none">
+            <TabelaCelula cabecalho align="direita" className="w-[160px] flex-none">
               Ações
             </TabelaCelula>
           </TabelaCabecalho>
@@ -142,27 +142,27 @@ export default async function PaginaItens({ searchParams }: Props) {
             const estado = estadoItem(saldo, item.estoque_minimo, item.ponto_pedido);
             return (
               <TabelaLinha key={item.id}>
-                <TabelaCelula mono className="max-w-[100px] flex-none text-bruma-texto">
+                <TabelaCelula mono className="w-[100px] flex-none text-bruma-texto">
                   {item.sku}
                 </TabelaCelula>
                 <TabelaCelula>{item.nome}</TabelaCelula>
-                <TabelaCelula className="max-w-[130px] flex-none text-bruma-texto">
+                <TabelaCelula className="w-[130px] flex-none text-bruma-texto">
                   {item.categoria_id ? (mapaCategorias.get(item.categoria_id) ?? "—") : "—"}
                 </TabelaCelula>
-                <TabelaCelula align="direita" mono className="max-w-[110px] flex-none">
+                <TabelaCelula align="direita" mono className="w-[110px] flex-none">
                   {quantidade(saldo)} {item.unidade}
                 </TabelaCelula>
-                <TabelaCelula align="direita" mono className="max-w-[110px] flex-none">
+                <TabelaCelula align="direita" mono className="w-[110px] flex-none">
                   {brl(item.custo_medio)}
                 </TabelaCelula>
-                <TabelaCelula align="direita" className="max-w-[110px] flex-none">
+                <TabelaCelula align="direita" className="w-[110px] flex-none">
                   <PontoEstado
                     cor={item.ativo ? estado.cor : cores.bruma}
                     texto={item.ativo ? estado.texto : "Inativo"}
                     estado={item.ativo ? estado.estado : "inativo"}
                   />
                 </TabelaCelula>
-                <TabelaCelula align="direita" className="max-w-[160px] flex-none">
+                <TabelaCelula align="direita" className="w-[160px] flex-none">
                   <div className="flex items-center justify-end gap-3">
                     <Link
                       href={`/gestao/itens/${item.id}`}
@@ -171,7 +171,7 @@ export default async function PaginaItens({ searchParams }: Props) {
                       Editar
                     </Link>
                     {item.ativo && (
-                      <form action={desativarItem.bind(null, item.id)} className="w-24">
+                      <form action={desativarItem.bind(null, item.id)}>
                         <BotaoConfirmar mensagem={`Desativar o item "${item.nome}"?`}>
                           Desativar
                         </BotaoConfirmar>

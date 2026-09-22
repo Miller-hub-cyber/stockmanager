@@ -35,35 +35,35 @@ export default async function PaginaValorEstoque() {
           <Tabela>
             <TabelaCabecalho>
               <TabelaCelula cabecalho>Categoria</TabelaCelula>
-              <TabelaCelula cabecalho align="direita" className="max-w-[90px] flex-none">
+              <TabelaCelula cabecalho align="direita" className="w-[90px] flex-none">
                 Itens
               </TabelaCelula>
-              <TabelaCelula cabecalho align="direita" className="max-w-[110px] flex-none">
+              <TabelaCelula cabecalho align="direita" className="w-[110px] flex-none">
                 Unidades
               </TabelaCelula>
-              <TabelaCelula cabecalho align="direita" className="max-w-[140px] flex-none">
+              <TabelaCelula cabecalho align="direita" className="w-[140px] flex-none">
                 Valor
               </TabelaCelula>
             </TabelaCabecalho>
             {lista.map((linha) => (
               <TabelaLinha key={linha.categoria}>
                 <TabelaCelula>{linha.categoria}</TabelaCelula>
-                <TabelaCelula align="direita" mono className="max-w-[90px] flex-none">
+                <TabelaCelula align="direita" mono className="w-[90px] flex-none">
                   {linha.itens}
                 </TabelaCelula>
-                <TabelaCelula align="direita" mono className="max-w-[110px] flex-none">
+                <TabelaCelula align="direita" mono className="w-[110px] flex-none">
                   {quantidade(linha.unidades)}
                 </TabelaCelula>
-                <TabelaCelula align="direita" mono className="max-w-[140px] flex-none">
+                <TabelaCelula align="direita" mono className="w-[140px] flex-none">
                   {brl(linha.valor)}
                 </TabelaCelula>
               </TabelaLinha>
             ))}
             <TabelaLinha className="bg-nevoa">
               <TabelaCelula className="font-semibold">Total</TabelaCelula>
-              <TabelaCelula className="max-w-[90px] flex-none">{""}</TabelaCelula>
-              <TabelaCelula className="max-w-[110px] flex-none">{""}</TabelaCelula>
-              <TabelaCelula align="direita" mono className="max-w-[140px] flex-none font-semibold">
+              <TabelaCelula className="w-[90px] flex-none">{""}</TabelaCelula>
+              <TabelaCelula className="w-[110px] flex-none">{""}</TabelaCelula>
+              <TabelaCelula align="direita" mono className="w-[140px] flex-none font-semibold">
                 {brl(totalValor)}
               </TabelaCelula>
             </TabelaLinha>

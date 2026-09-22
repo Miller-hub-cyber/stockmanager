@@ -35,20 +35,20 @@ export default async function PaginaConsumoCentro() {
           <Tabela>
             <TabelaCabecalho>
               <TabelaCelula cabecalho>Centro de custo</TabelaCelula>
-              <TabelaCelula cabecalho className="max-w-[100px] flex-none">
+              <TabelaCelula cabecalho className="w-[100px] flex-none">
                 Mês
               </TabelaCelula>
-              <TabelaCelula cabecalho align="direita" className="max-w-[140px] flex-none">
+              <TabelaCelula cabecalho align="direita" className="w-[140px] flex-none">
                 Custo total
               </TabelaCelula>
             </TabelaCabecalho>
             {lista.map((linha, i) => (
               <TabelaLinha key={`${linha.centro_custo}-${linha.mes}-${i}`}>
                 <TabelaCelula>{linha.centro_custo}</TabelaCelula>
-                <TabelaCelula mono className="max-w-[100px] flex-none">
+                <TabelaCelula mono className="w-[100px] flex-none">
                   {mesAno(linha.mes)}
                 </TabelaCelula>
-                <TabelaCelula align="direita" mono className="max-w-[140px] flex-none">
+                <TabelaCelula align="direita" mono className="w-[140px] flex-none">
                   {brl(linha.custo_total)}
                 </TabelaCelula>
               </TabelaLinha>

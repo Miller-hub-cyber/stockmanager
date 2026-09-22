@@ -15,7 +15,7 @@ export function BotaoConfirmar({ mensagem, children }: BotaoConfirmarProps) {
   }
 
   return (
-    <Botao type="submit" variante="perigo" onClick={aoClicar}>
+    <Botao type="submit" variante="perigo" tamanho="texto" onClick={aoClicar}>
       {children}
     </Botao>
   );

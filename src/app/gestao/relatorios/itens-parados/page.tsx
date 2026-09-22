@@ -33,39 +33,39 @@ export default async function PaginaItensParados() {
         ) : (
           <Tabela>
             <TabelaCabecalho>
-              <TabelaCelula cabecalho mono className="max-w-[100px] flex-none">
+              <TabelaCelula cabecalho mono className="w-[100px] flex-none">
                 SKU
               </TabelaCelula>
               <TabelaCelula cabecalho>Item</TabelaCelula>
-              <TabelaCelula cabecalho align="direita" className="max-w-[100px] flex-none">
+              <TabelaCelula cabecalho align="direita" className="w-[100px] flex-none">
                 Saldo
               </TabelaCelula>
-              <TabelaCelula cabecalho align="direita" className="max-w-[130px] flex-none">
+              <TabelaCelula cabecalho align="direita" className="w-[130px] flex-none">
                 Valor parado
               </TabelaCelula>
-              <TabelaCelula cabecalho align="direita" className="max-w-[120px] flex-none">
+              <TabelaCelula cabecalho align="direita" className="w-[120px] flex-none">
                 Última saída
               </TabelaCelula>
-              <TabelaCelula cabecalho align="direita" className="max-w-[100px] flex-none">
+              <TabelaCelula cabecalho align="direita" className="w-[100px] flex-none">
                 Dias parado
               </TabelaCelula>
             </TabelaCabecalho>
             {lista.map((item) => (
               <TabelaLinha key={item.id}>
-                <TabelaCelula mono className="max-w-[100px] flex-none text-bruma-texto">
+                <TabelaCelula mono className="w-[100px] flex-none text-bruma-texto">
                   {item.sku}
                 </TabelaCelula>
                 <TabelaCelula>{item.nome}</TabelaCelula>
-                <TabelaCelula align="direita" mono className="max-w-[100px] flex-none">
+                <TabelaCelula align="direita" mono className="w-[100px] flex-none">
                   {quantidade(item.saldo)}
                 </TabelaCelula>
-                <TabelaCelula align="direita" mono className="max-w-[130px] flex-none">
+                <TabelaCelula align="direita" mono className="w-[130px] flex-none">
                   {brl(item.valor_parado)}
                 </TabelaCelula>
-                <TabelaCelula align="direita" mono className="max-w-[120px] flex-none">
+                <TabelaCelula align="direita" mono className="w-[120px] flex-none">
                   {item.ultima_saida ? formatarData(item.ultima_saida) : "Nunca"}
                 </TabelaCelula>
-                <TabelaCelula align="direita" mono className="max-w-[100px] flex-none">
+                <TabelaCelula align="direita" mono className="w-[100px] flex-none">
                   {item.dias_sem_saida ?? "—"}
                 </TabelaCelula>
               </TabelaLinha>

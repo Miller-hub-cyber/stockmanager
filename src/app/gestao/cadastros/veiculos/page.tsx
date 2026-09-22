@@ -36,37 +36,37 @@ export default async function PaginaVeiculos() {
       ) : (
         <Tabela>
           <TabelaCabecalho>
-            <TabelaCelula cabecalho mono className="max-w-[100px] flex-none">
+            <TabelaCelula cabecalho mono className="w-[100px] flex-none">
               Placa
             </TabelaCelula>
             <TabelaCelula cabecalho>Modelo</TabelaCelula>
-            <TabelaCelula cabecalho align="direita" className="max-w-[130px] flex-none">
+            <TabelaCelula cabecalho align="direita" className="w-[130px] flex-none">
               Km atual
             </TabelaCelula>
-            <TabelaCelula cabecalho align="direita" className="max-w-[100px] flex-none">
+            <TabelaCelula cabecalho align="direita" className="w-[100px] flex-none">
               Status
             </TabelaCelula>
-            <TabelaCelula cabecalho align="direita" className="max-w-[180px] flex-none">
+            <TabelaCelula cabecalho align="direita" className="w-[180px] flex-none">
               Ações
             </TabelaCelula>
           </TabelaCabecalho>
           {lista.map((veiculo) => (
             <TabelaLinha key={veiculo.id}>
-              <TabelaCelula mono className="max-w-[100px] flex-none">
+              <TabelaCelula mono className="w-[100px] flex-none">
                 {veiculo.placa}
               </TabelaCelula>
               <TabelaCelula className="text-bruma-texto">{veiculo.modelo ?? "—"}</TabelaCelula>
-              <TabelaCelula align="direita" mono className="max-w-[130px] flex-none">
+              <TabelaCelula align="direita" mono className="w-[130px] flex-none">
                 {quantidade(veiculo.km_atual)} km
               </TabelaCelula>
-              <TabelaCelula align="direita" className="max-w-[100px] flex-none">
+              <TabelaCelula align="direita" className="w-[100px] flex-none">
                 <PontoEstado
                   cor={veiculo.ativo ? cores.musgo : cores.bruma}
                   texto={veiculo.ativo ? "Ativo" : "Inativo"}
                   estado={veiculo.ativo ? "normal" : "inativo"}
                 />
               </TabelaCelula>
-              <TabelaCelula align="direita" className="max-w-[180px] flex-none">
+              <TabelaCelula align="direita" className="w-[180px] flex-none">
                 <div className="flex items-center justify-end gap-3">
                   <Link
                     href={`/gestao/cadastros/veiculos/${veiculo.id}`}
@@ -75,7 +75,7 @@ export default async function PaginaVeiculos() {
                     Editar
                   </Link>
                   {veiculo.ativo && (
-                    <form action={desativarVeiculo.bind(null, veiculo.id)} className="w-24">
+                    <form action={desativarVeiculo.bind(null, veiculo.id)}>
                       <BotaoConfirmar mensagem={`Desativar o veículo "${veiculo.placa}"?`}>
                         Desativar
                       </BotaoConfirmar>

@@ -31,14 +31,14 @@ export default async function PaginaCategorias() {
         <Tabela>
           <TabelaCabecalho>
             <TabelaCelula cabecalho>Nome</TabelaCelula>
-            <TabelaCelula cabecalho align="direita" className="max-w-[100px] flex-none">
+            <TabelaCelula cabecalho align="direita" className="w-[100px] flex-none">
               Ações
             </TabelaCelula>
           </TabelaCabecalho>
           {lista.map((categoria) => (
             <TabelaLinha key={categoria.id}>
               <TabelaCelula>{categoria.nome}</TabelaCelula>
-              <TabelaCelula align="direita" className="max-w-[100px] flex-none">
+              <TabelaCelula align="direita" className="w-[100px] flex-none">
                 <Link
                   href={`/gestao/cadastros/categorias/${categoria.id}`}
                   className="font-corpo text-sm text-petroleo hover:underline"

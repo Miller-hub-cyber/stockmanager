@@ -66,37 +66,37 @@ export default async function PaginaKardex({ searchParams }: Props) {
           ) : (
             <Tabela>
               <TabelaCabecalho>
-                <TabelaCelula cabecalho className="max-w-[140px] flex-none">
+                <TabelaCelula cabecalho className="w-[140px] flex-none">
                   Data
                 </TabelaCelula>
-                <TabelaCelula cabecalho className="max-w-[90px] flex-none">
+                <TabelaCelula cabecalho className="w-[90px] flex-none">
                   Tipo
                 </TabelaCelula>
                 <TabelaCelula cabecalho>Destino</TabelaCelula>
-                <TabelaCelula cabecalho align="direita" className="max-w-[100px] flex-none">
+                <TabelaCelula cabecalho align="direita" className="w-[100px] flex-none">
                   Quantidade
                 </TabelaCelula>
-                <TabelaCelula cabecalho align="direita" className="max-w-[110px] flex-none">
+                <TabelaCelula cabecalho align="direita" className="w-[110px] flex-none">
                   Valor
                 </TabelaCelula>
-                <TabelaCelula cabecalho className="max-w-[120px] flex-none">
+                <TabelaCelula cabecalho className="w-[120px] flex-none">
                   Usuário
                 </TabelaCelula>
               </TabelaCabecalho>
               {lista.map((l) => (
                 <TabelaLinha key={l.id}>
-                  <TabelaCelula mono className="max-w-[140px] flex-none text-bruma-texto">
+                  <TabelaCelula mono className="w-[140px] flex-none text-bruma-texto">
                     {dataHora(l.criado_em)}
                   </TabelaCelula>
-                  <TabelaCelula className="max-w-[90px] flex-none capitalize">{l.tipo}</TabelaCelula>
+                  <TabelaCelula className="w-[90px] flex-none capitalize">{l.tipo}</TabelaCelula>
                   <TabelaCelula className="text-bruma-texto">{l.destino ?? "—"}</TabelaCelula>
-                  <TabelaCelula align="direita" mono className="max-w-[100px] flex-none">
+                  <TabelaCelula align="direita" mono className="w-[100px] flex-none">
                     {quantidade(l.quantidade)}
                   </TabelaCelula>
-                  <TabelaCelula align="direita" mono className="max-w-[110px] flex-none">
+                  <TabelaCelula align="direita" mono className="w-[110px] flex-none">
                     {brl(l.valor)}
                   </TabelaCelula>
-                  <TabelaCelula className="max-w-[120px] flex-none text-bruma-texto">{l.usuario ?? "—"}</TabelaCelula>
+                  <TabelaCelula className="w-[120px] flex-none text-bruma-texto">{l.usuario ?? "—"}</TabelaCelula>
                 </TabelaLinha>
               ))}
             </Tabela>

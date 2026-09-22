@@ -36,36 +36,36 @@ export default async function PaginaFornecedores() {
         <Tabela>
           <TabelaCabecalho>
             <TabelaCelula cabecalho>Nome</TabelaCelula>
-            <TabelaCelula cabecalho className="max-w-[150px] flex-none">
+            <TabelaCelula cabecalho className="w-[150px] flex-none">
               Contato
             </TabelaCelula>
-            <TabelaCelula cabecalho align="direita" className="max-w-[120px] flex-none">
+            <TabelaCelula cabecalho align="direita" className="w-[120px] flex-none">
               Prazo entrega
             </TabelaCelula>
-            <TabelaCelula cabecalho align="direita" className="max-w-[100px] flex-none">
+            <TabelaCelula cabecalho align="direita" className="w-[100px] flex-none">
               Status
             </TabelaCelula>
-            <TabelaCelula cabecalho align="direita" className="max-w-[180px] flex-none">
+            <TabelaCelula cabecalho align="direita" className="w-[180px] flex-none">
               Ações
             </TabelaCelula>
           </TabelaCabecalho>
           {lista.map((fornecedor) => (
             <TabelaLinha key={fornecedor.id}>
               <TabelaCelula>{fornecedor.nome}</TabelaCelula>
-              <TabelaCelula className="max-w-[150px] flex-none text-bruma-texto">
+              <TabelaCelula className="w-[150px] flex-none text-bruma-texto">
                 {fornecedor.telefone ?? fornecedor.email ?? "—"}
               </TabelaCelula>
-              <TabelaCelula align="direita" mono className="max-w-[120px] flex-none">
+              <TabelaCelula align="direita" mono className="w-[120px] flex-none">
                 {fornecedor.prazo_entrega_dias} dias
               </TabelaCelula>
-              <TabelaCelula align="direita" className="max-w-[100px] flex-none">
+              <TabelaCelula align="direita" className="w-[100px] flex-none">
                 <PontoEstado
                   cor={fornecedor.ativo ? cores.musgo : cores.bruma}
                   texto={fornecedor.ativo ? "Ativo" : "Inativo"}
                   estado={fornecedor.ativo ? "normal" : "inativo"}
                 />
               </TabelaCelula>
-              <TabelaCelula align="direita" className="max-w-[180px] flex-none">
+              <TabelaCelula align="direita" className="w-[180px] flex-none">
                 <div className="flex items-center justify-end gap-3">
                   <Link
                     href={`/gestao/cadastros/fornecedores/${fornecedor.id}`}
@@ -74,7 +74,7 @@ export default async function PaginaFornecedores() {
                     Editar
                   </Link>
                   {fornecedor.ativo && (
-                    <form action={desativarFornecedor.bind(null, fornecedor.id)} className="w-24">
+                    <form action={desativarFornecedor.bind(null, fornecedor.id)}>
                       <BotaoConfirmar mensagem={`Desativar o fornecedor "${fornecedor.nome}"?`}>
                         Desativar
                       </BotaoConfirmar>
