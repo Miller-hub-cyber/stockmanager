@@ -4,10 +4,9 @@ import { OperacaoEntrada } from "./OperacaoEntrada";
 export default async function PaginaEntrada() {
   const supabase = createClient();
 
-  const [{ data: deposito }, { data: fornecedores }, { data: veiculos }] = await Promise.all([
+  const [{ data: deposito }, { data: fornecedores }] = await Promise.all([
     supabase.from("depositos").select("id, nome").eq("ativo", true).order("nome").limit(1).maybeSingle(),
     supabase.from("fornecedores").select("id, nome").eq("ativo", true).order("nome"),
-    supabase.from("veiculos").select("id, placa").eq("ativo", true).order("placa"),
   ]);
 
   if (!deposito) {
@@ -20,5 +19,5 @@ export default async function PaginaEntrada() {
     );
   }
 
-  return <OperacaoEntrada depositoId={deposito.id} fornecedores={fornecedores ?? []} veiculos={veiculos ?? []} />;
+  return <OperacaoEntrada depositoId={deposito.id} fornecedores={fornecedores ?? []} />;
 }

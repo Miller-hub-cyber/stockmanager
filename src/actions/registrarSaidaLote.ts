@@ -63,6 +63,7 @@ export async function registrarSaidaLote(dados: unknown): Promise<ResultadoMovim
     funcionario_id: funcionarioId,
     km_veiculo: validado.data.kmVeiculo ?? null,
     motivo: validado.data.motivo ?? null,
+    numero_os: validado.data.numeroOs ?? null,
     usuario_id: usuario.id,
   }));
 

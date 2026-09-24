@@ -49,7 +49,7 @@ export function OperacaoSaida({ depositoId, veiculos, centrosCusto }: OperacaoSa
   const [destino, setDestino] = useState<DestinoSelecionado | null>(null);
   const [frotaDigitada, setFrotaDigitada] = useState("");
   const [funcionarioDigitado, setFuncionarioDigitado] = useState("");
-  const [km, setKm] = useState("");
+  const [numeroOs, setNumeroOs] = useState("");
   const [resultado, setResultado] = useState<ResultadoOperacao | null>(null);
   const [enviando, setEnviando] = useState(false);
 
@@ -62,7 +62,7 @@ export function OperacaoSaida({ depositoId, veiculos, centrosCusto }: OperacaoSa
     setDestino(null);
     setFrotaDigitada("");
     setFuncionarioDigitado("");
-    setKm("");
+    setNumeroOs("");
   }
 
   function editarItemCarrinho(indice: number) {
@@ -87,26 +87,17 @@ export function OperacaoSaida({ depositoId, veiculos, centrosCusto }: OperacaoSa
     setIndiceEditando(null);
   }
 
+  // Frota, setor e colaborador se combinam. So "veiculo da lista" e "frota digitada"
+  // se excluem, porque os dois dizem qual e o veiculo.
   function selecionarChipDestino(novoDestino: DestinoSelecionado) {
-    setDestino(novoDestino);
-    setFrotaDigitada("");
-    setFuncionarioDigitado("");
+    const jaSelecionado = destino?.tipo === novoDestino.tipo && destino.id === novoDestino.id;
+    setDestino(jaSelecionado ? null : novoDestino);
+    if (!jaSelecionado && novoDestino.tipo === "veiculo") setFrotaDigitada("");
   }
 
   function digitarFrota(valor: string) {
     setFrotaDigitada(valor);
-    if (valor.trim()) {
-      setDestino(null);
-      setFuncionarioDigitado("");
-    }
-  }
-
-  function digitarFuncionario(valor: string) {
-    setFuncionarioDigitado(valor);
-    if (valor.trim()) {
-      setDestino(null);
-      setFrotaDigitada("");
-    }
+    if (valor.trim() && destino?.tipo === "veiculo") setDestino(null);
   }
 
   function adicionarAoCarrinho() {
@@ -147,27 +138,26 @@ export function OperacaoSaida({ depositoId, veiculos, centrosCusto }: OperacaoSa
     if (enviando || carrinho.length === 0) return;
 
     const frota = frotaDigitada.trim();
-    const mecanico = funcionarioDigitado.trim();
-    if (!destino && !frota && !mecanico) {
+    const colaborador = funcionarioDigitado.trim();
+    if (!destino && !frota && !colaborador) {
       setResultado({
         ok: false,
         titulo: "Destino obrigatório",
-        detalhe: "Toda saída precisa ser vinculada a um veículo, setor ou funcionário.",
+        detalhe: "Toda saída precisa ser vinculada a uma frota, setor ou colaborador.",
       });
       return;
     }
 
-    const ehVeiculo = destino?.tipo === "veiculo" || (!destino && frota);
-    const rotuloDestino = destino ? destino.rotulo : frota || mecanico;
+    const rotuloDestino = [destino?.rotulo, frota, colaborador].filter(Boolean).join(" · ");
 
     setEnviando(true);
     const resposta = await registrarSaidaLote({
       depositoId,
       centroCustoId: destino?.tipo === "centro" ? destino.id : undefined,
       veiculoId: destino?.tipo === "veiculo" ? destino.id : undefined,
-      veiculoPlaca: !destino && frota ? frota : undefined,
-      funcionarioNome: !destino && mecanico ? mecanico : undefined,
-      kmVeiculo: ehVeiculo && km ? Number(km) : undefined,
+      veiculoPlaca: frota || undefined,
+      funcionarioNome: colaborador || undefined,
+      numeroOs: numeroOs.trim() || undefined,
       itens: carrinho.map((l) => ({ itemId: l.itemId, quantidade: l.quantidade })),
     });
     setEnviando(false);
@@ -349,30 +339,27 @@ export function OperacaoSaida({ depositoId, veiculos, centrosCusto }: OperacaoSa
               <div className="mt-3">
                 <input
                   value={funcionarioDigitado}
-                  onChange={(e) => digitarFuncionario(e.target.value)}
-                  placeholder="Ou digite o nome do mecânico"
+                  onChange={(e) => setFuncionarioDigitado(e.target.value)}
+                  placeholder="Nome do colaborador"
                   className="h-14 w-full rounded border border-bruma bg-aco px-3.5 font-corpo text-base text-white outline-none placeholder:text-bruma-luz"
                 />
                 {funcionarioDigitado.trim() && (
                   <p className="mt-2 font-corpo text-xs text-bruma-luz">
-                    Se esse mecânico ainda não estiver cadastrado, ele é criado automaticamente.
+                    Se esse colaborador ainda não estiver cadastrado, ele é criado automaticamente.
                   </p>
                 )}
               </div>
+            </div>
 
-              {(destino?.tipo === "veiculo" || frotaDigitada.trim()) && (
-                <div className="mt-4">
-                  <p className="mb-2.5 font-display text-rotulo uppercase text-bruma-luz">
-                    Quilometragem atual · opcional
-                  </p>
-                  <input
-                    value={km}
-                    onChange={(e) => setKm(e.target.value)}
-                    inputMode="numeric"
-                    className="h-14 w-full rounded border border-bruma bg-aco px-3.5 font-dado text-base text-white outline-none"
-                  />
-                </div>
-              )}
+            <div>
+              <p className="mb-2.5 font-display text-rotulo uppercase text-bruma-luz">Ordem de serviço · opcional</p>
+              <input
+                value={numeroOs}
+                onChange={(e) => setNumeroOs(e.target.value)}
+                maxLength={40}
+                placeholder="Número da OS (ex.: OS 12212)"
+                className="h-14 w-full rounded border border-bruma bg-aco px-3.5 font-dado text-base text-white outline-none placeholder:text-bruma-luz"
+              />
             </div>
           </div>
         )}

@@ -11,15 +11,10 @@ interface Fornecedor {
   id: string;
   nome: string;
 }
-interface Veiculo {
-  id: string;
-  placa: string;
-}
 
 interface OperacaoEntradaProps {
   depositoId: string;
   fornecedores: Fornecedor[];
-  veiculos: Veiculo[];
 }
 
 interface LinhaEntrada {
@@ -35,7 +30,7 @@ interface LinhaEntrada {
   custoUnitario: number;
 }
 
-export function OperacaoEntrada({ depositoId, fornecedores, veiculos }: OperacaoEntradaProps) {
+export function OperacaoEntrada({ depositoId, fornecedores }: OperacaoEntradaProps) {
   const [buscando, setBuscando] = useState(true);
   const [selecionado, setSelecionado] = useState<ItemComSaldo | null>(null);
   const [quantidadeSelecionada, setQuantidadeSelecionada] = useState(1);
@@ -43,8 +38,10 @@ export function OperacaoEntrada({ depositoId, fornecedores, veiculos }: Operacao
   const [carrinho, setCarrinho] = useState<LinhaEntrada[]>([]);
   const [indiceEditando, setIndiceEditando] = useState<number | null>(null);
   const [fornecedorId, setFornecedorId] = useState<string | null>(null);
-  const [veiculoId, setVeiculoId] = useState<string | null>(null);
+  const [frotaDigitada, setFrotaDigitada] = useState("");
+  const [mecanico, setMecanico] = useState("");
   const [numeroNf, setNumeroNf] = useState("");
+  const [numeroOs, setNumeroOs] = useState("");
   const [resultado, setResultado] = useState<ResultadoOperacao | null>(null);
   const [enviando, setEnviando] = useState(false);
 
@@ -56,8 +53,10 @@ export function OperacaoEntrada({ depositoId, fornecedores, veiculos }: Operacao
     setCarrinho([]);
     setIndiceEditando(null);
     setFornecedorId(null);
-    setVeiculoId(null);
+    setFrotaDigitada("");
+    setMecanico("");
     setNumeroNf("");
+    setNumeroOs("");
   }
 
   function editarItemCarrinho(indice: number) {
@@ -141,8 +140,10 @@ export function OperacaoEntrada({ depositoId, fornecedores, veiculos }: Operacao
     const resposta = await registrarEntradaLote({
       depositoId,
       fornecedorId: fornecedorId ?? undefined,
-      veiculoId: veiculoId ?? undefined,
+      veiculoPlaca: frotaDigitada.trim() || undefined,
+      funcionarioNome: mecanico.trim() || undefined,
       numeroNf: numeroNf || undefined,
+      numeroOs: numeroOs.trim() || undefined,
       itens: carrinho.map((l) => ({
         itemId: l.itemId,
         quantidade: l.quantidade,
@@ -320,18 +321,18 @@ export function OperacaoEntrada({ depositoId, fornecedores, veiculos }: Operacao
               <p className="mb-2.5 font-display text-rotulo uppercase text-bruma-luz">
                 Frota / veículo de destino · opcional
               </p>
-              <div className="flex flex-wrap gap-2">
-                {veiculos.map((v) => (
-                  <Chip
-                    key={v.id}
-                    escuro
-                    ativo={veiculoId === v.id}
-                    onClick={() => setVeiculoId((atual) => (atual === v.id ? null : v.id))}
-                  >
-                    <span className="font-dado">{v.placa}</span>
-                  </Chip>
-                ))}
-                {veiculos.length === 0 && <p className="font-corpo text-sm text-bruma-luz">Nenhum veículo cadastrado.</p>}
+              <div>
+                <input
+                  value={frotaDigitada}
+                  onChange={(e) => setFrotaDigitada(e.target.value)}
+                  placeholder="Número da frota / placa"
+                  className="h-14 w-full rounded border border-bruma bg-aco px-3.5 font-dado text-base text-white outline-none placeholder:text-bruma-luz"
+                />
+                {frotaDigitada.trim() && (
+                  <p className="mt-2 font-corpo text-xs text-bruma-luz">
+                    Se essa frota ainda não estiver cadastrada, ela é criada automaticamente.
+                  </p>
+                )}
               </div>
               <p className="mt-2 font-corpo text-xs text-bruma-luz">
                 Só uma etiqueta de referência (para qual frota essa compra é) — o item continua entrando no estoque
@@ -340,11 +341,39 @@ export function OperacaoEntrada({ depositoId, fornecedores, veiculos }: Operacao
             </div>
 
             <div>
+              <p className="mb-2.5 font-display text-rotulo uppercase text-bruma-luz">
+                Colaborador que pediu as peças · opcional
+              </p>
+              <input
+                value={mecanico}
+                onChange={(e) => setMecanico(e.target.value)}
+                placeholder="Nome do colaborador"
+                className="h-14 w-full rounded border border-bruma bg-aco px-3.5 font-corpo text-base text-white outline-none placeholder:text-bruma-luz"
+              />
+              {mecanico.trim() && (
+                <p className="mt-2 font-corpo text-xs text-bruma-luz">
+                  Se esse colaborador ainda não estiver cadastrado, ele é criado automaticamente.
+                </p>
+              )}
+            </div>
+
+            <div>
               <p className="mb-2.5 font-display text-rotulo uppercase text-bruma-luz">Nota fiscal · opcional</p>
               <input
                 value={numeroNf}
                 onChange={(e) => setNumeroNf(e.target.value)}
                 placeholder="Número da NF"
+                className="h-14 w-full rounded border border-bruma bg-aco px-3.5 font-dado text-base text-white outline-none placeholder:text-bruma-luz"
+              />
+            </div>
+
+            <div>
+              <p className="mb-2.5 font-display text-rotulo uppercase text-bruma-luz">Ordem de serviço · opcional</p>
+              <input
+                value={numeroOs}
+                onChange={(e) => setNumeroOs(e.target.value)}
+                maxLength={40}
+                placeholder="Número da OS (ex.: OS 12212)"
                 className="h-14 w-full rounded border border-bruma bg-aco px-3.5 font-dado text-base text-white outline-none placeholder:text-bruma-luz"
               />
             </div>

@@ -34,7 +34,7 @@ export function traduzirErro(mensagem: string): string {
   if (mensagem.includes("PLACA_INVALIDA"))
     return "Informe o numero da frota ou placa.";
   if (mensagem.includes("NOME_INVALIDO"))
-    return "Informe o nome do mecanico.";
+    return "Informe o nome do colaborador.";
   if (mensagem.includes("SEM_PERMISSAO"))
     return "Voce nao tem permissao para esta acao.";
   if (mensagem.includes("duplicate key value violates unique constraint")) {

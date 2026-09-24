@@ -4,6 +4,12 @@ import { z } from "zod";
 const opcional = (max: number) =>
   z.preprocess((v) => (v === "" ? undefined : v), z.string().max(max).optional());
 
+/** Numero da OS como referencia livre (ex.: "OS 12212"): aparado, vazio vira `undefined`. */
+const numeroOs = z.preprocess(
+  (v) => (typeof v === "string" ? v.trim() || undefined : v),
+  z.string().max(40, "O numero da OS aceita no maximo 40 caracteres").optional()
+);
+
 export const esquemaLogin = z.object({
   email: z.string().min(1, "Informe o e-mail").email("E-mail invalido"),
   senha: z.string().min(6, "A senha precisa ter no minimo 6 caracteres"),
@@ -40,12 +46,17 @@ const itemEntradaLote = z.object({
   custoUnitario: z.coerce.number().nonnegative(),
 });
 
-/** Varios itens na mesma entrada: fornecedor, veiculo e NF sao unicos para o lote todo. */
+/** Varios itens na mesma entrada: fornecedor, veiculo, mecanico e NF sao unicos para o lote todo. */
 export const esquemaEntradaLote = z.object({
   depositoId: z.string().uuid(),
   fornecedorId: z.string().uuid().nullable().optional(),
   veiculoId: z.string().uuid().nullable().optional(),
+  // Frota digitada na hora, quando o veiculo ainda nao esta cadastrado (fn_obter_ou_criar_veiculo).
+  veiculoPlaca: z.string().trim().min(1).max(20).optional(),
+  // Mecanico que pediu as pecas, digitado na hora (fn_obter_ou_criar_funcionario).
+  funcionarioNome: z.string().trim().min(1).max(120).optional(),
   numeroNf: z.string().max(60).optional(),
+  numeroOs,
   itens: z.array(itemEntradaLote).min(1, "Adicione ao menos um item"),
 });
 
@@ -69,6 +80,7 @@ export const esquemaSaidaLote = z
     funcionarioNome: z.string().trim().min(1).max(120).optional(),
     kmVeiculo: z.coerce.number().nonnegative().nullable().optional(),
     motivo: z.string().max(200).optional(),
+    numeroOs,
     itens: z.array(itemSaidaLote).min(1, "Adicione ao menos um item"),
   })
   .refine(
