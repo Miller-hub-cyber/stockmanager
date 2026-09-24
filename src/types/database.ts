@@ -381,6 +381,7 @@ export interface Database {
           km_veiculo: number | null;
           deposito_destino_id: string | null;
           motivo: string | null;
+          numero_os: string | null;
           estorno_de: string | null;
           usuario_id: string | null;
           criado_em: string;
@@ -400,6 +401,7 @@ export interface Database {
           km_veiculo?: number | null;
           deposito_destino_id?: string | null;
           motivo?: string | null;
+          numero_os?: string | null;
           estorno_de?: string | null;
           usuario_id?: string | null;
           criado_em?: string;
@@ -422,6 +424,7 @@ export interface Database {
           km_veiculo?: number | null;
           deposito_destino_id?: string | null;
           motivo?: string | null;
+          numero_os?: string | null;
           estorno_de?: string | null;
           usuario_id?: string | null;
           criado_em?: string;
@@ -588,6 +591,51 @@ export interface Database {
           usuario: string | null;
           destino: string | null;
           estorno_de: string | null;
+        };
+        Relationships: [];
+      };
+      v_estoque_geral: {
+        Row: {
+          item_id: string;
+          empresa_id: string;
+          sku: string;
+          nome: string;
+          unidade: string;
+          entradas: number;
+          saidas: number;
+          saldo: number;
+          custo_medio: number;
+          valor_estoque: number;
+          status: "Sem estoque" | "Crítico" | "Repor" | "Estoque bom";
+        };
+        Relationships: [];
+      };
+      v_movimentacoes_detalhe: {
+        Row: {
+          id: string;
+          empresa_id: string;
+          criado_em: string;
+          tipo: Database["public"]["Enums"]["tipo_mov"];
+          item_id: string;
+          sku: string;
+          item: string;
+          unidade: string;
+          quantidade: number;
+          custo_unitario: number;
+          valor: number;
+          veiculo_id: string | null;
+          placa: string | null;
+          funcionario_id: string | null;
+          mecanico: string | null;
+          centro_custo: string | null;
+          fornecedor: string | null;
+          numero_nf: string | null;
+          km_veiculo: number | null;
+          usuario: string | null;
+          motivo: string | null;
+          estorno_de: string | null;
+          estornada: boolean;
+          numero_os: string | null;
         };
         Relationships: [];
       };

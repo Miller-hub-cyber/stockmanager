@@ -1,7 +1,25 @@
 import Link from "next/link";
-import { Truck, Users, List, Package, ShoppingCart } from "lucide-react";
+import { Truck, Users, List, Package, ShoppingCart, TrendingUp, TrendingDown, ArrowLeftRight } from "lucide-react";
 
 const RELATORIOS = [
+  {
+    href: "/gestao/relatorios/entradas",
+    titulo: "Relatório de entradas",
+    descricao: "O que entrou, de qual fornecedor, para qual frota e quem pediu.",
+    Icone: TrendingUp,
+  },
+  {
+    href: "/gestao/relatorios/saidas",
+    titulo: "Relatório de saídas",
+    descricao: "O que saiu, para qual frota, colaborador ou setor.",
+    Icone: TrendingDown,
+  },
+  {
+    href: "/gestao/relatorios/geral",
+    titulo: "Relatório geral",
+    descricao: "Entradas e saídas juntas, com estornos.",
+    Icone: ArrowLeftRight,
+  },
   {
     href: "/gestao/relatorios/consumo-veiculo",
     titulo: "Consumo por veículo",
