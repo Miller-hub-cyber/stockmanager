@@ -24,7 +24,11 @@ export async function estornarMovimentacao(movimentacaoId: string): Promise<Resu
     p_motivo: "Estorno solicitado pelo usuario",
   });
 
-  if (error) return { sucesso: false, erro: traduzirErro(error.message) };
+  if (error) {
+    // Mensagem crua so no log do servidor: na tela vai a versao traduzida.
+    console.error("Falha ao estornar movimentacao", movimentacaoId, error);
+    return { sucesso: false, erro: traduzirErro(error.message) };
+  }
   revalidatePath("/operacao/consulta");
   return { sucesso: true };
 }
