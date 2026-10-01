@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { Botao, Campo, Seletor, Tabela, TabelaCabecalho, TabelaLinha, TabelaCelula } from "@/components/ui";
 import { brl, dataHora, quantidade } from "@/lib/formato";
@@ -125,7 +126,14 @@ export async function RelatorioMovimentacoes({ modo, titulo, descricao, rota, se
 
   return (
     <main className="p-6 sm:p-8">
-      <div className="flex items-center justify-between">
+      <Link
+        href="/gestao/relatorios"
+        className="flex items-center gap-1.5 font-corpo text-sm text-bruma-texto hover:text-petroleo"
+      >
+        <ArrowLeft size={16} /> Voltar para relatórios
+      </Link>
+
+      <div className="mt-4 flex items-center justify-between">
         <div>
           <h1 className="font-display text-tela text-tinta">{titulo}</h1>
           <p className="mt-1 font-corpo text-sm text-bruma-texto">{descricao}</p>
