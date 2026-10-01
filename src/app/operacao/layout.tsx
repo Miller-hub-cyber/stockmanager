@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { obterUsuarioAtual } from "@/lib/sessao";
 import { logout } from "@/actions/logout";
+import { Logo } from "@/components/Logo";
 import { AbasOperacao } from "./AbasOperacao";
 
 export default async function LayoutOperacao({ children }: { children: React.ReactNode }) {
@@ -13,12 +14,7 @@ export default async function LayoutOperacao({ children }: { children: React.Rea
         <div className="w-full max-w-[480px] overflow-hidden rounded-lg border border-grafite shadow-lg">
           <div className="flex min-h-[calc(100vh-32px)] flex-col bg-carbono sm:min-h-[calc(100vh-48px)]">
             <div className="flex h-14 flex-shrink-0 items-center justify-between border-b border-grafite bg-aco px-4">
-              <div className="flex items-center gap-2">
-                <div className="h-5 w-2 rounded-sm bg-petroleo-claro" />
-                <span className="font-display text-[17px] font-bold text-white">
-                  Stock<span className="text-petroleo-claro">Manager</span>
-                </span>
-              </div>
+              <Logo className="h-6 text-aco" />
               <form action={logout}>
                 <button type="submit" className="font-dado text-xs text-bruma-luz hover:text-white">
                   {usuario.nome.split(" ")[0]} · Sair

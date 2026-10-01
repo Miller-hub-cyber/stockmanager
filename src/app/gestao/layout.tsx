@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { obterUsuarioAtual } from "@/lib/sessao";
 import { logout } from "@/actions/logout";
+import { Logo } from "@/components/Logo";
 import { MenuLateral } from "./MenuLateral";
 
 export default async function LayoutGestao({ children }: { children: React.ReactNode }) {
@@ -10,11 +11,8 @@ export default async function LayoutGestao({ children }: { children: React.React
   return (
     <div className="flex min-h-screen bg-nevoa">
       <aside className="flex w-[210px] flex-shrink-0 flex-col bg-aco">
-        <div className="flex h-14 flex-shrink-0 items-center gap-2 border-b border-grafite px-4">
-          <div className="h-5 w-2 rounded-sm bg-petroleo-claro" />
-          <span className="font-display text-base font-bold text-white">
-            Stock<span className="text-petroleo-claro">Manager</span>
-          </span>
+        <div className="flex h-14 flex-shrink-0 items-center border-b border-grafite px-4">
+          <Logo className="h-7 text-aco" />
         </div>
 
         <MenuLateral />
