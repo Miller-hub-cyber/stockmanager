@@ -19,16 +19,16 @@ export default async function LayoutGestao({ children }: { children: React.React
 
         <div className="mt-auto border-t border-grafite p-3">
           <div className="truncate font-corpo text-xs text-white">{usuario.nome}</div>
-          <div className="truncate font-dado text-[11px] uppercase text-bruma-texto">{usuario.perfil}</div>
+          <div className="truncate font-dado text-[11px] uppercase text-laranja">{usuario.perfil}</div>
           <form action={logout} className="mt-2">
-            <button type="submit" className="font-corpo text-xs text-bruma-texto hover:text-white">
+            <button type="submit" className="font-corpo text-xs text-bruma-luz hover:text-white">
               Sair
             </button>
           </form>
         </div>
       </aside>
 
-      <div className="min-w-0 flex-1">{children}</div>
+      <div className="min-w-0 flex-1 [&>*]:animate-entrada">{children}</div>
     </div>
   );
 }

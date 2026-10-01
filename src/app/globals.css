@@ -9,15 +9,33 @@
 }
 
 html, body { height: 100%; }
-body { background: #F1F4F6; color: #1B2026; font-family: var(--fonte-corpo), system-ui, sans-serif; }
+body { background: #EEF2F7; color: #13233F; font-family: var(--fonte-corpo), system-ui, sans-serif; }
 
-/* foco visivel em todo elemento interativo. petroleo-luz (nao petroleo-claro):
-   e o unico tom que passa 3:1 tanto contra fundo claro (nevoa/white) quanto
-   contra fundo escuro (aco/carbono), onde o app usa esse outline global. */
-:focus-visible { outline: 2px solid #4FB3C8; outline-offset: 2px; border-radius: 6px; }
+/* foco visivel em todo elemento interativo. cobalto-luz passa 3:1 tanto contra
+   fundo claro (nevoa/white) quanto contra fundo escuro (aco/carbono), onde o
+   app usa esse outline global. */
+:focus-visible { outline: 2px solid #598BDC; outline-offset: 2px; border-radius: 6px; }
+
+/* selecao de texto no laranja da marca; aco sobre laranja passa 7:1 */
+::selection { background: #F2A33A; color: #13233F; }
+
+/* filtro enviado (FormularioFiltro): o resultado abaixo esmaece e o botao
+   pulsa ate a nova pagina chegar */
+form[data-pendente] ~ * { @apply pointer-events-none opacity-50 transition-opacity duration-150; }
+form[data-pendente] button[type="submit"] { @apply animate-pulse; }
 
 /* numeros tabulares em dado e quantidade */
 .dado { font-family: var(--fonte-dado), monospace; font-variant-numeric: tabular-nums; }
+
+/* Traço laranja da marca. Fica pendurado na margem esquerda do título, então
+   não desloca o texto nem muda a altura da linha. */
+@layer components {
+  .titulo-tela { @apply relative font-display text-tela text-tinta; }
+  .titulo-tela::before { content: ""; @apply absolute -left-4 bottom-1 top-1 w-1 rounded-sm bg-laranja; }
+
+  .rotulo-secao { @apply flex items-center gap-2 font-display text-rotulo uppercase text-bruma-luz; }
+  .rotulo-secao::before { content: ""; @apply h-3 w-[3px] flex-shrink-0 rounded-sm bg-laranja; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }

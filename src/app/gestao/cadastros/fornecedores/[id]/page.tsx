@@ -42,7 +42,7 @@ export default async function PaginaEditarFornecedor({ params }: { params: { id:
   return (
     <main className="min-h-screen bg-nevoa p-8">
       <div className="mx-auto max-w-2xl">
-        <h1 className="font-display text-tela text-tinta">{fornecedor.nome}</h1>
+        <h1 className="titulo-tela">{fornecedor.nome}</h1>
 
         <div className="mt-6">
           <span className="font-display text-rotulo uppercase text-bruma-texto">Últimas entradas</span>

@@ -9,7 +9,7 @@ export default async function PaginaImportarItens() {
   return (
     <main className="min-h-screen bg-nevoa p-8">
       <div className="mx-auto max-w-2xl">
-        <h1 className="font-display text-tela text-tinta">Importar itens</h1>
+        <h1 className="titulo-tela">Importar itens</h1>
         <p className="mt-1 font-corpo text-sm text-bruma-texto">
           Cadastra vários itens de uma vez a partir de uma planilha exportada como CSV.
         </p>
@@ -17,7 +17,7 @@ export default async function PaginaImportarItens() {
         <div className="mt-4 rounded border border-giz bg-white p-4 font-corpo text-sm text-bruma-texto">
           <p>
             Baixe o{" "}
-            <Link href="/gestao/itens/importar/modelo" className="text-petroleo hover:underline">
+            <Link href="/gestao/itens/importar/modelo" className="text-cobalto hover:underline">
               modelo de planilha
             </Link>
             , preencha uma linha por item e envie o arquivo abaixo. Só SKU, Item e Unidade são

@@ -169,7 +169,7 @@ export function OperacaoEntrada({ depositoId, fornecedores }: OperacaoEntradaPro
 
       <div className="flex-1 overflow-auto p-4 pb-24">
         {selecionado ? (
-          <div className="flex flex-col gap-5">
+          <div key="item" className="flex animate-entrada flex-col gap-5">
             <button
               onClick={cancelarEdicaoItem}
               className="flex items-center gap-1.5 font-corpo text-sm text-bruma-luz"
@@ -189,7 +189,7 @@ export function OperacaoEntrada({ depositoId, fornecedores }: OperacaoEntradaPro
             />
 
             <div>
-              <p className="mb-2.5 font-display text-rotulo uppercase text-bruma-luz">Quantidade</p>
+              <p className="mb-2.5 rotulo-secao">Quantidade</p>
               <div className="flex items-center gap-4">
                 <button
                   onClick={() => setQuantidadeSelecionada((q) => Math.max(1, q - 1))}
@@ -213,7 +213,7 @@ export function OperacaoEntrada({ depositoId, fornecedores }: OperacaoEntradaPro
             </div>
 
             <div>
-              <p className="mb-2.5 font-display text-rotulo uppercase text-bruma-luz">Custo unitário da compra</p>
+              <p className="mb-2.5 rotulo-secao">Custo unitário da compra</p>
               <input
                 value={custoUnitario}
                 onChange={(e) => digitarCusto(e.target.value)}
@@ -230,7 +230,7 @@ export function OperacaoEntrada({ depositoId, fornecedores }: OperacaoEntradaPro
             </div>
           </div>
         ) : buscando ? (
-          <div className="flex flex-col gap-4">
+          <div key="busca" className="flex animate-entrada flex-col gap-4">
             {temCarrinho && (
               <button
                 onClick={() => setBuscando(false)}
@@ -242,13 +242,13 @@ export function OperacaoEntrada({ depositoId, fornecedores }: OperacaoEntradaPro
             <BuscaItem depositoId={depositoId} onSelecionar={setSelecionado} />
           </div>
         ) : (
-          <div className="flex flex-col gap-5">
+          <div key="lista" className="flex animate-entrada flex-col gap-5">
             <div>
               <div className="mb-2.5 flex items-center justify-between">
-                <p className="font-display text-rotulo uppercase text-bruma-luz">Itens desta entrada</p>
+                <p className="rotulo-secao">Itens desta entrada</p>
                 <button
                   onClick={() => setBuscando(true)}
-                  className="flex items-center gap-1 font-corpo text-sm text-petroleo-claro"
+                  className="flex items-center gap-1 font-corpo text-sm text-cobalto-luz"
                 >
                   <Plus size={16} /> Adicionar item
                 </button>
@@ -290,7 +290,7 @@ export function OperacaoEntrada({ depositoId, fornecedores }: OperacaoEntradaPro
             </div>
 
             <div>
-              <p className="mb-2.5 font-display text-rotulo uppercase text-bruma-luz">Fornecedor · opcional</p>
+              <p className="mb-2.5 rotulo-secao">Fornecedor · opcional</p>
               <div className="flex flex-wrap gap-2">
                 {fornecedores.map((f) => (
                   <Chip
@@ -309,7 +309,7 @@ export function OperacaoEntrada({ depositoId, fornecedores }: OperacaoEntradaPro
             </div>
 
             <div>
-              <p className="mb-2.5 font-display text-rotulo uppercase text-bruma-luz">
+              <p className="mb-2.5 rotulo-secao">
                 Frota / veículo de destino · opcional
               </p>
               <div>

@@ -16,7 +16,7 @@ export default async function PaginaConsumoCentro() {
     <main className="p-6 sm:p-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-display text-tela text-tinta">Consumo por centro de custo</h1>
+          <h1 className="titulo-tela">Consumo por centro de custo</h1>
           <p className="mt-1 font-corpo text-sm text-bruma-texto">Distribuição do gasto entre setores, por mês.</p>
         </div>
         <div className="w-36">

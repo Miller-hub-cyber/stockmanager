@@ -21,7 +21,7 @@ export default async function PaginaCompras() {
     <main className="p-6 sm:p-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-display text-tela text-tinta">Compras</h1>
+          <h1 className="titulo-tela">Compras</h1>
           <p className="mt-1 font-corpo text-sm text-bruma-texto">
             Itens no ponto de reposição, agrupados por fornecedor.
           </p>

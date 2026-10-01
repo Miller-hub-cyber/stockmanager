@@ -42,7 +42,7 @@ export default function PaginaDesign() {
 
   return (
     <div className="min-h-screen bg-nevoa p-8">
-      <h1 className="font-display text-tela text-tinta">Design system</h1>
+      <h1 className="titulo-tela">Design system</h1>
       <p className="mt-2 max-w-2xl font-corpo text-corpo text-bruma-texto">
         Componentes base do StockManager. Cada um consome os tokens de{" "}
         <code className="font-dado text-denso">tailwind.config.ts</code>, nunca cor ou tamanho fixo fora da

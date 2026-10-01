@@ -32,15 +32,20 @@ Não use: gradiente colorido, glassmorphism, sombra difusa grande, ilustração 
 
 Defina exatamente estes tokens no Tailwind. Não invente família de cor fora desta lista.
 
+A paleta sai da logo: azul-marinho `#13233F` (`aco` e `tinta`), laranja `#F2A33A` (`ambar`) e azul-acinzentado `#A9B7CF` (`bruma-luz`). Os demais neutros e o `cobalto` são da mesma matiz do marinho (~217°).
+
 | Token | Hex | Uso |
 |---|---|---|
-| `carbono` | `#14181D` | Fundo da área de operação |
-| `aco` | `#212933` | Superfície elevada sobre carbono, cabeçalho da gestão |
-| `grafite` | `#3A4450` | Bordas e divisórias estruturais no escuro (não interativas) |
-| `petroleo` | `#0F5563` | Cor de marca, ação primária, estados ativos |
-| `petroleo-claro` | `#177A8F` | Hover da ação primária, destaque de logo |
-| `petroleo-luz` | `#4FB3C8` | Foco e link em contexto escuro; `petroleo-claro` reprova 3:1 contra `aco` |
-| `ambar` | `#F5A524` | Ícone/borda de alerta em contexto **escuro** (reprova texto/ícone em fundo claro) |
+| `carbono` | `#0C1A2E` | Fundo da área de operação |
+| `aco` | `#13233F` | Marinho da logo. Superfície elevada sobre carbono, cabeçalho da operação, trilho da gestão |
+| `grafite` | `#2E4366` | Bordas e divisórias estruturais no escuro (não interativas) |
+| `cobalto` | `#1F4E94` | Ação primária, estados ativos |
+| `cobalto-claro` | `#2F6ED3` | Hover da ação primária, borda de item selecionado (passa 3:1 contra `aco` e branco) |
+| `cobalto-luz` | `#598BDC` | Foco e link em contexto escuro (4.5:1 contra `aco`, 3:1 contra `nevoa`) |
+| `laranja` | `#F2A33A` | Laranja da logo como acento de marca: traço de título e de rótulo, indicador de navegação ativa, mira do leitor (7.5:1 contra `aco`) |
+| `laranja-texto` | `#A05C0D` | Ícone/texto de marca em contexto claro (5.2:1 contra branco) |
+| `laranja-fundo` | `#FCEDD9` | Fundo de ícone de atalho em contexto claro |
+| `ambar` | `#F2A33A` | Mesmo tom do `laranja`, papel diferente: ícone/borda de alerta em contexto **escuro** (reprova texto/ícone em fundo claro) |
 | `ambar-texto` | `#8A5A00` | Texto/ícone de alerta em contexto claro |
 | `ambar-fundo` | `#FBEBCB` | Fundo de badge de alerta em contexto claro |
 | `carmim` | `#D64545` | Bloqueio, erro, ícone/borda de estado crítico nos dois contextos |
@@ -51,16 +56,20 @@ Defina exatamente estes tokens no Tailwind. Não invente família de cor fora de
 | `musgo-texto` | `#2F6F55` | Texto de sucesso em contexto claro |
 | `musgo-luz` | `#5DB38F` | Texto de sucesso em contexto escuro |
 | `musgo-fundo` | `#D8EBE3` | Fundo de badge de sucesso em contexto claro |
-| `nevoa` | `#F1F4F6` | Fundo da área de gestão |
-| `giz` | `#DDE3E8` | Bordas e divisórias estruturais no claro (não interativas) |
-| `tinta` | `#1B2026` | Texto principal sobre fundo claro |
-| `bruma` | `#6C7885` | Ícone/borda de estado inativo; borda de campo e card clicável nos dois contextos |
-| `bruma-texto` | `#5A6573` | Texto secundário em contexto claro — `bruma` sozinho reprova 4.5:1 |
-| `bruma-luz` | `#8A96A3` | Texto secundário em contexto escuro — `bruma` sozinho reprova 4.5:1 |
+| `nevoa` | `#EEF2F7` | Fundo da área de gestão |
+| `giz` | `#D8E0EB` | Bordas e divisórias estruturais no claro (não interativas) |
+| `tinta` | `#13233F` | Texto principal sobre fundo claro |
+| `bruma` | `#687792` | Ícone/borda de estado inativo; borda de campo e card clicável nos dois contextos |
+| `bruma-texto` | `#53627C` | Texto secundário em contexto claro — `bruma` sozinho reprova 4.5:1 |
+| `bruma-luz` | `#A9B7CF` | Azul-acinzentado da logo. Texto secundário em contexto escuro — `bruma` sozinho reprova 4.5:1 |
 
 Subchaves: `DEFAULT` é ícone, borda e barra; `texto` é texto em fundo claro; `luz` é texto em fundo escuro; `fundo` é badge em contexto claro.
 
-Regra de dominância: `petroleo` é a cor da marca e aparece em toda ação primária. `ambar` e `carmim` são exclusivos de estado do estoque e nunca decoram nada. Se você usar âmbar em um botão que não seja de alerta, está errado.
+Regra de dominância: `aco` (o marinho da logo) é a cor da marca e domina as superfícies de marca. `cobalto` aparece em toda ação primária. `ambar` e `carmim` são exclusivos de estado do estoque e nunca decoram nada. Se você usar âmbar em um botão que não seja de alerta, está errado.
+
+O laranja da logo aparece em dois tokens com o mesmo hex. `ambar` é estado; `laranja` é personalidade. O que separa os dois é o lugar: `laranja` vive só na moldura do app (navegação, títulos, rótulos, perfil do usuário, ícone de atalho, seleção de texto, mira do leitor) e nunca em botão, em número, em barra de gráfico nem dentro da `Etiqueta`. Se o laranja puder ser lido como "este item precisa de atenção", use outra cor.
+
+Formas de uso já prontas em `globals.css`: `titulo-tela` (título com traço laranja pendurado na margem esquerda) e `rotulo-secao` (rótulo da operação com traço laranja à esquerda).
 
 A área de operação é escura por decisão funcional: balcão de almoxarifado tem luz ruim e tela escura cansa menos em uso repetitivo. A área de gestão é clara porque tabela densa se lê melhor em fundo claro.
 
@@ -129,7 +138,7 @@ Gaste a ousadia do projeto nesses dois elementos. Todo o resto é discreto.
 │  [ABC-1234] [DEF-5678] ...  │  últimos usados, chips 48px
 │                             │
 ├─────────────────────────────┤
-│   REGISTRAR SAÍDA           │  fixo no rodapé, 64px, petroleo
+│   REGISTRAR SAÍDA           │  fixo no rodapé, 64px, cobalto
 └─────────────────────────────┘
 ```
 
@@ -164,13 +173,16 @@ Sombra: apenas uma, sutil, em elemento flutuante (modal e menu). Card não tem s
 
 ### Movimento
 
-Só três, e nada além disso:
+Movimento existe para confirmar a ação, não para enfeitar. Todo ele usa a curva `ease-mola` (`cubic-bezier(0.2, 0.8, 0.2, 1)`: sai rápido e assenta suave) e nada passa de 300ms. Este é o vocabulário completo:
 
-1. Transição de cor em 120ms em botão e chip
-2. Entrada da tela de resultado com fade e escala de 0.98 para 1 em 180ms
-3. Estado de carregamento como pulso de opacidade, nunca girando
+1. **Cor** — transição de 150ms em botão, chip, link e borda de card.
+2. **Toque** — o elemento pressionado encolhe: botão e card para 0.98–0.99, chip para 0.95, ícone de navegação para 0.9. Confirma o toque mesmo de luva.
+3. **Indicador deslizante** — menu lateral da gestão e abas da operação têm um único destaque que desliza até o item escolhido em 300ms. Ele se move no clique (`useCaminhoOtimista`), sem esperar a resposta do servidor.
+4. **Entrada** — `animate-entrada`: fade com subida de 6px em 220ms. Vale para toda página nova (aplicado no layout), para cada troca de bloco na operação (busca → item → lista) e para os cartões de atalho, escalonados em 30ms.
+5. **Tela de resultado** — fade e escala de 0.98 para 1 em 200ms.
+6. **Carregamento** — pulso de opacidade, nunca girando. Navegação mostra o esqueleto de `loading.tsx` na hora do clique; filtro esmaece o resultado e pulsa o botão até a nova página chegar.
 
-Respeite `prefers-reduced-motion`: desligue tudo, mantenha a tela de resultado sem animação.
+Não anime dado: numeral de saldo, valor e linha de tabela aparecem prontos. Respeite `prefers-reduced-motion`: `globals.css` desliga toda animação e transição, e a tela de resultado aparece sem animação.
 
 ### Voz da interface
 
@@ -184,7 +196,7 @@ Português do Brasil, frase em caixa baixa exceto rótulos de seção, verbo no 
 
 ### Piso de qualidade
 
-Antes de considerar qualquer tela pronta: responsiva até 360px de largura, foco de teclado visível em `petroleo-luz` com anel de 2px (passa 3:1 tanto em fundo claro quanto escuro; `petroleo-claro` não passa contra `aco`), contraste mínimo 4.5:1 em texto normal e 3:1 em texto grande/ícone/borda de campo, área de toque de 48px em toda a operação, e a tela de saída inteira funcionando com uma única mão.
+Antes de considerar qualquer tela pronta: responsiva até 360px de largura, foco de teclado visível em `cobalto-luz` com anel de 2px (passa 3:1 tanto em fundo claro quanto escuro), contraste mínimo 4.5:1 em texto normal e 3:1 em texto grande/ícone/borda de campo, área de toque de 48px em toda a operação, e a tela de saída inteira funcionando com uma única mão.
 
 ### Ordem de execução
 

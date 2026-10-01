@@ -11,7 +11,7 @@ export default async function PaginaNovoItem() {
   return (
     <main className="min-h-screen bg-nevoa p-8">
       <div className="mx-auto max-w-2xl">
-        <h1 className="font-display text-tela text-tinta">Novo item</h1>
+        <h1 className="titulo-tela">Novo item</h1>
         <div className="mt-6">
           <FormularioItem categorias={categorias ?? []} fornecedores={fornecedores ?? []} />
         </div>

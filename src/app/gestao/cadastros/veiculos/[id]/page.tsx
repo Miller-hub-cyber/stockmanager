@@ -35,7 +35,7 @@ export default async function PaginaEditarVeiculo({ params }: { params: { id: st
   return (
     <main className="min-h-screen bg-nevoa p-8">
       <div className="mx-auto max-w-2xl">
-        <h1 className="font-display text-tela text-tinta">
+        <h1 className="titulo-tela">
           Veículo <span className="font-dado">{veiculo.placa}</span>
         </h1>
 

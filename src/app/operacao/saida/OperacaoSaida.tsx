@@ -181,7 +181,7 @@ export function OperacaoSaida({ depositoId, veiculos, centrosCusto }: OperacaoSa
 
       <div className="flex-1 overflow-auto p-4 pb-24">
         {selecionado ? (
-          <div className="flex flex-col gap-5">
+          <div key="item" className="flex animate-entrada flex-col gap-5">
             <button
               onClick={cancelarEdicaoItem}
               className="flex items-center gap-1.5 font-corpo text-sm text-bruma-luz"
@@ -201,7 +201,7 @@ export function OperacaoSaida({ depositoId, veiculos, centrosCusto }: OperacaoSa
             />
 
             <div>
-              <p className="mb-2.5 font-display text-rotulo uppercase text-bruma-luz">Quantidade</p>
+              <p className="mb-2.5 rotulo-secao">Quantidade</p>
               <div className="flex items-center gap-4">
                 <button
                   onClick={() => setQuantidadeSelecionada((q) => Math.max(1, q - 1))}
@@ -230,7 +230,7 @@ export function OperacaoSaida({ depositoId, veiculos, centrosCusto }: OperacaoSa
             </div>
           </div>
         ) : buscando ? (
-          <div className="flex flex-col gap-4">
+          <div key="busca" className="flex animate-entrada flex-col gap-4">
             {temCarrinho && (
               <button
                 onClick={() => setBuscando(false)}
@@ -242,13 +242,13 @@ export function OperacaoSaida({ depositoId, veiculos, centrosCusto }: OperacaoSa
             <BuscaItem depositoId={depositoId} onSelecionar={setSelecionado} />
           </div>
         ) : (
-          <div className="flex flex-col gap-5">
+          <div key="lista" className="flex animate-entrada flex-col gap-5">
             <div>
               <div className="mb-2.5 flex items-center justify-between">
-                <p className="font-display text-rotulo uppercase text-bruma-luz">Itens desta saída</p>
+                <p className="rotulo-secao">Itens desta saída</p>
                 <button
                   onClick={() => setBuscando(true)}
-                  className="flex items-center gap-1 font-corpo text-sm text-petroleo-claro"
+                  className="flex items-center gap-1 font-corpo text-sm text-cobalto-luz"
                 >
                   <Plus size={16} /> Adicionar item
                 </button>
@@ -288,7 +288,7 @@ export function OperacaoSaida({ depositoId, veiculos, centrosCusto }: OperacaoSa
             </div>
 
             <div>
-              <p className="mb-2.5 font-display text-rotulo uppercase text-bruma-luz">Destino · obrigatório</p>
+              <p className="mb-2.5 rotulo-secao">Destino · obrigatório</p>
               <div className="flex flex-wrap gap-2">
                 {veiculos.map((v) => (
                   <Chip

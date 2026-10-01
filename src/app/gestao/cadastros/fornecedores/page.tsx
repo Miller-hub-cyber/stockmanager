@@ -16,7 +16,7 @@ export default async function PaginaFornecedores() {
     <main className="min-h-screen bg-nevoa p-8">
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="font-display text-tela text-tinta">Fornecedores</h1>
+          <h1 className="titulo-tela">Fornecedores</h1>
           <p className="mt-1 font-corpo text-sm text-bruma-texto">Origem das entradas de estoque.</p>
         </div>
         <div className="w-48">
@@ -27,7 +27,7 @@ export default async function PaginaFornecedores() {
       {lista.length === 0 ? (
         <div className="rounded border border-giz bg-white p-8 text-center font-corpo text-sm text-bruma-texto">
           Nenhum fornecedor cadastrado.{" "}
-          <Link href="/gestao/cadastros/fornecedores/novo" className="text-petroleo hover:underline">
+          <Link href="/gestao/cadastros/fornecedores/novo" className="text-cobalto hover:underline">
             Cadastre o primeiro
           </Link>
           .
@@ -69,7 +69,7 @@ export default async function PaginaFornecedores() {
                 <div className="flex items-center justify-end gap-3">
                   <Link
                     href={`/gestao/cadastros/fornecedores/${fornecedor.id}`}
-                    className="font-corpo text-sm text-petroleo hover:underline"
+                    className="font-corpo text-sm text-cobalto hover:underline"
                   >
                     Editar
                   </Link>

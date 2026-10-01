@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { createClient } from "@/lib/supabase/server";
 import type { PerfilUsuario } from "@/lib/perfil";
 
@@ -9,8 +10,12 @@ export interface UsuarioAtual {
   perfil: PerfilUsuario;
 }
 
-/** Usuario autenticado + seu perfil, ja resolvidos contra `usuarios`. */
-export async function obterUsuarioAtual(): Promise<UsuarioAtual | null> {
+/**
+ * Usuario autenticado + seu perfil, ja resolvidos contra `usuarios`.
+ * `cache` deduplica por requisicao: layout e pagina chamam juntos e o
+ * Supabase e consultado uma vez so.
+ */
+export const obterUsuarioAtual = cache(async (): Promise<UsuarioAtual | null> => {
   const supabase = createClient();
   const {
     data: { user },
@@ -31,4 +36,4 @@ export async function obterUsuarioAtual(): Promise<UsuarioAtual | null> {
     email: usuario.email,
     perfil: usuario.perfil,
   };
-}
+});

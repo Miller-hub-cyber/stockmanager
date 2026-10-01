@@ -60,7 +60,7 @@ export default async function PaginaConsulta() {
   return (
     <div className="flex-1 overflow-auto p-4">
       <div>
-        <p className="mb-2.5 font-display text-rotulo uppercase text-bruma-luz">Consultar item</p>
+        <p className="mb-2.5 rotulo-secao">Consultar item</p>
         {deposito ? (
           <ConsultaItem depositoId={deposito.id} />
         ) : (
@@ -69,7 +69,7 @@ export default async function PaginaConsulta() {
       </div>
 
       <div className="mt-7">
-        <p className="mb-2.5 font-display text-rotulo uppercase text-bruma-luz">Movimentações recentes</p>
+        <p className="mb-2.5 rotulo-secao">Movimentações recentes</p>
         <div className="flex flex-col gap-2">
           {lista.length === 0 && (
             <p className="font-corpo text-sm text-bruma-luz">Nenhuma movimentação registrada ainda.</p>

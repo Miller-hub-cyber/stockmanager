@@ -24,7 +24,7 @@ export default async function LayoutOperacao({ children }: { children: React.Rea
 
             <AbasOperacao />
 
-            <div className="flex flex-1 flex-col">{children}</div>
+            <div className="flex flex-1 flex-col [&>*]:animate-entrada">{children}</div>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
-import { Botao, Campo, Seletor, Tabela, TabelaCabecalho, TabelaLinha, TabelaCelula } from "@/components/ui";
+import { Botao, Campo, FormularioFiltro, Seletor, Tabela, TabelaCabecalho, TabelaLinha, TabelaCelula } from "@/components/ui";
 import { brl, dataHora, quantidade } from "@/lib/formato";
 import {
   buscarMovimentacoes,
@@ -118,14 +118,14 @@ export async function RelatorioMovimentacoes({ modo, titulo, descricao, rota, se
     <main className="p-6 sm:p-8">
       <Link
         href="/gestao/relatorios"
-        className="flex items-center gap-1.5 font-corpo text-sm text-bruma-texto hover:text-petroleo"
+        className="flex items-center gap-1.5 font-corpo text-sm text-bruma-texto hover:text-cobalto"
       >
         <ArrowLeft size={16} /> Voltar para relatórios
       </Link>
 
       <div className="mt-4 flex items-center justify-between">
         <div>
-          <h1 className="font-display text-tela text-tinta">{titulo}</h1>
+          <h1 className="titulo-tela">{titulo}</h1>
           <p className="mt-1 font-corpo text-sm text-bruma-texto">{descricao}</p>
         </div>
         <div className="flex items-center gap-2">
@@ -142,7 +142,7 @@ export async function RelatorioMovimentacoes({ modo, titulo, descricao, rota, se
         </div>
       </div>
 
-      <form method="get" className="mt-4 flex flex-wrap items-end gap-3">
+      <FormularioFiltro className="mt-4 flex flex-wrap items-end gap-3">
         <div className="w-40">
           <Campo id="de" name="de" type="date" rotulo="De" defaultValue={filtros.de ?? ""} />
         </div>
@@ -169,7 +169,7 @@ export async function RelatorioMovimentacoes({ modo, titulo, descricao, rota, se
             Limpar
           </Link>
         )}
-      </form>
+      </FormularioFiltro>
 
       {!cortado && linhas.length > 0 && (
         <dl className="mt-5 flex flex-wrap gap-x-8 gap-y-2">

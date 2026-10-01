@@ -16,7 +16,7 @@ export default async function PaginaCentrosCusto() {
     <main className="min-h-screen bg-nevoa p-8">
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="font-display text-tela text-tinta">Centros de custo</h1>
+          <h1 className="titulo-tela">Centros de custo</h1>
           <p className="mt-1 font-corpo text-sm text-bruma-texto">Setores usados como destino de saída.</p>
         </div>
         <div className="w-52">
@@ -27,7 +27,7 @@ export default async function PaginaCentrosCusto() {
       {lista.length === 0 ? (
         <div className="rounded border border-giz bg-white p-8 text-center font-corpo text-sm text-bruma-texto">
           Nenhum centro de custo cadastrado.{" "}
-          <Link href="/gestao/cadastros/centros-custo/novo" className="text-petroleo hover:underline">
+          <Link href="/gestao/cadastros/centros-custo/novo" className="text-cobalto hover:underline">
             Cadastre o primeiro
           </Link>
           .
@@ -63,7 +63,7 @@ export default async function PaginaCentrosCusto() {
                 <div className="flex items-center justify-end gap-3">
                   <Link
                     href={`/gestao/cadastros/centros-custo/${centro.id}`}
-                    className="font-corpo text-sm text-petroleo hover:underline"
+                    className="font-corpo text-sm text-cobalto hover:underline"
                   >
                     Editar
                   </Link>

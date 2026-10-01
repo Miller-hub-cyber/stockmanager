@@ -16,7 +16,7 @@ export default async function PaginaDepositos() {
     <main className="min-h-screen bg-nevoa p-8">
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="font-display text-tela text-tinta">Depósitos</h1>
+          <h1 className="titulo-tela">Depósitos</h1>
           <p className="mt-1 font-corpo text-sm text-bruma-texto">Locais de armazenamento do estoque.</p>
         </div>
         <div className="w-40">
@@ -27,7 +27,7 @@ export default async function PaginaDepositos() {
       {lista.length === 0 ? (
         <div className="rounded border border-giz bg-white p-8 text-center font-corpo text-sm text-bruma-texto">
           Nenhum depósito cadastrado.{" "}
-          <Link href="/gestao/cadastros/depositos/novo" className="text-petroleo hover:underline">
+          <Link href="/gestao/cadastros/depositos/novo" className="text-cobalto hover:underline">
             Cadastre o primeiro
           </Link>
           .
@@ -59,7 +59,7 @@ export default async function PaginaDepositos() {
                 <div className="flex items-center justify-end gap-3">
                   <Link
                     href={`/gestao/cadastros/depositos/${deposito.id}`}
-                    className="font-corpo text-sm text-petroleo hover:underline"
+                    className="font-corpo text-sm text-cobalto hover:underline"
                   >
                     Editar
                   </Link>

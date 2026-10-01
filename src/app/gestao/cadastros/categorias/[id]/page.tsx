@@ -15,7 +15,7 @@ export default async function PaginaEditarCategoria({ params }: { params: { id: 
   return (
     <main className="min-h-screen bg-nevoa p-8">
       <div className="mx-auto max-w-lg">
-        <h1 className="font-display text-tela text-tinta">Editar categoria</h1>
+        <h1 className="titulo-tela">Editar categoria</h1>
         <div className="mt-6">
           <FormularioCategoria categoria={categoria} />
         </div>

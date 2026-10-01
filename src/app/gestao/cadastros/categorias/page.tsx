@@ -11,7 +11,7 @@ export default async function PaginaCategorias() {
     <main className="min-h-screen bg-nevoa p-8">
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="font-display text-tela text-tinta">Categorias</h1>
+          <h1 className="titulo-tela">Categorias</h1>
           <p className="mt-1 font-corpo text-sm text-bruma-texto">Agrupam os itens do estoque.</p>
         </div>
         <div className="w-40">
@@ -22,7 +22,7 @@ export default async function PaginaCategorias() {
       {lista.length === 0 ? (
         <div className="rounded border border-giz bg-white p-8 text-center font-corpo text-sm text-bruma-texto">
           Nenhuma categoria cadastrada.{" "}
-          <Link href="/gestao/cadastros/categorias/novo" className="text-petroleo hover:underline">
+          <Link href="/gestao/cadastros/categorias/novo" className="text-cobalto hover:underline">
             Cadastre a primeira
           </Link>
           .
@@ -41,7 +41,7 @@ export default async function PaginaCategorias() {
               <TabelaCelula align="direita" className="w-[100px] flex-none">
                 <Link
                   href={`/gestao/cadastros/categorias/${categoria.id}`}
-                  className="font-corpo text-sm text-petroleo hover:underline"
+                  className="font-corpo text-sm text-cobalto hover:underline"
                 >
                   Editar
                 </Link>

@@ -4,6 +4,8 @@ export { Campo } from "./Campo";
 export { Seletor } from "./Seletor";
 export { Etiqueta } from "./Etiqueta";
 export { Chip } from "./Chip";
+export { CartaoAtalho } from "./CartaoAtalho";
+export { FormularioFiltro } from "./FormularioFiltro";
 export { Tabela, TabelaCabecalho, TabelaLinha, TabelaCelula } from "./Tabela";
 export { Indicador } from "./Indicador";
 export { PontoEstado } from "./PontoEstado";

@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { Botao, Seletor, Tabela, TabelaCabecalho, TabelaLinha, TabelaCelula } from "@/components/ui";
+import { Botao, FormularioFiltro, Seletor, Tabela, TabelaCabecalho, TabelaLinha, TabelaCelula } from "@/components/ui";
 import { brl, quantidade, dataHora } from "@/lib/formato";
 
 interface Props {
@@ -25,7 +25,7 @@ export default async function PaginaKardex({ searchParams }: Props) {
     <main className="p-6 sm:p-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-display text-tela text-tinta">Kardex por item</h1>
+          <h1 className="titulo-tela">Kardex por item</h1>
           <p className="mt-1 font-corpo text-sm text-bruma-texto">Histórico completo de entradas e saídas.</p>
         </div>
         {itemId && (
@@ -37,7 +37,7 @@ export default async function PaginaKardex({ searchParams }: Props) {
         )}
       </div>
 
-      <form method="get" className="mt-4 flex flex-wrap items-end gap-3">
+      <FormularioFiltro className="mt-4 flex flex-wrap items-end gap-3">
         <div className="w-72">
           <Seletor id="itemId" name="itemId" rotulo="Item" defaultValue={itemId ?? ""}>
             <option value="" disabled>
@@ -55,7 +55,7 @@ export default async function PaginaKardex({ searchParams }: Props) {
             Ver
           </Botao>
         </div>
-      </form>
+      </FormularioFiltro>
 
       {itemId && (
         <div className="mt-6">

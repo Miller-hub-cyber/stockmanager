@@ -37,7 +37,7 @@ export default async function PaginaEditarItem({ params }: { params: { id: strin
     <main className="min-h-screen bg-nevoa p-8">
       <div className="mx-auto max-w-2xl">
         <div className="flex items-center gap-3">
-          <h1 className="font-display text-tela text-tinta">{item.nome}</h1>
+          <h1 className="titulo-tela">{item.nome}</h1>
           <PontoEstado cor={estado.cor} texto={estado.texto} estado={estado.estado} />
         </div>
         <p className="mt-1 font-dado text-sm text-bruma-texto">{item.sku}</p>

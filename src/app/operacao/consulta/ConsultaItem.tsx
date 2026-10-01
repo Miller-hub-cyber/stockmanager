@@ -10,7 +10,7 @@ export function ConsultaItem({ depositoId }: { depositoId: string }) {
 
   if (selecionado) {
     return (
-      <div className="flex flex-col gap-3">
+      <div className="flex animate-entrada flex-col gap-3">
         <button
           onClick={() => setSelecionado(null)}
           className="flex items-center gap-1.5 self-start font-corpo text-sm text-bruma-luz"
@@ -31,5 +31,9 @@ export function ConsultaItem({ depositoId }: { depositoId: string }) {
     );
   }
 
-  return <BuscaItem depositoId={depositoId} onSelecionar={setSelecionado} />;
+  return (
+    <div className="animate-entrada">
+      <BuscaItem depositoId={depositoId} onSelecionar={setSelecionado} />
+    </div>
+  );
 }

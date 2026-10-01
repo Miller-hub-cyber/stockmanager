@@ -18,7 +18,7 @@ interface BotaoProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const estilosVariante: Record<VarianteBotao, (escuro: boolean) => string> = {
-  primario: () => "bg-petroleo text-white hover:bg-petroleo-claro",
+  primario: () => "bg-cobalto text-white hover:bg-cobalto-claro",
   secundario: (escuro) =>
     escuro
       ? "border border-bruma bg-transparent text-white hover:bg-white/5"
@@ -28,7 +28,7 @@ const estilosVariante: Record<VarianteBotao, (escuro: boolean) => string> = {
 
 // Ação secundária em linha de tabela: mesmo peso visual do link "Editar" ao lado.
 const estilosVarianteTexto: Record<VarianteBotao, string> = {
-  primario: "text-petroleo hover:underline",
+  primario: "text-cobalto hover:underline",
   secundario: "text-tinta hover:underline",
   perigo: "text-carmim hover:underline",
 };
@@ -55,7 +55,7 @@ export function Botao({
           className
         )
       : cn(
-          "flex w-full items-center justify-center gap-2.5 rounded font-display transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-40",
+          "flex w-full items-center justify-center gap-2.5 rounded font-display transition-[color,background-color,border-color,opacity,transform] duration-150 ease-mola active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 disabled:active:scale-100",
           tamanho === "grande" ? "h-rodape px-5 text-[19px] font-bold tracking-tight" : "h-10 px-4 text-sm font-semibold",
           carregando && "animate-pulse",
           estilosVariante[variante](escuro),

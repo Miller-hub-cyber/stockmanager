@@ -44,7 +44,7 @@ export function FormularioImportarItens({ depositos }: { depositos: Deposito[] }
           type="file"
           accept=".csv,text/csv"
           required
-          className="block w-full font-corpo text-sm text-tinta file:mr-4 file:cursor-pointer file:rounded file:border-0 file:bg-petroleo file:px-4 file:py-2 file:font-display file:text-sm file:font-semibold file:text-white hover:file:bg-petroleo-claro"
+          className="block w-full font-corpo text-sm text-tinta file:mr-4 file:cursor-pointer file:rounded file:border-0 file:bg-cobalto file:px-4 file:py-2 file:font-display file:text-sm file:font-semibold file:text-white hover:file:bg-cobalto-claro"
         />
       </div>
 

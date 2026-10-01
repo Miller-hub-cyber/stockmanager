@@ -13,26 +13,26 @@ interface AvisoProps {
 }
 
 const estilosBorda: Record<TipoAviso, string> = {
-  info: "border-petroleo/30",
+  info: "border-cobalto/30",
   alerta: "border-ambar/40",
   erro: "border-carmim/40",
   sucesso: "border-musgo/40",
 };
 
 const fundos: Record<TipoAviso, { claro: string; escuro: string }> = {
-  info: { claro: "bg-petroleo/5", escuro: "bg-petroleo/15" },
+  info: { claro: "bg-cobalto/5", escuro: "bg-cobalto/15" },
   alerta: { claro: "bg-ambar/10", escuro: "bg-ambar/15" },
   erro: { claro: "bg-carmim/5", escuro: "bg-carmim/15" },
   sucesso: { claro: "bg-musgo/5", escuro: "bg-musgo/15" },
 };
 
 /**
- * petroleo e ambar (DEFAULT) reprovam 3:1 no contexto oposto ao que foram
- * calibrados (petroleo é escuro demais para ícone em fundo escuro, ambar é
+ * cobalto e ambar (DEFAULT) reprovam 3:1 no contexto oposto ao que foram
+ * calibrados (cobalto é escuro demais para ícone em fundo escuro, ambar é
  * claro demais para ícone em fundo claro); erro e sucesso passam nos dois.
  */
 const coresIcone: Record<TipoAviso, { claro: string; escuro: string }> = {
-  info: { claro: "text-petroleo", escuro: "text-petroleo-luz" },
+  info: { claro: "text-cobalto", escuro: "text-cobalto-luz" },
   alerta: { claro: "text-ambar-texto", escuro: "text-ambar" },
   erro: { claro: "text-carmim", escuro: "text-carmim" },
   sucesso: { claro: "text-musgo", escuro: "text-musgo" },

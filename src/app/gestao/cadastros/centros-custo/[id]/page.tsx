@@ -15,7 +15,7 @@ export default async function PaginaEditarCentroCusto({ params }: { params: { id
   return (
     <main className="min-h-screen bg-nevoa p-8">
       <div className="mx-auto max-w-lg">
-        <h1 className="font-display text-tela text-tinta">Editar centro de custo</h1>
+        <h1 className="titulo-tela">Editar centro de custo</h1>
         <div className="mt-6">
           <FormularioCentroCusto centro={centro} />
         </div>

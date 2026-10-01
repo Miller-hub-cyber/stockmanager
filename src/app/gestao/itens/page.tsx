@@ -10,6 +10,7 @@ import {
   TabelaCelula,
   Botao,
   BotaoConfirmar,
+  FormularioFiltro,
   PontoEstado,
   Campo,
   Seletor,
@@ -60,7 +61,7 @@ export default async function PaginaItens({ searchParams }: Props) {
     <main className="min-h-screen bg-nevoa p-8">
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="font-display text-tela text-tinta">Itens</h1>
+          <h1 className="titulo-tela">Itens</h1>
           <p className="mt-1 font-corpo text-sm text-bruma-texto">Catálogo de peças, insumos e EPIs.</p>
         </div>
         <div className="flex gap-3">
@@ -75,7 +76,7 @@ export default async function PaginaItens({ searchParams }: Props) {
         </div>
       </div>
 
-      <form method="get" className="mb-4 flex flex-wrap items-end gap-3">
+      <FormularioFiltro className="mb-4 flex flex-wrap items-end gap-3">
         <div className="w-64">
           <Campo id="q" name="q" rotulo="Buscar" placeholder="Nome ou SKU" defaultValue={q} />
         </div>
@@ -104,12 +105,12 @@ export default async function PaginaItens({ searchParams }: Props) {
             Filtrar
           </Botao>
         </div>
-      </form>
+      </FormularioFiltro>
 
       {lista.length === 0 ? (
         <div className="rounded border border-giz bg-white p-8 text-center font-corpo text-sm text-bruma-texto">
           Nenhum item encontrado. Tente alterar os filtros ou{" "}
-          <Link href="/gestao/itens/novo" className="text-petroleo hover:underline">
+          <Link href="/gestao/itens/novo" className="text-cobalto hover:underline">
             cadastre um novo item
           </Link>
           .
@@ -166,7 +167,7 @@ export default async function PaginaItens({ searchParams }: Props) {
                   <div className="flex items-center justify-end gap-3">
                     <Link
                       href={`/gestao/itens/${item.id}`}
-                      className="font-corpo text-sm text-petroleo hover:underline"
+                      className="font-corpo text-sm text-cobalto hover:underline"
                     >
                       Editar
                     </Link>

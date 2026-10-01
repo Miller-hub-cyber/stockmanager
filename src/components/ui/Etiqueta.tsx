@@ -46,10 +46,10 @@ export function Etiqueta({
       role={onClick ? "button" : undefined}
       tabIndex={onClick ? 0 : undefined}
       className={cn(
-        "rounded border p-3.5 transition-colors duration-150",
+        "rounded border p-3.5 transition-[border-color,transform] duration-150 ease-mola",
         escuro ? "bg-aco" : "bg-white",
-        ativo ? "border-petroleo-claro" : "border-bruma",
-        onClick && "cursor-pointer"
+        ativo ? "border-cobalto-claro" : "border-bruma",
+        onClick && "cursor-pointer hover:border-cobalto-claro active:scale-[0.99]"
       )}
     >
       <div

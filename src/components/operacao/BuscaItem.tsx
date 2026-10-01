@@ -137,8 +137,8 @@ export function BuscaItem({ depositoId, onSelecionar }: BuscaItemProps) {
           onClick={() => setLeitorAberto(true)}
           className="flex h-14 w-16 flex-shrink-0 flex-col items-center justify-center gap-0.5 rounded border border-grafite bg-aco"
         >
-          <Camera size={20} className="text-petroleo-claro" />
-          <span className="font-display text-[10px] font-bold uppercase tracking-wide text-petroleo-claro">
+          <Camera size={20} className="text-cobalto-luz" />
+          <span className="font-display text-[10px] font-bold uppercase tracking-wide text-cobalto-luz">
             Ler
           </span>
         </button>

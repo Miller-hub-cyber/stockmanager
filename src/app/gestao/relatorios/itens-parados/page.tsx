@@ -15,7 +15,7 @@ export default async function PaginaItensParados() {
     <main className="p-6 sm:p-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-display text-tela text-tinta">Itens parados</h1>
+          <h1 className="titulo-tela">Itens parados</h1>
           <p className="mt-1 font-corpo text-sm text-bruma-texto">Estoque com saldo, sem saída há mais de 90 dias.</p>
         </div>
         <div className="w-36">

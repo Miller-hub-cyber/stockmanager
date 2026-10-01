@@ -69,7 +69,7 @@ export default async function PaginaGestao() {
 
   return (
     <main className="p-6 sm:p-8">
-      <h1 className="font-display text-tela text-tinta">Painel</h1>
+      <h1 className="titulo-tela">Painel</h1>
       <p className="mt-1 font-corpo text-sm text-bruma-texto">
         {usuario ? `Bom dia, ${usuario.nome.split(" ")[0]}.` : ""} Situação do estoque agora.
       </p>
@@ -94,7 +94,7 @@ export default async function PaginaGestao() {
         <div className="rounded border border-giz bg-white p-[18px] lg:col-span-2">
           <div className="flex items-center justify-between">
             <span className="font-display text-rotulo uppercase text-bruma-texto">Precisa de reposição</span>
-            <Link href="/gestao/compras" className="font-corpo text-xs text-petroleo hover:underline">
+            <Link href="/gestao/compras" className="font-corpo text-xs text-cobalto hover:underline">
               Ver todos
             </Link>
           </div>
@@ -140,7 +140,7 @@ export default async function PaginaGestao() {
                 </div>
                 <div className="h-1.5 rounded bg-nevoa">
                   <div
-                    className="h-1.5 rounded bg-petroleo"
+                    className="h-1.5 rounded bg-cobalto"
                     style={{ width: `${(c.custo_total / maiorCustoVeiculo) * 100}%` }}
                   />
                 </div>
@@ -162,7 +162,7 @@ export default async function PaginaGestao() {
               <div key={id} className="rounded border border-giz p-3">
                 <div className="truncate font-corpo text-sm text-tinta">{item?.nome ?? "Item"}</div>
                 <div className="font-dado text-xs text-bruma-texto">{item?.sku}</div>
-                <div className="mt-1.5 font-dado text-sm text-petroleo">{brl(valor)}</div>
+                <div className="mt-1.5 font-dado text-sm text-cobalto">{brl(valor)}</div>
               </div>
             );
           })}
