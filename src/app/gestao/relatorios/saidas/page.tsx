@@ -9,7 +9,7 @@ export default function PaginaRelatorioSaidas({ searchParams }: Props) {
     <RelatorioMovimentacoes
       modo="saida"
       titulo="Relatório de saídas"
-      descricao="Peças e materiais que saíram do estoque, com frota, colaborador e centro de custo."
+      descricao="Peças e materiais que saíram do estoque, com frota e centro de custo."
       rota="/gestao/relatorios/saidas"
       searchParams={searchParams}
     />

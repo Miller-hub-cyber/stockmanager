@@ -7,8 +7,8 @@
  * (edite o script em package.json com o project-id antes de rodar).
  *
  * Cobre Tables, Enums, a function de estorno e as views de relatorio usadas
- * pela Fase 6 (0003_views.sql). v_consumo_anomalo e v_epi_alerta ficam de
- * fora: schema pronto, mas sem tela ainda (EPI e Fase 2 do CLAUDE.md).
+ * pela Fase 6 (0003_views.sql). v_consumo_anomalo fica de fora: schema
+ * pronto, mas sem tela ainda.
  *
  * `Relationships` fica vazio em toda tabela: o postgrest-js exige o campo
  * (GenericTable), mas nao modelamos FK aqui — nao muda o tipo de retorno de
@@ -209,33 +209,6 @@ export interface Database {
         };
         Relationships: [];
       };
-      funcionarios: {
-        Row: {
-          id: string;
-          empresa_id: string;
-          nome: string;
-          matricula: string | null;
-          funcao: string | null;
-          ativo: boolean;
-        };
-        Insert: {
-          id?: string;
-          empresa_id: string;
-          nome: string;
-          matricula?: string | null;
-          funcao?: string | null;
-          ativo?: boolean;
-        };
-        Update: {
-          id?: string;
-          empresa_id?: string;
-          nome?: string;
-          matricula?: string | null;
-          funcao?: string | null;
-          ativo?: boolean;
-        };
-        Relationships: [];
-      };
       itens: {
         Row: {
           id: string;
@@ -328,7 +301,6 @@ export interface Database {
           id: string;
           empresa_id: string;
           tipo: Database["public"]["Enums"]["tipo_mov"];
-          numero_nf: string | null;
           fornecedor_id: string | null;
           data: string;
           valor_total: number | null;
@@ -341,7 +313,6 @@ export interface Database {
           id?: string;
           empresa_id: string;
           tipo: Database["public"]["Enums"]["tipo_mov"];
-          numero_nf?: string | null;
           fornecedor_id?: string | null;
           data?: string;
           valor_total?: number | null;
@@ -354,7 +325,6 @@ export interface Database {
           id?: string;
           empresa_id?: string;
           tipo?: Database["public"]["Enums"]["tipo_mov"];
-          numero_nf?: string | null;
           fornecedor_id?: string | null;
           data?: string;
           valor_total?: number | null;
@@ -377,11 +347,9 @@ export interface Database {
           documento_id: string | null;
           centro_custo_id: string | null;
           veiculo_id: string | null;
-          funcionario_id: string | null;
           km_veiculo: number | null;
           deposito_destino_id: string | null;
           motivo: string | null;
-          numero_os: string | null;
           estorno_de: string | null;
           usuario_id: string | null;
           criado_em: string;
@@ -397,11 +365,9 @@ export interface Database {
           documento_id?: string | null;
           centro_custo_id?: string | null;
           veiculo_id?: string | null;
-          funcionario_id?: string | null;
           km_veiculo?: number | null;
           deposito_destino_id?: string | null;
           motivo?: string | null;
-          numero_os?: string | null;
           estorno_de?: string | null;
           usuario_id?: string | null;
           criado_em?: string;
@@ -420,58 +386,11 @@ export interface Database {
           documento_id?: string | null;
           centro_custo_id?: string | null;
           veiculo_id?: string | null;
-          funcionario_id?: string | null;
           km_veiculo?: number | null;
           deposito_destino_id?: string | null;
           motivo?: string | null;
-          numero_os?: string | null;
           estorno_de?: string | null;
           usuario_id?: string | null;
-          criado_em?: string;
-        };
-        Relationships: [];
-      };
-      epi_entregas: {
-        Row: {
-          id: string;
-          empresa_id: string;
-          funcionario_id: string;
-          item_id: string;
-          movimentacao_id: string | null;
-          numero_ca: string | null;
-          validade_ca: string | null;
-          quantidade: number;
-          data_entrega: string;
-          data_devolucao: string | null;
-          assinatura_url: string | null;
-          criado_em: string;
-        };
-        Insert: {
-          id?: string;
-          empresa_id: string;
-          funcionario_id: string;
-          item_id: string;
-          movimentacao_id?: string | null;
-          numero_ca?: string | null;
-          validade_ca?: string | null;
-          quantidade?: number;
-          data_entrega?: string;
-          data_devolucao?: string | null;
-          assinatura_url?: string | null;
-          criado_em?: string;
-        };
-        Update: {
-          id?: string;
-          empresa_id?: string;
-          funcionario_id?: string;
-          item_id?: string;
-          movimentacao_id?: string | null;
-          numero_ca?: string | null;
-          validade_ca?: string | null;
-          quantidade?: number;
-          data_entrega?: string;
-          data_devolucao?: string | null;
-          assinatura_url?: string | null;
           criado_em?: string;
         };
         Relationships: [];
@@ -625,17 +544,13 @@ export interface Database {
           valor: number;
           veiculo_id: string | null;
           placa: string | null;
-          funcionario_id: string | null;
-          mecanico: string | null;
           centro_custo: string | null;
           fornecedor: string | null;
-          numero_nf: string | null;
           km_veiculo: number | null;
           usuario: string | null;
           motivo: string | null;
           estorno_de: string | null;
           estornada: boolean;
-          numero_os: string | null;
         };
         Relationships: [];
       };
@@ -675,12 +590,6 @@ export interface Database {
       fn_obter_ou_criar_veiculo: {
         Args: {
           p_placa: string;
-        };
-        Returns: string;
-      };
-      fn_obter_ou_criar_funcionario: {
-        Args: {
-          p_nome: string;
         };
         Returns: string;
       };

@@ -39,9 +39,6 @@ export function OperacaoEntrada({ depositoId, fornecedores }: OperacaoEntradaPro
   const [indiceEditando, setIndiceEditando] = useState<number | null>(null);
   const [fornecedorId, setFornecedorId] = useState<string | null>(null);
   const [frotaDigitada, setFrotaDigitada] = useState("");
-  const [mecanico, setMecanico] = useState("");
-  const [numeroNf, setNumeroNf] = useState("");
-  const [numeroOs, setNumeroOs] = useState("");
   const [resultado, setResultado] = useState<ResultadoOperacao | null>(null);
   const [enviando, setEnviando] = useState(false);
 
@@ -54,9 +51,6 @@ export function OperacaoEntrada({ depositoId, fornecedores }: OperacaoEntradaPro
     setIndiceEditando(null);
     setFornecedorId(null);
     setFrotaDigitada("");
-    setMecanico("");
-    setNumeroNf("");
-    setNumeroOs("");
   }
 
   function editarItemCarrinho(indice: number) {
@@ -141,9 +135,6 @@ export function OperacaoEntrada({ depositoId, fornecedores }: OperacaoEntradaPro
       depositoId,
       fornecedorId: fornecedorId ?? undefined,
       veiculoPlaca: frotaDigitada.trim() || undefined,
-      funcionarioNome: mecanico.trim() || undefined,
-      numeroNf: numeroNf || undefined,
-      numeroOs: numeroOs.trim() || undefined,
       itens: carrinho.map((l) => ({
         itemId: l.itemId,
         quantidade: l.quantidade,
@@ -338,44 +329,6 @@ export function OperacaoEntrada({ depositoId, fornecedores }: OperacaoEntradaPro
                 Só uma etiqueta de referência (para qual frota essa compra é) — o item continua entrando no estoque
                 do depósito.
               </p>
-            </div>
-
-            <div>
-              <p className="mb-2.5 font-display text-rotulo uppercase text-bruma-luz">
-                Colaborador que pediu as peças · opcional
-              </p>
-              <input
-                value={mecanico}
-                onChange={(e) => setMecanico(e.target.value)}
-                placeholder="Nome do colaborador"
-                className="h-14 w-full rounded border border-bruma bg-aco px-3.5 font-corpo text-base text-white outline-none placeholder:text-bruma-luz"
-              />
-              {mecanico.trim() && (
-                <p className="mt-2 font-corpo text-xs text-bruma-luz">
-                  Se esse colaborador ainda não estiver cadastrado, ele é criado automaticamente.
-                </p>
-              )}
-            </div>
-
-            <div>
-              <p className="mb-2.5 font-display text-rotulo uppercase text-bruma-luz">Nota fiscal · opcional</p>
-              <input
-                value={numeroNf}
-                onChange={(e) => setNumeroNf(e.target.value)}
-                placeholder="Número da NF"
-                className="h-14 w-full rounded border border-bruma bg-aco px-3.5 font-dado text-base text-white outline-none placeholder:text-bruma-luz"
-              />
-            </div>
-
-            <div>
-              <p className="mb-2.5 font-display text-rotulo uppercase text-bruma-luz">Ordem de serviço · opcional</p>
-              <input
-                value={numeroOs}
-                onChange={(e) => setNumeroOs(e.target.value)}
-                maxLength={40}
-                placeholder="Número da OS (ex.: OS 12212)"
-                className="h-14 w-full rounded border border-bruma bg-aco px-3.5 font-dado text-base text-white outline-none placeholder:text-bruma-luz"
-              />
             </div>
           </div>
         )}

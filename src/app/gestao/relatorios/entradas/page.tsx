@@ -9,7 +9,7 @@ export default function PaginaRelatorioEntradas({ searchParams }: Props) {
     <RelatorioMovimentacoes
       modo="entrada"
       titulo="Relatório de entradas"
-      descricao="Peças e materiais que entraram no estoque, com fornecedor, frota e colaborador."
+      descricao="Peças e materiais que entraram no estoque, com fornecedor e frota."
       rota="/gestao/relatorios/entradas"
       searchParams={searchParams}
     />

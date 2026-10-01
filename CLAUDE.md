@@ -27,7 +27,7 @@ Não adicione biblioteca nova sem justificar em uma linha no PR. Sem Redux, sem 
 
 1. **Saldo é derivado.** A tabela `saldos` só é alterada por trigger a partir de `movimentacoes`. Nenhum código de aplicação faz `UPDATE saldos`.
 2. **Movimentação é imutável.** `UPDATE` e `DELETE` em `movimentacoes` são bloqueados por trigger. Correção é feita por registro de estorno.
-3. **Toda saída exige destino de custo.** `centro_custo_id` ou `veiculo_id` ou `funcionario_id`. Garantido por `CHECK` no banco, não apenas na tela.
+3. **Toda saída exige destino de custo.** `centro_custo_id` ou `veiculo_id`. Garantido por `CHECK` no banco, não apenas na tela.
 4. **Saldo não pode ficar negativo.** A trigger lança exceção. A interface trata o erro, não o previne sozinha.
 5. **Custo médio ponderado** é recalculado apenas na entrada. A saída é valorizada pelo custo médio vigente.
 6. **Regra de negócio crítica vive no banco.** Se der para expressar em constraint ou trigger, é lá que vai.

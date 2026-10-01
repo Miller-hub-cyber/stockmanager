@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Package, Truck, Users, Building2, Factory, FolderTree } from "lucide-react";
+import { Package, Truck, Building2, Factory, FolderTree } from "lucide-react";
 
 const CADASTROS = [
   {
@@ -31,12 +31,6 @@ const CADASTROS = [
     titulo: "Veículos",
     descricao: "Frota usada como destino de saída.",
     Icone: Truck,
-  },
-  {
-    href: "/gestao/cadastros/funcionarios",
-    titulo: "Funcionários",
-    descricao: "Destino de saída e ficha de EPI.",
-    Icone: Users,
   },
 ];
 

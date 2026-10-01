@@ -31,7 +31,7 @@
 
 -- 8. Usuario perfil 'almoxarife' cadastrando fornecedor -> espera erro de RLS
 --    (Fase 4: mesma policy restritiva em depositos, categorias, fornecedores,
---    centros_custo, veiculos e funcionarios; almoxarife opera estoque, nao cadastra)
+--    centros_custo e veiculos; almoxarife opera estoque, nao cadastra)
 -- insert into fornecedores (empresa_id, nome) values ('<empresa>', 'Fornecedor teste');
 
 -- 9. Usuario da empresa A tentando ler item da empresa B -> espera 0 linhas

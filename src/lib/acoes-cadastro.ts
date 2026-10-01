@@ -12,7 +12,6 @@ type TabelaCadastro =
   | "categorias"
   | "depositos"
   | "centros_custo"
-  | "funcionarios"
   | "fornecedores"
   | "veiculos"
   | "itens";

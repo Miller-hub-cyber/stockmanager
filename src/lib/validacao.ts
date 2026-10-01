@@ -4,12 +4,6 @@ import { z } from "zod";
 const opcional = (max: number) =>
   z.preprocess((v) => (v === "" ? undefined : v), z.string().max(max).optional());
 
-/** Numero da OS como referencia livre (ex.: "OS 12212"): aparado, vazio vira `undefined`. */
-const numeroOs = z.preprocess(
-  (v) => (typeof v === "string" ? v.trim() || undefined : v),
-  z.string().max(40, "O numero da OS aceita no maximo 40 caracteres").optional()
-);
-
 export const esquemaLogin = z.object({
   email: z.string().min(1, "Informe o e-mail").email("E-mail invalido"),
   senha: z.string().min(6, "A senha precisa ter no minimo 6 caracteres"),
@@ -21,12 +15,11 @@ export const esquemaSaida = z.object({
   quantidade: z.coerce.number().positive("Informe uma quantidade maior que zero"),
   centroCustoId: z.string().uuid().nullable().optional(),
   veiculoId: z.string().uuid().nullable().optional(),
-  funcionarioId: z.string().uuid().nullable().optional(),
   kmVeiculo: z.coerce.number().nonnegative().nullable().optional(),
   motivo: z.string().max(200).optional(),
 }).refine(
-  (d) => Boolean(d.centroCustoId || d.veiculoId || d.funcionarioId),
-  { message: "Toda saida precisa de um destino: veiculo, setor ou funcionario." }
+  (d) => Boolean(d.centroCustoId || d.veiculoId),
+  { message: "Toda saida precisa de um destino: veiculo ou setor." }
 );
 
 export const esquemaEntrada = z.object({
@@ -37,7 +30,6 @@ export const esquemaEntrada = z.object({
   fornecedorId: z.string().uuid().nullable().optional(),
   // Etiqueta informativa (para qual frota o lote se destina). Nao aciona regra de saldo/negocio.
   veiculoId: z.string().uuid().nullable().optional(),
-  numeroNf: z.string().max(60).optional(),
 });
 
 const itemEntradaLote = z.object({
@@ -46,17 +38,13 @@ const itemEntradaLote = z.object({
   custoUnitario: z.coerce.number().nonnegative(),
 });
 
-/** Varios itens na mesma entrada: fornecedor, veiculo, mecanico e NF sao unicos para o lote todo. */
+/** Varios itens na mesma entrada: fornecedor e veiculo sao unicos para o lote todo. */
 export const esquemaEntradaLote = z.object({
   depositoId: z.string().uuid(),
   fornecedorId: z.string().uuid().nullable().optional(),
   veiculoId: z.string().uuid().nullable().optional(),
   // Frota digitada na hora, quando o veiculo ainda nao esta cadastrado (fn_obter_ou_criar_veiculo).
   veiculoPlaca: z.string().trim().min(1).max(20).optional(),
-  // Mecanico que pediu as pecas, digitado na hora (fn_obter_ou_criar_funcionario).
-  funcionarioNome: z.string().trim().min(1).max(120).optional(),
-  numeroNf: z.string().max(60).optional(),
-  numeroOs,
   itens: z.array(itemEntradaLote).min(1, "Adicione ao menos um item"),
 });
 
@@ -74,18 +62,13 @@ export const esquemaSaidaLote = z
     // Numero de frota/placa digitado na hora, quando o veiculo ainda nao esta cadastrado.
     // Resolvido para um veiculoId de verdade em registrarSaidaLote (fn_obter_ou_criar_veiculo).
     veiculoPlaca: z.string().trim().min(1).max(20).optional(),
-    funcionarioId: z.string().uuid().nullable().optional(),
-    // Nome do mecanico digitado na hora, quando ele ainda nao esta cadastrado.
-    // Resolvido para um funcionarioId de verdade em registrarSaidaLote (fn_obter_ou_criar_funcionario).
-    funcionarioNome: z.string().trim().min(1).max(120).optional(),
     kmVeiculo: z.coerce.number().nonnegative().nullable().optional(),
     motivo: z.string().max(200).optional(),
-    numeroOs,
     itens: z.array(itemSaidaLote).min(1, "Adicione ao menos um item"),
   })
   .refine(
-    (d) => Boolean(d.centroCustoId || d.veiculoId || d.veiculoPlaca || d.funcionarioId || d.funcionarioNome),
-    { message: "Toda saida precisa de um destino: veiculo, setor ou funcionario." }
+    (d) => Boolean(d.centroCustoId || d.veiculoId || d.veiculoPlaca),
+    { message: "Toda saida precisa de um destino: veiculo ou setor." }
   );
 
 export const esquemaItem = z.object({
@@ -113,12 +96,6 @@ export const esquemaDeposito = z.object({
 export const esquemaCentroCusto = z.object({
   nome: z.string().min(2, "Informe o nome do centro de custo").max(120),
   codigo: opcional(20),
-});
-
-export const esquemaFuncionario = z.object({
-  nome: z.string().min(2, "Informe o nome do funcionario").max(120),
-  matricula: opcional(30),
-  funcao: opcional(80),
 });
 
 export const esquemaFornecedor = z.object({

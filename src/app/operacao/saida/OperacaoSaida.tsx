@@ -48,8 +48,6 @@ export function OperacaoSaida({ depositoId, veiculos, centrosCusto }: OperacaoSa
   const [indiceEditando, setIndiceEditando] = useState<number | null>(null);
   const [destino, setDestino] = useState<DestinoSelecionado | null>(null);
   const [frotaDigitada, setFrotaDigitada] = useState("");
-  const [funcionarioDigitado, setFuncionarioDigitado] = useState("");
-  const [numeroOs, setNumeroOs] = useState("");
   const [resultado, setResultado] = useState<ResultadoOperacao | null>(null);
   const [enviando, setEnviando] = useState(false);
 
@@ -61,8 +59,6 @@ export function OperacaoSaida({ depositoId, veiculos, centrosCusto }: OperacaoSa
     setIndiceEditando(null);
     setDestino(null);
     setFrotaDigitada("");
-    setFuncionarioDigitado("");
-    setNumeroOs("");
   }
 
   function editarItemCarrinho(indice: number) {
@@ -87,7 +83,7 @@ export function OperacaoSaida({ depositoId, veiculos, centrosCusto }: OperacaoSa
     setIndiceEditando(null);
   }
 
-  // Frota, setor e colaborador se combinam. So "veiculo da lista" e "frota digitada"
+  // Frota e setor se combinam. So "veiculo da lista" e "frota digitada"
   // se excluem, porque os dois dizem qual e o veiculo.
   function selecionarChipDestino(novoDestino: DestinoSelecionado) {
     const jaSelecionado = destino?.tipo === novoDestino.tipo && destino.id === novoDestino.id;
@@ -138,17 +134,16 @@ export function OperacaoSaida({ depositoId, veiculos, centrosCusto }: OperacaoSa
     if (enviando || carrinho.length === 0) return;
 
     const frota = frotaDigitada.trim();
-    const colaborador = funcionarioDigitado.trim();
-    if (!destino && !frota && !colaborador) {
+    if (!destino && !frota) {
       setResultado({
         ok: false,
         titulo: "Destino obrigatório",
-        detalhe: "Toda saída precisa ser vinculada a uma frota, setor ou colaborador.",
+        detalhe: "Toda saída precisa ser vinculada a uma frota ou setor.",
       });
       return;
     }
 
-    const rotuloDestino = [destino?.rotulo, frota, colaborador].filter(Boolean).join(" · ");
+    const rotuloDestino = [destino?.rotulo, frota].filter(Boolean).join(" · ");
 
     setEnviando(true);
     const resposta = await registrarSaidaLote({
@@ -156,8 +151,6 @@ export function OperacaoSaida({ depositoId, veiculos, centrosCusto }: OperacaoSa
       centroCustoId: destino?.tipo === "centro" ? destino.id : undefined,
       veiculoId: destino?.tipo === "veiculo" ? destino.id : undefined,
       veiculoPlaca: frota || undefined,
-      funcionarioNome: colaborador || undefined,
-      numeroOs: numeroOs.trim() || undefined,
       itens: carrinho.map((l) => ({ itemId: l.itemId, quantidade: l.quantidade })),
     });
     setEnviando(false);
@@ -335,31 +328,6 @@ export function OperacaoSaida({ depositoId, veiculos, centrosCusto }: OperacaoSa
                   </p>
                 )}
               </div>
-
-              <div className="mt-3">
-                <input
-                  value={funcionarioDigitado}
-                  onChange={(e) => setFuncionarioDigitado(e.target.value)}
-                  placeholder="Nome do colaborador"
-                  className="h-14 w-full rounded border border-bruma bg-aco px-3.5 font-corpo text-base text-white outline-none placeholder:text-bruma-luz"
-                />
-                {funcionarioDigitado.trim() && (
-                  <p className="mt-2 font-corpo text-xs text-bruma-luz">
-                    Se esse colaborador ainda não estiver cadastrado, ele é criado automaticamente.
-                  </p>
-                )}
-              </div>
-            </div>
-
-            <div>
-              <p className="mb-2.5 font-display text-rotulo uppercase text-bruma-luz">Ordem de serviço · opcional</p>
-              <input
-                value={numeroOs}
-                onChange={(e) => setNumeroOs(e.target.value)}
-                maxLength={40}
-                placeholder="Número da OS (ex.: OS 12212)"
-                className="h-14 w-full rounded border border-bruma bg-aco px-3.5 font-dado text-base text-white outline-none placeholder:text-bruma-luz"
-              />
             </div>
           </div>
         )}

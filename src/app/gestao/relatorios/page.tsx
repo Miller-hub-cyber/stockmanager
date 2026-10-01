@@ -11,7 +11,7 @@ const RELATORIOS = [
   {
     href: "/gestao/relatorios/saidas",
     titulo: "Relatório de saídas",
-    descricao: "O que saiu, para qual frota, colaborador ou setor.",
+    descricao: "O que saiu, para qual frota ou setor.",
     Icone: TrendingDown,
   },
   {

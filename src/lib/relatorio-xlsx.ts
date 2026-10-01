@@ -12,29 +12,14 @@ const DATA: ColunaXlsx = { chave: "data", rotulo: "Data", largura: 17, tipo: "da
 const VALOR_UNIT: ColunaXlsx = { chave: "custo_unitario", rotulo: "Valor unitário", largura: 15, tipo: "moeda" };
 const TOTAL: ColunaXlsx = { chave: "valor", rotulo: "Total", largura: 15, tipo: "moeda" };
 const FORNECEDOR: ColunaXlsx = { chave: "fornecedor", rotulo: "Fornecedor", largura: 26 };
-const NF: ColunaXlsx = { chave: "numero_nf", rotulo: "NF", largura: 14 };
-const OS: ColunaXlsx = { chave: "numero_os", rotulo: "OS", largura: 12 };
 const FROTA: ColunaXlsx = { chave: "placa", rotulo: "Frota / placa", largura: 15 };
-const COLABORADOR: ColunaXlsx = { chave: "mecanico", rotulo: "Colaborador", largura: 26 };
 const CENTRO: ColunaXlsx = { chave: "centro_custo", rotulo: "Centro de custo", largura: 22 };
 const USUARIO: ColunaXlsx = { chave: "usuario", rotulo: "Registrado por", largura: 20 };
 const qtd = (rotulo: string): ColunaXlsx => ({ chave: "quantidade", rotulo, largura: 12, tipo: "numero" });
 
 const COLUNAS_MOVIMENTACAO: Record<ModoRelatorio, ColunaXlsx[]> = {
-  entrada: [SKU, ITEM, DATA, VALOR_UNIT, qtd("Entrada"), TOTAL, FORNECEDOR, NF, OS, FROTA, COLABORADOR, USUARIO],
-  saida: [
-    SKU,
-    ITEM,
-    DATA,
-    VALOR_UNIT,
-    qtd("Saída"),
-    TOTAL,
-    OS,
-    FROTA,
-    COLABORADOR,
-    CENTRO,
-    USUARIO,
-  ],
+  entrada: [SKU, ITEM, DATA, VALOR_UNIT, qtd("Entrada"), TOTAL, FORNECEDOR, FROTA, USUARIO],
+  saida: [SKU, ITEM, DATA, VALOR_UNIT, qtd("Saída"), TOTAL, FROTA, CENTRO, USUARIO],
   geral: [
     DATA,
     { chave: "tipo", rotulo: "Tipo", largura: 18 },
@@ -44,10 +29,7 @@ const COLUNAS_MOVIMENTACAO: Record<ModoRelatorio, ColunaXlsx[]> = {
     VALOR_UNIT,
     TOTAL,
     FORNECEDOR,
-    NF,
-    OS,
     FROTA,
-    COLABORADOR,
     CENTRO,
     USUARIO,
     { chave: "motivo", rotulo: "Motivo", largura: 28 },
@@ -73,10 +55,7 @@ export function abaMovimentacoes(modo: ModoRelatorio, linhas: LinhaMovimentacao[
       custo_unitario: l.custo_unitario,
       valor: l.valor,
       fornecedor: l.fornecedor,
-      numero_nf: l.numero_nf,
-      numero_os: l.numero_os,
       placa: l.placa,
-      mecanico: l.mecanico,
       centro_custo: l.centro_custo,
       usuario: l.usuario,
       motivo: l.motivo,

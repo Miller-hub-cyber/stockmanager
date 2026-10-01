@@ -28,13 +28,11 @@ export function traduzirErro(mensagem: string): string {
   if (mensagem.includes("MOVIMENTACAO_JA_ESTORNADA"))
     return "Esta movimentacao ja foi estornada.";
   if (mensagem.includes("saida_exige_destino"))
-    return "Toda saida precisa de um destino: veiculo, setor ou funcionario.";
+    return "Toda saida precisa de um destino: veiculo ou setor.";
   if (mensagem.includes("SALDO_DERIVADO"))
     return "O saldo resulta das movimentacoes e nao pode ser editado.";
   if (mensagem.includes("PLACA_INVALIDA"))
     return "Informe o numero da frota ou placa.";
-  if (mensagem.includes("NOME_INVALIDO"))
-    return "Informe o nome do colaborador.";
   if (mensagem.includes("SEM_PERMISSAO"))
     return "Voce nao tem permissao para esta acao.";
   if (mensagem.includes("duplicate key value violates unique constraint")) {

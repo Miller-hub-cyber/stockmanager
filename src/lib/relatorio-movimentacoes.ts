@@ -17,18 +17,15 @@ export interface FiltrosRelatorio {
   de?: string;
   ate?: string;
   veiculoId?: string;
-  funcionarioId?: string;
-  /** Busca parcial, sem diferenciar maiusculas: "12212" acha "OS 12212". */
-  numeroOs?: string;
 }
 
 export type LinhaMovimentacao = Omit<
   Database["public"]["Views"]["v_movimentacoes_detalhe"]["Row"],
-  "empresa_id" | "item_id" | "veiculo_id" | "funcionario_id" | "km_veiculo"
+  "empresa_id" | "item_id" | "veiculo_id" | "km_veiculo"
 >;
 
 const COLUNAS =
-  "id, criado_em, tipo, sku, item, unidade, quantidade, custo_unitario, valor, placa, mecanico, centro_custo, fornecedor, numero_nf, numero_os, usuario, motivo, estorno_de, estornada";
+  "id, criado_em, tipo, sku, item, unidade, quantidade, custo_unitario, valor, placa, centro_custo, fornecedor, usuario, motivo, estorno_de, estornada";
 
 const dataIso = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
 const uuid = z.string().uuid();
@@ -40,8 +37,6 @@ export function lerFiltros(bruto: { [chave: string]: string | string[] | undefin
     de: dataIso.safeParse(texto("de")).data,
     ate: dataIso.safeParse(texto("ate")).data,
     veiculoId: uuid.safeParse(texto("veiculoId")).data,
-    funcionarioId: uuid.safeParse(texto("funcionarioId")).data,
-    numeroOs: texto("numeroOs")?.trim().slice(0, 40) || undefined,
   };
 }
 
@@ -76,8 +71,6 @@ export async function buscarMovimentacoes(
   if (filtros.de) consulta = consulta.gte("criado_em", `${filtros.de}T00:00:00-03:00`);
   if (filtros.ate) consulta = consulta.lte("criado_em", `${filtros.ate}T23:59:59.999-03:00`);
   if (filtros.veiculoId) consulta = consulta.eq("veiculo_id", filtros.veiculoId);
-  if (filtros.funcionarioId) consulta = consulta.eq("funcionario_id", filtros.funcionarioId);
-  if (filtros.numeroOs) consulta = consulta.ilike("numero_os", padraoContem(filtros.numeroOs));
 
   const { data, error } = await consulta
     .order("criado_em", { ascending: false })
@@ -124,10 +117,7 @@ export const COLUNAS_CSV: Record<ModoRelatorio, { chave: string; rotulo: string 
     { chave: "custo_unitario", rotulo: "Custo unitário" },
     { chave: "valor", rotulo: "Valor" },
     { chave: "fornecedor", rotulo: "Fornecedor" },
-    { chave: "numero_nf", rotulo: "NF" },
-    { chave: "numero_os", rotulo: "OS" },
     { chave: "placa", rotulo: "Frota / placa" },
-    { chave: "mecanico", rotulo: "Colaborador" },
     { chave: "usuario", rotulo: "Usuário" },
   ],
   saida: [
@@ -138,9 +128,7 @@ export const COLUNAS_CSV: Record<ModoRelatorio, { chave: string; rotulo: string 
     { chave: "unidade", rotulo: "Unidade" },
     { chave: "custo_unitario", rotulo: "Custo unitário" },
     { chave: "valor", rotulo: "Valor" },
-    { chave: "numero_os", rotulo: "OS" },
     { chave: "placa", rotulo: "Frota / placa" },
-    { chave: "mecanico", rotulo: "Colaborador" },
     { chave: "centro_custo", rotulo: "Centro de custo" },
     { chave: "usuario", rotulo: "Usuário" },
   ],
@@ -154,10 +142,7 @@ export const COLUNAS_CSV: Record<ModoRelatorio, { chave: string; rotulo: string 
     { chave: "custo_unitario", rotulo: "Custo unitário" },
     { chave: "valor", rotulo: "Valor" },
     { chave: "fornecedor", rotulo: "Fornecedor" },
-    { chave: "numero_nf", rotulo: "NF" },
-    { chave: "numero_os", rotulo: "OS" },
     { chave: "placa", rotulo: "Frota / placa" },
-    { chave: "mecanico", rotulo: "Colaborador" },
     { chave: "centro_custo", rotulo: "Centro de custo" },
     { chave: "usuario", rotulo: "Usuário" },
     { chave: "motivo", rotulo: "Motivo" },
@@ -175,10 +160,7 @@ export function linhaParaCsv(l: LinhaMovimentacao): Record<string, string | numb
     custo_unitario: decimal(l.custo_unitario, 4),
     valor: decimal(l.valor, 2),
     fornecedor: l.fornecedor,
-    numero_nf: l.numero_nf,
-    numero_os: l.numero_os,
     placa: l.placa,
-    mecanico: l.mecanico,
     centro_custo: l.centro_custo,
     usuario: l.usuario,
     motivo: l.motivo,

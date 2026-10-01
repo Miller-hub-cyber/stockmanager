@@ -14,7 +14,7 @@ export default async function PaginaEditarFornecedor({ params }: { params: { id:
       .single(),
     supabase
       .from("documentos")
-      .select("id, numero_nf, data")
+      .select("id, data")
       .eq("fornecedor_id", params.id)
       .order("data", { ascending: false })
       .limit(10),
@@ -49,7 +49,7 @@ export default async function PaginaEditarFornecedor({ params }: { params: { id:
           <div className="mt-2 flex flex-col gap-2">
             {(entradas ?? []).length === 0 && (
               <p className="rounded border border-giz bg-white p-4 font-corpo text-sm text-bruma-texto">
-                Nenhuma entrada com nota fiscal registrada para este fornecedor ainda.
+                Nenhuma entrada registrada para este fornecedor ainda.
               </p>
             )}
             {(entradas ?? []).map((e) => {
@@ -64,7 +64,6 @@ export default async function PaginaEditarFornecedor({ params }: { params: { id:
                     <div className="truncate font-corpo text-sm text-tinta">{item?.nome ?? "Item"}</div>
                     <div className="font-dado text-xs text-bruma-texto">
                       {quantidade(e.quantidade)} {item?.unidade}
-                      {documento?.numero_nf ? ` · NF ${documento.numero_nf}` : ""}
                       {documento?.data ? ` · ${formatarData(documento.data)}` : ""}
                     </div>
                   </div>

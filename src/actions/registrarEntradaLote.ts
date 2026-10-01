@@ -10,7 +10,7 @@ export interface ResultadoMovimentacao {
   erro?: string;
 }
 
-/** Registra varios itens na mesma entrada: um documento (NF) e uma movimentacao por item, no mesmo lote. */
+/** Registra varios itens na mesma entrada: um documento e uma movimentacao por item, no mesmo lote. */
 export async function registrarEntradaLote(dados: unknown): Promise<ResultadoMovimentacao> {
   const usuario = await obterUsuarioAtual();
   if (!usuario) return { sucesso: false, erro: "Sessao expirada. Faca login novamente." };
@@ -37,28 +37,14 @@ export async function registrarEntradaLote(dados: unknown): Promise<ResultadoMov
     veiculoId = veiculoResolvido;
   }
 
-  // Mecanico que pediu as pecas: mesma resolucao da saida (0010).
-  let funcionarioId: string | null = null;
-  if (validado.data.funcionarioNome) {
-    const { data: funcionarioResolvido, error: erroFuncionario } = await supabase.rpc(
-      "fn_obter_ou_criar_funcionario",
-      { p_nome: validado.data.funcionarioNome }
-    );
-    if (erroFuncionario || !funcionarioResolvido) {
-      return { sucesso: false, erro: traduzirErro(erroFuncionario?.message ?? "") };
-    }
-    funcionarioId = funcionarioResolvido;
-  }
-
-  // NF ou fornecedor informado -> cria um unico documento para o lote e vincula todas as linhas a ele.
+  // Fornecedor informado -> cria um unico documento para o lote e vincula todas as linhas a ele.
   let documentoId: string | null = null;
-  if (validado.data.numeroNf || validado.data.fornecedorId) {
+  if (validado.data.fornecedorId) {
     const { data: documento, error: erroDocumento } = await supabase
       .from("documentos")
       .insert({
         empresa_id: usuario.empresaId,
         tipo: "entrada",
-        numero_nf: validado.data.numeroNf ?? null,
         fornecedor_id: validado.data.fornecedorId ?? null,
         usuario_id: usuario.id,
       })
@@ -78,9 +64,7 @@ export async function registrarEntradaLote(dados: unknown): Promise<ResultadoMov
     quantidade: item.quantidade,
     custo_unitario: item.custoUnitario,
     documento_id: documentoId,
-    numero_os: validado.data.numeroOs ?? null,
     veiculo_id: veiculoId,
-    funcionario_id: funcionarioId,
     usuario_id: usuario.id,
   }));
 

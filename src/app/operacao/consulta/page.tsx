@@ -17,7 +17,7 @@ export default async function PaginaConsulta() {
   const { data: movimentacoes } = await supabase
     .from("movimentacoes")
     .select(
-      "id, item_id, tipo, quantidade, custo_unitario, centro_custo_id, veiculo_id, funcionario_id, estorno_de, criado_em, usuario_id"
+      "id, item_id, tipo, quantidade, custo_unitario, centro_custo_id, veiculo_id, estorno_de, criado_em, usuario_id"
     )
     .order("criado_em", { ascending: false })
     .limit(15);
@@ -31,14 +31,11 @@ export default async function PaginaConsulta() {
   const idsCentros = Array.from(
     new Set(lista.map((m) => m.centro_custo_id).filter((v): v is string => Boolean(v)))
   );
-  const idsFuncionarios = Array.from(
-    new Set(lista.map((m) => m.funcionario_id).filter((v): v is string => Boolean(v)))
-  );
   const idsUsuarios = Array.from(
     new Set(lista.map((m) => m.usuario_id).filter((v): v is string => Boolean(v)))
   );
 
-  const [itensRel, veiculosRel, centrosRel, funcionariosRel, usuariosRel] = await Promise.all([
+  const [itensRel, veiculosRel, centrosRel, usuariosRel] = await Promise.all([
     idsItens.length
       ? supabase.from("itens").select("id, nome, sku, unidade").in("id", idsItens)
       : { data: [] as { id: string; nome: string; sku: string; unidade: string }[] },
@@ -48,9 +45,6 @@ export default async function PaginaConsulta() {
     idsCentros.length
       ? supabase.from("centros_custo").select("id, nome").in("id", idsCentros)
       : { data: [] as { id: string; nome: string }[] },
-    idsFuncionarios.length
-      ? supabase.from("funcionarios").select("id, nome").in("id", idsFuncionarios)
-      : { data: [] as { id: string; nome: string }[] },
     idsUsuarios.length
       ? supabase.from("usuarios").select("id, nome").in("id", idsUsuarios)
       : { data: [] as { id: string; nome: string }[] },
@@ -59,7 +53,6 @@ export default async function PaginaConsulta() {
   const mapaItens = new Map((itensRel.data ?? []).map((i) => [i.id, i]));
   const mapaVeiculos = new Map((veiculosRel.data ?? []).map((v) => [v.id, v.placa]));
   const mapaCentros = new Map((centrosRel.data ?? []).map((c) => [c.id, c.nome]));
-  const mapaFuncionarios = new Map((funcionariosRel.data ?? []).map((f) => [f.id, f.nome]));
   const mapaUsuarios = new Map((usuariosRel.data ?? []).map((u) => [u.id, u.nome]));
 
   const idsJaEstornados = new Set(lista.map((m) => m.estorno_de).filter((v): v is string => Boolean(v)));
@@ -87,9 +80,7 @@ export default async function PaginaConsulta() {
               ? mapaVeiculos.get(m.veiculo_id)
               : m.centro_custo_id
                 ? mapaCentros.get(m.centro_custo_id)
-                : m.funcionario_id
-                  ? mapaFuncionarios.get(m.funcionario_id)
-                  : null;
+                : null;
             const saida = m.tipo === "saida";
             const jaEstornada = idsJaEstornados.has(m.id);
             const ehEstorno = m.estorno_de !== null;

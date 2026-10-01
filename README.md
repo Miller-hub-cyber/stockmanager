@@ -54,7 +54,7 @@ pelo arquivo gerado de verdade.
 
 1. Saldo e derivado das movimentacoes. Nenhum codigo faz `UPDATE saldos`.
 2. Movimentacao e imutavel. Correcao e estorno.
-3. Toda saida exige destino de custo: veiculo, setor ou funcionario.
+3. Toda saida exige destino de custo: veiculo ou setor.
 4. Saldo nao pode ficar negativo.
 5. Custo medio ponderado recalculado so na entrada.
 6. Regra critica vive no banco, nao na interface.

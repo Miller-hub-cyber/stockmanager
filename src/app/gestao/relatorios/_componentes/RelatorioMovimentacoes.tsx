@@ -36,9 +36,7 @@ const COL_QTD: Coluna = {
   valor: (l) => `${quantidade(l.quantidade)} ${l.unidade}`,
 };
 const COL_VALOR: Coluna = { rotulo: "Valor", largura: "w-[110px] flex-none", direita: true, mono: true, valor: (l) => brl(l.valor) };
-const COL_OS: Coluna = { rotulo: "OS", largura: "w-[90px] flex-none", mono: true, valor: (l) => dash(l.numero_os) };
 const COL_FROTA: Coluna = { rotulo: "Frota", largura: "w-[100px] flex-none", mono: true, valor: (l) => dash(l.placa) };
-const COL_MECANICO: Coluna = { rotulo: "Colaborador", largura: "w-[140px] flex-none", suave: true, valor: (l) => dash(l.mecanico) };
 const COL_SETOR: Coluna = { rotulo: "Centro de custo", largura: "w-[130px] flex-none", suave: true, valor: (l) => dash(l.centro_custo) };
 const COL_USUARIO: Coluna = { rotulo: "Usuário", largura: "w-[110px] flex-none", suave: true, valor: (l) => dash(l.usuario) };
 
@@ -49,22 +47,17 @@ const COLUNAS: Record<ModoRelatorio, Coluna[]> = {
     COL_QTD,
     COL_VALOR,
     { rotulo: "Fornecedor", largura: "w-[140px] flex-none", suave: true, valor: (l) => dash(l.fornecedor) },
-    { rotulo: "NF", largura: "w-[90px] flex-none", mono: true, valor: (l) => dash(l.numero_nf) },
-    COL_OS,
     COL_FROTA,
-    COL_MECANICO,
     COL_USUARIO,
   ],
-  saida: [COL_DATA, COL_ITEM, COL_QTD, COL_VALOR, COL_OS, COL_FROTA, COL_MECANICO, COL_SETOR, COL_USUARIO],
+  saida: [COL_DATA, COL_ITEM, COL_QTD, COL_VALOR, COL_FROTA, COL_SETOR, COL_USUARIO],
   geral: [
     COL_DATA,
     { rotulo: "Tipo", largura: "w-[130px] flex-none", valor: (l) => rotuloTipo(l) },
     COL_ITEM,
     COL_QTD,
     COL_VALOR,
-    COL_OS,
     COL_FROTA,
-    COL_MECANICO,
     COL_SETOR,
     COL_USUARIO,
   ],
@@ -97,10 +90,7 @@ export async function RelatorioMovimentacoes({ modo, titulo, descricao, rota, se
     console.error("Falha ao carregar relatorio", erro);
     falhou = true;
   }
-  const [{ data: veiculos }, { data: funcionarios }] = await Promise.all([
-    supabase.from("veiculos").select("id, placa").order("placa"),
-    supabase.from("funcionarios").select("id, nome").order("nome"),
-  ]);
+  const { data: veiculos } = await supabase.from("veiculos").select("id, placa").order("placa");
 
   const cortado = linhasBrutas.length > LIMITE_TELA;
   const linhas = cortado ? linhasBrutas.slice(0, LIMITE_TELA) : linhasBrutas;
@@ -168,24 +158,6 @@ export async function RelatorioMovimentacoes({ modo, titulo, descricao, rota, se
               </option>
             ))}
           </Seletor>
-        </div>
-        <div className="w-52">
-          <Seletor
-            id="funcionarioId"
-            name="funcionarioId"
-            rotulo="Colaborador"
-            defaultValue={filtros.funcionarioId ?? ""}
-          >
-            <option value="">Todos</option>
-            {(funcionarios ?? []).map((f) => (
-              <option key={f.id} value={f.id}>
-                {f.nome}
-              </option>
-            ))}
-          </Seletor>
-        </div>
-        <div className="w-36">
-          <Campo id="numeroOs" name="numeroOs" rotulo="OS" placeholder="Ex.: 12212" maxLength={40} defaultValue={filtros.numeroOs ?? ""} />
         </div>
         <div className="w-28">
           <Botao type="submit" variante="secundario">

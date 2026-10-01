@@ -10,7 +10,7 @@ export interface ResultadoMovimentacao {
   erro?: string;
 }
 
-/** Registra varios itens na mesma saida: mesmo destino (veiculo/centro/funcionario) para todas as linhas. */
+/** Registra varios itens na mesma saida: mesmo destino (veiculo/centro de custo) para todas as linhas. */
 export async function registrarSaidaLote(dados: unknown): Promise<ResultadoMovimentacao> {
   const usuario = await obterUsuarioAtual();
   if (!usuario) return { sucesso: false, erro: "Sessao expirada. Faca login novamente." };
@@ -39,19 +39,6 @@ export async function registrarSaidaLote(dados: unknown): Promise<ResultadoMovim
     veiculoId = veiculoResolvido;
   }
 
-  // Nome do mecanico digitado na hora (ainda sem cadastro): mesma logica da placa acima.
-  let funcionarioId = validado.data.funcionarioId ?? null;
-  if (!funcionarioId && validado.data.funcionarioNome) {
-    const { data: funcionarioResolvido, error: erroFuncionario } = await supabase.rpc(
-      "fn_obter_ou_criar_funcionario",
-      { p_nome: validado.data.funcionarioNome }
-    );
-    if (erroFuncionario || !funcionarioResolvido) {
-      return { sucesso: false, erro: traduzirErro(erroFuncionario?.message ?? "") };
-    }
-    funcionarioId = funcionarioResolvido;
-  }
-
   const linhas = validado.data.itens.map((item) => ({
     empresa_id: usuario.empresaId,
     item_id: item.itemId,
@@ -60,10 +47,8 @@ export async function registrarSaidaLote(dados: unknown): Promise<ResultadoMovim
     quantidade: item.quantidade,
     centro_custo_id: validado.data.centroCustoId ?? null,
     veiculo_id: veiculoId,
-    funcionario_id: funcionarioId,
     km_veiculo: validado.data.kmVeiculo ?? null,
     motivo: validado.data.motivo ?? null,
-    numero_os: validado.data.numeroOs ?? null,
     usuario_id: usuario.id,
   }));
 
