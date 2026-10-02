@@ -1,9 +1,22 @@
 import type { Database } from "@/types/database";
 import { dataBelem, type AbaXlsx, type ColunaXlsx } from "@/lib/xlsx";
+import { mesAno } from "@/lib/formato";
 import { rotuloTipo, type LinhaMovimentacao, type ModoRelatorio } from "@/lib/relatorio-movimentacoes";
 
+type Views = Database["public"]["Views"];
 type Fornecedor = Database["public"]["Tables"]["fornecedores"]["Row"];
-type EstoqueGeral = Database["public"]["Views"]["v_estoque_geral"]["Row"];
+type EstoqueGeral = Views["v_estoque_geral"]["Row"];
+type ConsumoVeiculo = Pick<Views["v_consumo_por_veiculo"]["Row"], "placa" | "modelo" | "mes" | "custo_total" | "movimentos">;
+type ConsumoCentro = Pick<Views["v_consumo_por_centro"]["Row"], "centro_custo" | "mes" | "custo_total">;
+type ItemParado = Pick<
+  Views["v_itens_parados"]["Row"],
+  "sku" | "nome" | "saldo" | "valor_parado" | "ultima_saida" | "dias_sem_saida"
+>;
+type ValorEstoque = Pick<Views["v_valor_estoque"]["Row"], "categoria" | "itens" | "unidades" | "valor">;
+type LinhaKardex = Pick<
+  Views["v_kardex"]["Row"],
+  "criado_em" | "tipo" | "destino" | "quantidade" | "custo_unitario" | "valor" | "usuario" | "motivo"
+>;
 
 // Colunas na ordem do modelo (Codigo, Item, Data, Valor, Quantidade) + o que este sistema controla a mais.
 const SKU: ColunaXlsx = { chave: "sku", rotulo: "Código do Produto", largura: 18 };
@@ -88,6 +101,105 @@ export function abaEstoqueGeral(estoque: EstoqueGeral[]): AbaXlsx {
       custo_medio: e.custo_medio,
       valor_estoque: e.valor_estoque,
       status: e.status,
+    })),
+  };
+}
+
+// As abas abaixo espelham, coluna por coluna, o CSV da rota /exportar de cada relatório.
+const MES: ColunaXlsx = { chave: "mes", rotulo: "Mês", largura: 14 };
+const CUSTO_TOTAL: ColunaXlsx = { chave: "custo_total", rotulo: "Custo total", largura: 16, tipo: "moeda" };
+
+export function abaConsumoVeiculo(linhas: ConsumoVeiculo[]): AbaXlsx {
+  return {
+    nome: "Consumo por veículo",
+    titulo: "Consumo de Material por Veículo",
+    colunas: [
+      { chave: "placa", rotulo: "Placa", largura: 14 },
+      { chave: "modelo", rotulo: "Modelo", largura: 24 },
+      MES,
+      { chave: "movimentos", rotulo: "Saídas", largura: 10, tipo: "numero" },
+      CUSTO_TOTAL,
+    ],
+    linhas: linhas.map((l) => ({
+      placa: l.placa,
+      modelo: l.modelo,
+      mes: mesAno(l.mes),
+      movimentos: l.movimentos,
+      custo_total: l.custo_total,
+    })),
+  };
+}
+
+export function abaConsumoCentro(linhas: ConsumoCentro[]): AbaXlsx {
+  return {
+    nome: "Consumo por centro de custo",
+    titulo: "Consumo de Material por Centro de Custo",
+    colunas: [{ chave: "centro_custo", rotulo: "Centro de custo", largura: 28 }, MES, CUSTO_TOTAL],
+    linhas: linhas.map((l) => ({ centro_custo: l.centro_custo, mes: mesAno(l.mes), custo_total: l.custo_total })),
+  };
+}
+
+export function abaItensParados(linhas: ItemParado[]): AbaXlsx {
+  return {
+    nome: "Itens parados",
+    titulo: "Itens Parados (sem saída há mais de 90 dias)",
+    colunas: [
+      SKU,
+      ITEM,
+      { chave: "saldo", rotulo: "Saldo", largura: 12, tipo: "numero" },
+      { chave: "valor_parado", rotulo: "Valor parado", largura: 16, tipo: "moeda" },
+      { chave: "ultima_saida", rotulo: "Última saída", largura: 14, tipo: "data" },
+      { chave: "dias_sem_saida", rotulo: "Dias parado", largura: 12, tipo: "numero" },
+    ],
+    linhas: linhas.map((l) => ({
+      sku: l.sku,
+      item: l.nome,
+      saldo: l.saldo,
+      valor_parado: l.valor_parado,
+      ultima_saida: l.ultima_saida ? dataBelem(l.ultima_saida) : "Nunca",
+      dias_sem_saida: l.dias_sem_saida,
+    })),
+  };
+}
+
+export function abaValorEstoque(linhas: ValorEstoque[]): AbaXlsx {
+  return {
+    nome: "Valor imobilizado",
+    titulo: "Valor Imobilizado por Categoria",
+    colunas: [
+      { chave: "categoria", rotulo: "Categoria", largura: 28 },
+      { chave: "itens", rotulo: "Itens", largura: 10, tipo: "numero" },
+      { chave: "unidades", rotulo: "Unidades", largura: 14, tipo: "numero" },
+      { chave: "valor", rotulo: "Valor", largura: 16, tipo: "moeda" },
+    ],
+    linhas: linhas.map((l) => ({ categoria: l.categoria, itens: l.itens, unidades: l.unidades, valor: l.valor })),
+  };
+}
+
+/** `item` dá nome à faixa de título ("Kardex — SKU · Nome"). */
+export function abaKardex(linhas: LinhaKardex[], item?: { sku: string; nome: string }): AbaXlsx {
+  return {
+    nome: "Kardex",
+    titulo: item ? `Kardex — ${item.sku} · ${item.nome}` : "Kardex",
+    colunas: [
+      DATA,
+      { chave: "tipo", rotulo: "Tipo", largura: 14 },
+      { chave: "destino", rotulo: "Destino", largura: 22 },
+      qtd("Quantidade"),
+      VALOR_UNIT,
+      TOTAL,
+      USUARIO,
+      { chave: "motivo", rotulo: "Motivo", largura: 28 },
+    ],
+    linhas: linhas.map((l) => ({
+      data: dataBelem(l.criado_em),
+      tipo: l.tipo,
+      destino: l.destino,
+      quantidade: l.quantidade,
+      custo_unitario: l.custo_unitario,
+      valor: l.valor,
+      usuario: l.usuario,
+      motivo: l.motivo,
     })),
   };
 }

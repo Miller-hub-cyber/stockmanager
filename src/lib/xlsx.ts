@@ -6,7 +6,7 @@ import ExcelJS from "exceljs";
  * fina, status colorido. So formatacao — quem chama entrega os dados prontos.
  */
 
-export type TipoColuna = "texto" | "dataHora" | "moeda" | "numero";
+export type TipoColuna = "texto" | "data" | "dataHora" | "moeda" | "numero";
 
 export interface ColunaXlsx {
   rotulo: string;
@@ -44,6 +44,7 @@ const ESTILO_STATUS: Record<string, { fundo: string; texto: string }> = {
 
 const FORMATO: Record<TipoColuna, string | undefined> = {
   texto: undefined,
+  data: "dd/mm/yyyy",
   dataHora: "dd/mm/yyyy hh:mm",
   moeda: '"R$" #,##0.00',
   numero: "#,##0.###",

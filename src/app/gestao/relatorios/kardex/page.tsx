@@ -29,10 +29,17 @@ export default async function PaginaKardex({ searchParams }: Props) {
           <p className="mt-1 font-corpo text-sm text-bruma-texto">Histórico completo de entradas e saídas.</p>
         </div>
         {itemId && (
-          <div className="w-36">
-            <Botao href={`/gestao/relatorios/kardex/exportar?itemId=${itemId}`} variante="secundario">
-              Exportar CSV
-            </Botao>
+          <div className="flex items-center gap-2">
+            <div className="w-40">
+              <Botao href={`/gestao/relatorios/kardex/exportar?itemId=${itemId}&formato=xlsx`} variante="secundario">
+                Exportar Excel
+              </Botao>
+            </div>
+            <div className="w-36">
+              <Botao href={`/gestao/relatorios/kardex/exportar?itemId=${itemId}`} variante="secundario">
+                Exportar CSV
+              </Botao>
+            </div>
           </div>
         )}
       </div>

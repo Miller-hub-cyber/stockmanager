@@ -6,7 +6,8 @@ import type { Config } from "tailwindcss";
  * Nao adicione familia de cor fora desta lista. Ambar e carmim sao exclusivos
  * de estado do estoque e nunca decoram elemento neutro. Laranja tem o mesmo
  * tom do ambar, mas e acento de marca: so em navegacao e identidade, nunca em
- * botao, dado ou perto de estado de item.
+ * botao, dado ou perto de estado de item. Unica excecao: o botao Excel dos
+ * cartoes de relatorio (ver docs/design-system.md).
  * Subchaves: DEFAULT = icone, borda, barra | texto = texto em fundo claro |
  * luz = texto em fundo escuro | fundo = badge em contexto claro.
  */

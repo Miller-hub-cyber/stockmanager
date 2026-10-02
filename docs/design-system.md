@@ -69,6 +69,8 @@ Regra de dominância: `aco` (o marinho da logo) é a cor da marca e domina as su
 
 O laranja da logo aparece em dois tokens com o mesmo hex. `ambar` é estado; `laranja` é personalidade. O que separa os dois é o lugar: `laranja` vive só na moldura do app (navegação, títulos, rótulos, perfil do usuário, ícone de atalho, seleção de texto, mira do leitor) e nunca em botão, em número, em barra de gráfico nem dentro da `Etiqueta`. Se o laranja puder ser lido como "este item precisa de atenção", use outra cor.
 
+Exceção única, pedida pelo dono do produto: o botão **Excel** dos cartões em `/gestao/relatorios` é laranja (`bg-laranja`, texto `aco`, 7.5:1), para separar à primeira vista da exportação CSV, que segue em `cobalto`. Não estenda a exceção para outros botões.
+
 Formas de uso já prontas em `globals.css`: `titulo-tela` (título com traço laranja pendurado na margem esquerda) e `rotulo-secao` (rótulo da operação com traço laranja à esquerda).
 
 A área de operação é escura por decisão funcional: balcão de almoxarifado tem luz ruim e tela escura cansa menos em uso repetitivo. A área de gestão é clara porque tabela densa se lê melhor em fundo claro.

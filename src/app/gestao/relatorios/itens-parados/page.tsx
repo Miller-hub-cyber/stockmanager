@@ -18,10 +18,17 @@ export default async function PaginaItensParados() {
           <h1 className="titulo-tela">Itens parados</h1>
           <p className="mt-1 font-corpo text-sm text-bruma-texto">Estoque com saldo, sem saída há mais de 90 dias.</p>
         </div>
-        <div className="w-36">
-          <Botao href="/gestao/relatorios/itens-parados/exportar" variante="secundario">
-            Exportar CSV
-          </Botao>
+        <div className="flex items-center gap-2">
+          <div className="w-40">
+            <Botao href="/gestao/relatorios/itens-parados/exportar?formato=xlsx" variante="secundario">
+              Exportar Excel
+            </Botao>
+          </div>
+          <div className="w-36">
+            <Botao href="/gestao/relatorios/itens-parados/exportar" variante="secundario">
+              Exportar CSV
+            </Botao>
+          </div>
         </div>
       </div>
 

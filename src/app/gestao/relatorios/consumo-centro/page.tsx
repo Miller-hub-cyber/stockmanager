@@ -1,14 +1,25 @@
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { Botao, Tabela, TabelaCabecalho, TabelaLinha, TabelaCelula } from "@/components/ui";
 import { brl, mesAno } from "@/lib/formato";
+import { descreverMeses, inicioDoMes } from "@/lib/periodo";
+import { lerFiltros } from "@/lib/relatorio-movimentacoes";
+import { rotaExportacao, rotaRelatorio } from "@/lib/relatorios";
 
-export default async function PaginaConsumoCentro() {
+interface Props {
+  searchParams: { [chave: string]: string | string[] | undefined };
+}
+
+export default async function PaginaConsumoCentro({ searchParams }: Props) {
+  // O relatório é mensal: o período entra como os meses que ele toca.
+  const { de, ate } = lerFiltros(searchParams);
+  const filtrado = Boolean(de || ate);
+
   const supabase = createClient();
-  const { data: linhas } = await supabase
-    .from("v_consumo_por_centro")
-    .select("centro_custo, mes, custo_total")
-    .order("mes", { ascending: false })
-    .order("custo_total", { ascending: false });
+  let consulta = supabase.from("v_consumo_por_centro").select("centro_custo, mes, custo_total");
+  if (de) consulta = consulta.gte("mes", inicioDoMes(de));
+  if (ate) consulta = consulta.lte("mes", ate);
+  const { data: linhas } = await consulta.order("mes", { ascending: false }).order("custo_total", { ascending: false });
 
   const lista = linhas ?? [];
 
@@ -17,19 +28,35 @@ export default async function PaginaConsumoCentro() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="titulo-tela">Consumo por centro de custo</h1>
-          <p className="mt-1 font-corpo text-sm text-bruma-texto">Distribuição do gasto entre setores, por mês.</p>
+          <p className="mt-1 font-corpo text-sm text-bruma-texto">
+            Distribuição do gasto entre setores, por mês{filtrado ? `, ${descreverMeses(de, ate)}` : ""}.
+            {filtrado && (
+              <Link href={rotaRelatorio("consumo-centro")} className="ml-2 text-cobalto hover:underline">
+                Ver todos os meses
+              </Link>
+            )}
+          </p>
         </div>
-        <div className="w-36">
-          <Botao href="/gestao/relatorios/consumo-centro/exportar" variante="secundario">
-            Exportar CSV
-          </Botao>
+        <div className="flex items-center gap-2">
+          <div className="w-40">
+            <Botao href={rotaExportacao("consumo-centro", { de, ate, formato: "xlsx" })} variante="secundario">
+              Exportar Excel
+            </Botao>
+          </div>
+          <div className="w-36">
+            <Botao href={rotaExportacao("consumo-centro", { de, ate })} variante="secundario">
+              Exportar CSV
+            </Botao>
+          </div>
         </div>
       </div>
 
       <div className="mt-6">
         {lista.length === 0 ? (
           <div className="rounded border border-giz bg-white p-8 text-center font-corpo text-sm text-bruma-texto">
-            Nenhuma saída vinculada a centro de custo ainda.
+            {filtrado
+              ? "Nenhuma saída vinculada a centro de custo neste período."
+              : "Nenhuma saída vinculada a centro de custo ainda."}
           </div>
         ) : (
           <Tabela>

@@ -19,10 +19,17 @@ export default async function PaginaValorEstoque() {
           <h1 className="titulo-tela">Valor imobilizado</h1>
           <p className="mt-1 font-corpo text-sm text-bruma-texto">Saldo multiplicado pelo custo médio, por categoria.</p>
         </div>
-        <div className="w-36">
-          <Botao href="/gestao/relatorios/valor-estoque/exportar" variante="secundario">
-            Exportar CSV
-          </Botao>
+        <div className="flex items-center gap-2">
+          <div className="w-40">
+            <Botao href="/gestao/relatorios/valor-estoque/exportar?formato=xlsx" variante="secundario">
+              Exportar Excel
+            </Botao>
+          </div>
+          <div className="w-36">
+            <Botao href="/gestao/relatorios/valor-estoque/exportar" variante="secundario">
+              Exportar CSV
+            </Botao>
+          </div>
         </div>
       </div>
 

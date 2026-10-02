@@ -10,6 +10,9 @@ export const dataHora = (d: string | Date) =>
 export const data = (d: string | Date) =>
   new Date(d).toLocaleDateString("pt-BR", { timeZone: "America/Belem" });
 
+/** Dia de calendário em Belém no formato AAAA-MM-DD (o "hoje" dos filtros de data). */
+export const diaBelem = (d: Date) => d.toLocaleDateString("en-CA", { timeZone: "America/Belem" });
+
 /** Recebe uma data truncada ao mes (ex.: "2026-08-01") e devolve "ago/2026". */
 export const mesAno = (dataIso: string) =>
   new Date(`${dataIso}T00:00:00`).toLocaleDateString("pt-BR", { month: "short", year: "numeric" }).replace(".", "");

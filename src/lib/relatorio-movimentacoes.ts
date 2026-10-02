@@ -54,15 +54,16 @@ export function filtrosParaQuery(filtros: FiltrosRelatorio): string {
   return params.toString();
 }
 
-/** Busca em pagina unica (tela). Devolve ate `limite` linhas, da mais recente para a mais antiga. */
-export async function buscarMovimentacoes(
+/** A view com os filtros do modo e da tela aplicados. `contar` troca as linhas pela contagem. */
+function consultaFiltrada(
   supabase: SupabaseClient<Database>,
   modo: ModoRelatorio,
   filtros: FiltrosRelatorio,
-  inicio: number,
-  limite: number
-): Promise<LinhaMovimentacao[]> {
-  let consulta = supabase.from("v_movimentacoes_detalhe").select(COLUNAS);
+  contar = false
+) {
+  let consulta = supabase
+    .from("v_movimentacoes_detalhe")
+    .select(COLUNAS, contar ? { count: "exact", head: true } : undefined);
 
   if (modo === "entrada") consulta = consulta.eq("tipo", "entrada").is("estorno_de", null).eq("estornada", false);
   if (modo === "saida") consulta = consulta.eq("tipo", "saida").is("estorno_de", null).eq("estornada", false);
@@ -72,7 +73,29 @@ export async function buscarMovimentacoes(
   if (filtros.ate) consulta = consulta.lte("criado_em", `${filtros.ate}T23:59:59.999-03:00`);
   if (filtros.veiculoId) consulta = consulta.eq("veiculo_id", filtros.veiculoId);
 
-  const { data, error } = await consulta
+  return consulta;
+}
+
+/** Quantas linhas o relatorio teria com estes filtros, sem trazer as linhas. */
+export async function contarMovimentacoes(
+  supabase: SupabaseClient<Database>,
+  modo: ModoRelatorio,
+  filtros: FiltrosRelatorio
+): Promise<number> {
+  const { count, error } = await consultaFiltrada(supabase, modo, filtros, true);
+  if (error) throw new Error(`Contagem de ${modo}: ${error.message}`);
+  return count ?? 0;
+}
+
+/** Busca em pagina unica (tela). Devolve ate `limite` linhas, da mais recente para a mais antiga. */
+export async function buscarMovimentacoes(
+  supabase: SupabaseClient<Database>,
+  modo: ModoRelatorio,
+  filtros: FiltrosRelatorio,
+  inicio: number,
+  limite: number
+): Promise<LinhaMovimentacao[]> {
+  const { data, error } = await consultaFiltrada(supabase, modo, filtros)
     .order("criado_em", { ascending: false })
     .order("id", { ascending: false })
     .range(inicio, inicio + limite - 1);

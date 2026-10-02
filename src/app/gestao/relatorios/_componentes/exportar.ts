@@ -1,8 +1,9 @@
 import { type NextRequest } from "next/server";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/server";
-import { obterUsuarioAtual } from "@/lib/sessao";
+import { obterUsuarioAtual, type UsuarioAtual } from "@/lib/sessao";
 import { paraCsv, respostaCsv } from "@/lib/csv";
+import { diaBelem } from "@/lib/formato";
 import type { Database } from "@/types/database";
 import {
   ARQUIVO_CSV,
@@ -14,8 +15,16 @@ import {
 } from "@/lib/relatorio-movimentacoes";
 import { abaEstoqueGeral, abaFornecedores, abaMovimentacoes } from "@/lib/relatorio-xlsx";
 import { montarXlsx, respostaXlsx, type AbaXlsx } from "@/lib/xlsx";
+import { registrarExportacao } from "@/lib/exportacoes";
+import type { ChaveRelatorio, FiltrosExportacao } from "@/lib/relatorios";
 
 const TAMANHO_PAGINA = 1000; // limite do PostgREST por requisicao
+
+const RELATORIO_DO_MODO: Record<ModoRelatorio, ChaveRelatorio> = {
+  entrada: "entradas",
+  saida: "saidas",
+  geral: "geral",
+};
 
 /** Le uma consulta inteira em paginas de 1000. */
 async function lerTudo<T>(
@@ -55,6 +64,34 @@ async function abasDoGeral(supabase: SupabaseClient<Database>, movimentacoes: Ab
   return [movimentacoes, abaEstoqueGeral(estoque), abaFornecedores(fornecedores, itens)];
 }
 
+interface OpcoesExportacao {
+  /** Nome do arquivo sem extensao; o Excel leva a data de hoje no fim. */
+  arquivo: string;
+  csv: () => string;
+  xlsx: () => AbaXlsx[] | Promise<AbaXlsx[]>;
+  /** Filtros que geraram o arquivo, para o historico de exportacoes. */
+  filtros?: FiltrosExportacao;
+}
+
+/**
+ * Resposta comum das rotas /exportar: CSV por padrao, Excel com ?formato=xlsx.
+ * So monta o formato pedido e registra a exportacao no historico.
+ */
+export async function responderExportacao(
+  request: NextRequest,
+  usuario: UsuarioAtual,
+  relatorio: ChaveRelatorio,
+  { arquivo, csv, xlsx, filtros }: OpcoesExportacao
+): Promise<Response> {
+  const formato = request.nextUrl.searchParams.get("formato") === "xlsx" ? "xlsx" : "csv";
+  const resposta =
+    formato === "xlsx"
+      ? respostaXlsx(await montarXlsx(await xlsx()), `${arquivo}-${diaBelem(new Date())}.xlsx`)
+      : respostaCsv(csv(), `${arquivo}.csv`);
+  await registrarExportacao(request, usuario, relatorio, { ...filtros, formato });
+  return resposta;
+}
+
 /** Corpo comum das rotas /exportar dos relatorios de entrada, saida e geral. */
 export async function exportarMovimentacoes(modo: ModoRelatorio, request: NextRequest) {
   const usuario = await obterUsuarioAtual();
@@ -62,22 +99,21 @@ export async function exportarMovimentacoes(modo: ModoRelatorio, request: NextRe
     return new Response("Não autorizado", { status: 403 });
   }
 
-  const parametros = request.nextUrl.searchParams;
-  const filtros = lerFiltros(Object.fromEntries(parametros));
+  const filtros = lerFiltros(Object.fromEntries(request.nextUrl.searchParams));
   const supabase = createClient();
 
   try {
     const linhas = await buscarTodasMovimentacoes(supabase, modo, filtros);
 
-    if (parametros.get("formato") === "xlsx") {
-      const movimentacoes = abaMovimentacoes(modo, linhas);
-      const abas = modo === "geral" ? await abasDoGeral(supabase, movimentacoes) : [movimentacoes];
-      // Data no fuso de Belem (UTC-3) para o nome do arquivo.
-      const hoje = new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString().slice(0, 10);
-      return respostaXlsx(await montarXlsx(abas), ARQUIVO_CSV[modo].replace(".csv", `-${hoje}.xlsx`));
-    }
-
-    return respostaCsv(paraCsv(linhas.map(linhaParaCsv), COLUNAS_CSV[modo]), ARQUIVO_CSV[modo]);
+    return await responderExportacao(request, usuario, RELATORIO_DO_MODO[modo], {
+      arquivo: ARQUIVO_CSV[modo].replace(".csv", ""),
+      csv: () => paraCsv(linhas.map(linhaParaCsv), COLUNAS_CSV[modo]),
+      xlsx: async () => {
+        const movimentacoes = abaMovimentacoes(modo, linhas);
+        return modo === "geral" ? abasDoGeral(supabase, movimentacoes) : [movimentacoes];
+      },
+      filtros,
+    });
   } catch (erro) {
     console.error("Falha ao exportar relatorio", erro);
     return new Response("Não foi possível gerar o relatório. Tente novamente.", { status: 500 });

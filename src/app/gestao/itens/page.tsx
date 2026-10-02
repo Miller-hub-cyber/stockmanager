@@ -42,7 +42,9 @@ export default async function PaginaItens({ searchParams }: Props) {
     .select("id, sku, nome, unidade, tipo, estoque_minimo, ponto_pedido, custo_medio, ativo, categoria_id")
     .order("nome");
 
-  if (categoria) consulta = consulta.eq("categoria_id", categoria);
+  // "sem" vem do aviso "itens sem categoria" em Cadastros.
+  if (categoria === "sem") consulta = consulta.is("categoria_id", null);
+  else if (categoria) consulta = consulta.eq("categoria_id", categoria);
   if (tipo) consulta = consulta.eq("tipo", tipo as Database["public"]["Enums"]["tipo_item"]);
   if (q) consulta = consulta.or(`nome.ilike.%${q}%,sku.ilike.%${q}%`);
 
@@ -83,6 +85,7 @@ export default async function PaginaItens({ searchParams }: Props) {
         <div className="w-48">
           <Seletor id="categoria" name="categoria" rotulo="Categoria" defaultValue={categoria ?? ""}>
             <option value="">Todas</option>
+            <option value="sem">Sem categoria</option>
             {(categorias ?? []).map((c) => (
               <option key={c.id} value={c.id}>
                 {c.nome}

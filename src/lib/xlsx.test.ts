@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import ExcelJS from "exceljs";
 import { dataBelem, montarXlsx, type AbaXlsx } from "./xlsx";
-import { abaFornecedores } from "./relatorio-xlsx";
+import { abaConsumoCentro, abaFornecedores, abaItensParados, abaKardex } from "./relatorio-xlsx";
 
 async function abrir(abas: AbaXlsx[]) {
   const planilha = new ExcelJS.Workbook();
@@ -54,6 +54,31 @@ describe("dataBelem", () => {
   it("mostra o horario de Belem: 02:30Z vira 23:30 do dia anterior", () => {
     const d = dataBelem("2026-09-23T02:30:00Z");
     expect(d.toISOString()).toBe("2026-09-22T23:30:00.000Z");
+  });
+});
+
+describe("abas dos demais relatorios", () => {
+  it("itens parados: data sem hora e 'Nunca' para item que nunca saiu", async () => {
+    const aba = abaItensParados([
+      { sku: "P1", nome: "Filtro", saldo: 3, valor_parado: 90, ultima_saida: "2026-05-10T15:00:00Z", dias_sem_saida: 145 },
+      { sku: "P2", nome: "Correia", saldo: 1, valor_parado: 40, ultima_saida: null, dias_sem_saida: null },
+    ]);
+    const folha = (await abrir([aba])).getWorksheet("Itens parados")!;
+    expect(folha.getCell("E3").numFmt).toBe("dd/mm/yyyy");
+    expect(folha.getCell("E4").value).toBe("Nunca");
+    expect(folha.getCell("D3").value).toBe(90);
+  });
+
+  it("consumo por centro: valor numerico em moeda, nao texto", async () => {
+    const aba = abaConsumoCentro([{ centro_custo: "Oficina", mes: "2026-09-01", custo_total: 1234.5 }]);
+    const folha = (await abrir([aba])).getWorksheet("Consumo por centro de custo")!;
+    expect(folha.getCell("C3").value).toBe(1234.5);
+    expect(folha.getCell("C3").numFmt).toBe('"R$" #,##0.00');
+  });
+
+  it("kardex leva o item na faixa de titulo", () => {
+    expect(abaKardex([], { sku: "F-10", nome: "Filtro de óleo" }).titulo).toBe("Kardex — F-10 · Filtro de óleo");
+    expect(abaKardex([]).titulo).toBe("Kardex");
   });
 });
 

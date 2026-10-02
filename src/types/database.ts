@@ -453,6 +453,45 @@ export interface Database {
         };
         Relationships: [];
       };
+      exportacoes: {
+        Row: {
+          id: string;
+          empresa_id: string;
+          usuario_id: string;
+          relatorio: string;
+          formato: string;
+          periodo_de: string | null;
+          periodo_ate: string | null;
+          item_id: string | null;
+          veiculo_id: string | null;
+          criado_em: string;
+        };
+        Insert: {
+          id?: string;
+          empresa_id: string;
+          usuario_id: string;
+          relatorio: string;
+          formato?: string;
+          periodo_de?: string | null;
+          periodo_ate?: string | null;
+          item_id?: string | null;
+          veiculo_id?: string | null;
+          criado_em?: string;
+        };
+        Update: {
+          id?: string;
+          empresa_id?: string;
+          usuario_id?: string;
+          relatorio?: string;
+          formato?: string;
+          periodo_de?: string | null;
+          periodo_ate?: string | null;
+          item_id?: string | null;
+          veiculo_id?: string | null;
+          criado_em?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: {
       v_itens_a_comprar: {
