@@ -1,6 +1,7 @@
 import { type NextRequest } from "next/server";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/server";
+import { lerTudo } from "@/lib/supabase/lerTudo";
 import { obterUsuarioAtual, type UsuarioAtual } from "@/lib/sessao";
 import { paraCsv, respostaCsv } from "@/lib/csv";
 import { diaBelem } from "@/lib/formato";
@@ -18,27 +19,11 @@ import { montarXlsx, respostaXlsx, type AbaXlsx } from "@/lib/xlsx";
 import { registrarExportacao } from "@/lib/exportacoes";
 import type { ChaveRelatorio, FiltrosExportacao } from "@/lib/relatorios";
 
-const TAMANHO_PAGINA = 1000; // limite do PostgREST por requisicao
-
 const RELATORIO_DO_MODO: Record<ModoRelatorio, ChaveRelatorio> = {
   entrada: "entradas",
   saida: "saidas",
   geral: "geral",
 };
-
-/** Le uma consulta inteira em paginas de 1000. */
-async function lerTudo<T>(
-  buscar: (de: number, ate: number) => PromiseLike<{ data: T[] | null; error: { message: string } | null }>
-): Promise<T[]> {
-  const todas: T[] = [];
-  for (let de = 0; ; de += TAMANHO_PAGINA) {
-    const { data, error } = await buscar(de, de + TAMANHO_PAGINA - 1);
-    if (error) throw new Error(error.message);
-    const pagina = data ?? [];
-    todas.push(...pagina);
-    if (pagina.length < TAMANHO_PAGINA) return todas;
-  }
-}
 
 /**
  * Relatorio geral em Excel: as movimentacoes (com os filtros da tela) mais a

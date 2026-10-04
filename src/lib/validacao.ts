@@ -84,6 +84,16 @@ export const esquemaItem = z.object({
   codigoBarras: opcional(64),
 });
 
+/** Itens marcados na lista de /gestao/itens para uma acao em lote. */
+const idsItensEmLote = z.array(z.string().uuid()).min(1, "Selecione ao menos um item").max(500);
+
+export const esquemaDesativarItens = z.object({ ids: idsItensEmLote });
+
+export const esquemaAlterarCategoriaItens = z.object({
+  ids: idsItensEmLote,
+  categoriaId: z.string().uuid().nullable(),
+});
+
 export const esquemaCategoria = z.object({
   nome: z.string().min(2, "Informe o nome da categoria").max(80),
 });
