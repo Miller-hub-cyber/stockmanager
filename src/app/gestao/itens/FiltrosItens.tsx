@@ -17,13 +17,14 @@ const TIPOS = [
 
 const ESPERA_BUSCA = 300;
 
+const CHAVES = ["q", "categoria", "tipo", "estoque", "inativos"] as const;
+
+/** Filtros como estão na querystring; string vazia é "sem filtro". */
+export type Filtros = Record<(typeof CHAVES)[number], string>;
+
 interface FiltrosItensProps {
   categorias: { id: string; nome: string }[];
-  q?: string;
-  categoria?: string;
-  tipo?: string;
-  abaixoDoMinimo: boolean;
-  inativos: boolean;
+  filtros: Filtros;
 }
 
 /**
@@ -31,19 +32,41 @@ interface FiltrosItensProps {
  * botão "Filtrar"); a busca espera a digitação parar. Enquanto a nova página
  * não chega, `data-pendente` esmaece a tabela logo abaixo (regra em globals.css).
  */
-export function FiltrosItens({ categorias, q, categoria, tipo, abaixoDoMinimo, inativos }: FiltrosItensProps) {
+export function FiltrosItens({ categorias, filtros }: FiltrosItensProps) {
   const router = useRouter();
   const pathname = usePathname();
   const [pendente, iniciarTransicao] = useTransition();
-  const [busca, definirBusca] = useState(q ?? "");
+  const [atuais, definirAtuais] = useState(filtros);
+  const [busca, definirBusca] = useState(filtros.q);
   const espera = useRef<ReturnType<typeof setTimeout>>();
+  // Último conjunto pedido ao roteador. A URL só muda quando a navegação
+  // termina, então mudanças em sequência partem daqui, não de location.search.
+  const enviados = useRef(filtros);
 
   useEffect(() => () => clearTimeout(espera.current), []);
 
-  function aplicar(chave: string, valor: string) {
+  // Navegação de fora (menu lateral, cartões, botão voltar): os controles
+  // acompanham a URL. Durante a nossa própria navegação as props estão atrasadas.
+  useEffect(() => {
+    if (pendente || CHAVES.every((chave) => filtros[chave] === enviados.current[chave])) return;
+    clearTimeout(espera.current);
+    enviados.current = filtros;
+    definirAtuais(filtros);
+    definirBusca(filtros.q);
+  }, [filtros, pendente]);
+
+  function aplicar(mudanca: Partial<Filtros>) {
+    clearTimeout(espera.current);
+    const proximos = { ...enviados.current, q: busca.trim(), ...mudanca };
+    enviados.current = proximos;
+    definirAtuais(proximos);
+
+    // Ordenação continua vindo da URL; só os filtros e a página são reescritos.
     const parametros = new URLSearchParams(window.location.search);
-    if (valor) parametros.set(chave, valor);
-    else parametros.delete(chave);
+    CHAVES.forEach((chave) => {
+      if (proximos[chave]) parametros.set(chave, proximos[chave]);
+      else parametros.delete(chave);
+    });
     parametros.delete("pagina");
     const consulta = parametros.toString();
     iniciarTransicao(() => router.replace(consulta ? `${pathname}?${consulta}` : pathname, { scroll: false }));
@@ -52,14 +75,15 @@ export function FiltrosItens({ categorias, q, categoria, tipo, abaixoDoMinimo, i
   function aoDigitar(valor: string) {
     definirBusca(valor);
     clearTimeout(espera.current);
-    espera.current = setTimeout(() => aplicar("q", valor.trim()), ESPERA_BUSCA);
+    espera.current = setTimeout(() => aplicar({ q: valor.trim() }), ESPERA_BUSCA);
   }
 
   function aoEnviar(evento: FormEvent<HTMLFormElement>) {
     evento.preventDefault();
-    clearTimeout(espera.current);
-    aplicar("q", busca.trim());
+    aplicar({});
   }
+
+  const abaixoDoMinimo = atuais.estoque === "abaixo";
 
   const caixaSeletor =
     "flex h-10 items-center gap-2 rounded border border-giz bg-white pl-3 pr-1.5 font-corpo text-sm text-bruma-texto transition-colors duration-150 focus-within:border-cobalto-claro";
@@ -93,8 +117,8 @@ export function FiltrosItens({ categorias, q, categoria, tipo, abaixoDoMinimo, i
         Categoria
         <select
           name="categoria"
-          defaultValue={categoria ?? ""}
-          onChange={(evento) => aplicar("categoria", evento.target.value)}
+          value={atuais.categoria}
+          onChange={(evento) => aplicar({ categoria: evento.target.value })}
           className={seletor}
         >
           <option value="">Todas</option>
@@ -111,8 +135,8 @@ export function FiltrosItens({ categorias, q, categoria, tipo, abaixoDoMinimo, i
         Tipo
         <select
           name="tipo"
-          defaultValue={tipo ?? ""}
-          onChange={(evento) => aplicar("tipo", evento.target.value)}
+          value={atuais.tipo}
+          onChange={(evento) => aplicar({ tipo: evento.target.value })}
           className={seletor}
         >
           <option value="">Todos</option>
@@ -127,7 +151,7 @@ export function FiltrosItens({ categorias, q, categoria, tipo, abaixoDoMinimo, i
       <button
         type="button"
         aria-pressed={abaixoDoMinimo}
-        onClick={() => aplicar("estoque", abaixoDoMinimo ? "" : "abaixo")}
+        onClick={() => aplicar({ estoque: abaixoDoMinimo ? "" : "abaixo" })}
         className={cn(
           "h-10 rounded-full border px-4 font-corpo text-sm font-semibold text-ambar-texto transition-[background-color,border-color,transform] duration-150 ease-mola active:scale-95",
           abaixoDoMinimo
@@ -142,8 +166,8 @@ export function FiltrosItens({ categorias, q, categoria, tipo, abaixoDoMinimo, i
         <input
           type="checkbox"
           name="inativos"
-          defaultChecked={inativos}
-          onChange={(evento) => aplicar("inativos", evento.target.checked ? "1" : "")}
+          checked={atuais.inativos === "1"}
+          onChange={(evento) => aplicar({ inativos: evento.target.checked ? "1" : "" })}
           className="h-4 w-4 cursor-pointer accent-cobalto"
         />
         Mostrar inativos

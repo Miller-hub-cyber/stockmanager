@@ -30,6 +30,17 @@ export async function exigirGestorOuAdmin(): Promise<{ empresaId: string } | { e
   return { empresaId: usuario.empresaId };
 }
 
+/** Resultado de uma acao em lote: so e sucesso se todas as linhas pedidas foram alteradas. */
+export function conferirAlterados(alterados: number, pedidos: number): ResultadoAcao {
+  if (alterados === 0) {
+    return { sucesso: false, erro: "Nenhum item foi alterado. Voce nao tem permissao para esta acao." };
+  }
+  if (alterados < pedidos) {
+    return { sucesso: false, erro: `So ${alterados} de ${pedidos} itens foram alterados. Confira a lista.` };
+  }
+  return { sucesso: true };
+}
+
 export async function inserirRegistro<T extends TabelaCadastro>(
   tabela: T,
   dados: Database["public"]["Tables"][T]["Insert"]

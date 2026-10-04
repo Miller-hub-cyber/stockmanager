@@ -94,6 +94,8 @@ export default async function PaginaItens({ searchParams }: Props) {
     // "sem" vem do aviso "itens sem categoria" em Cadastros.
     if (categoria === "sem" ? item.categoria_id !== null : categoria && item.categoria_id !== categoria) return false;
     if (tipo && item.tipo !== tipo) return false;
+    // Mesmo recorte dos cartões: estado de estoque só vale para item ativo.
+    if (estoque && !item.ativo) return false;
     if (estoque === "abaixo" && item.situacao !== "Abaixo do minimo") return false;
     if (estoque === "zerado" && item.situacao !== "Esgotado") return false;
     return !busca || normalizar(`${item.nome} ${item.sku}`).includes(busca);
@@ -212,11 +214,13 @@ export default async function PaginaItens({ searchParams }: Props) {
           <section className="mt-5 rounded border border-giz bg-white">
             <FiltrosItens
               categorias={categorias}
-              q={q}
-              categoria={categoria}
-              tipo={tipo}
-              abaixoDoMinimo={estoque === "abaixo"}
-              inativos={inativos}
+              filtros={{
+                q: q ?? "",
+                categoria: categoria ?? "",
+                tipo: tipo ?? "",
+                estoque: estoque ?? "",
+                inativos: inativos ? "1" : "",
+              }}
             />
 
             {linhas.length === 0 ? (
