@@ -12,16 +12,22 @@ PWA instalavel (Next.js 14 + Supabase). Duas areas com o mesmo codigo: `/operaca
 
 ## Como comecar
 
+O projeto fica em `stockmanager/`, nao na raiz do repositorio. Ha um
+`package.json` de conveniencia na raiz que apenas repassa os comandos para
+`stockmanager/`, entao rodar `npm run dev` da raiz tambem funciona.
+
 ```bash
+cd stockmanager                # a menos que voce rode o atalho da raiz
 npm install
 cp .env.example .env.local     # preencha com as chaves do Supabase (veja abaixo)
 npm run dev
 ```
 
-Sem projeto Supabase configurado, o servidor sobe normalmente mas o login real
-nao funciona (falha com erro de conexao traduzido na tela). Para ver o sistema
-funcionando sem nenhuma configuracao, abra `http://localhost:3000/prototipo` —
-fluxo completo com dados em memoria, nao depende do Supabase.
+Sem projeto Supabase configurado, o servidor sobe e as telas publicas
+funcionam: `/login` e `/design` abrem, e as rotas protegidas redirecionam para
+`/login`. O login real so funciona com um projeto Supabase valido — sem ele a
+autenticacao falha com erro de conexao traduzido na tela. Para ver os
+componentes base sem nenhuma configuracao, abra `http://localhost:3000/design`.
 
 ### Configurar um projeto Supabase real
 
@@ -81,7 +87,6 @@ nao ha projeto Supabase de CI neste ambiente.
 src/app/operacao      area mobile (saida, entrada, consulta) — leitor de codigo de barras
 src/app/gestao         area desktop (painel, itens, cadastros, compras, relatorios)
 src/app/login          autenticacao
-src/app/prototipo      prototipo isolado, dados em memoria, sem Supabase
 src/app/design         design system vivo (componentes base)
 src/actions            Server Actions, um arquivo por acao
 src/components/ui      componentes base do design system
