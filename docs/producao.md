@@ -22,6 +22,18 @@ Etapa 1 do go-live. Os passos manuais (criar o projeto, rodar SQL) são feitos n
 3. **Criar o usuário admin** em Authentication → Users → Add user.
 4. **Rodar `supabase/producao/configurar_empresa.sql`** depois de preencher nome da empresa, e-mail e nome do admin. O script cria a empresa, o depósito, as categorias da biblioteca e vincula o admin.
 5. **Conferir as regras** rodando `supabase/tests/triggers.test.sql`.
+6. **Desligar a confirmação de e-mail**: Authentication → Sign In / Providers → Email → desmarcar "Confirm email". Deixe "Allow new users to sign up" ligado.
+   Quem libera o acesso é o código do convite, não o e-mail, e o e-mail gratuito do Supabase só manda poucas mensagens por hora. Com a confirmação ligada, o sistema também funciona, mas a pessoa precisa clicar no link do e-mail antes de entrar.
+
+## Usuários
+
+O admin libera acessos em **Gestão → Usuários**:
+
+1. Preenche nome, e-mail e perfil e clica em "Gerar convite".
+2. Copia a mensagem pronta, com o link e o código de 8 caracteres, e manda para a pessoa (por WhatsApp, por exemplo).
+3. A pessoa abre `/primeiro-acesso`, digita e-mail, código e cria a senha. O código vale 7 dias e só pode ser usado uma vez.
+
+Na mesma tela o admin muda o perfil ou desativa alguém. A desativação vale na hora: a pessoa perde o acesso mesmo que esteja logada. O admin não altera o próprio usuário, para a empresa nunca ficar sem administrador.
 
 ## Planilhas para a carga
 

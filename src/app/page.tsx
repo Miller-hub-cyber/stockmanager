@@ -16,7 +16,8 @@ export default async function Home() {
     .eq("id", user.id)
     .single();
 
-  if (!usuario) redirect("/login");
+  // Logado no Auth mas sem usuario ativo: "/login" mandaria de volta para ca (loop).
+  if (!usuario) redirect("/sem-acesso");
 
   redirect(destinoPorPerfil(usuario.perfil));
 }

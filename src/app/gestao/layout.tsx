@@ -12,7 +12,7 @@ function iniciais(nome: string): string {
 
 export default async function LayoutGestao({ children }: { children: React.ReactNode }) {
   const usuario = await obterUsuarioAtual();
-  if (!usuario) redirect("/login");
+  if (!usuario) redirect("/");
 
   return (
     <div className="flex min-h-screen bg-nevoa">
@@ -21,7 +21,7 @@ export default async function LayoutGestao({ children }: { children: React.React
           <Logo className="h-7 text-aco" />
         </div>
 
-        <MenuLateral />
+        <MenuLateral admin={usuario.perfil === "admin"} />
 
         <div className="mt-auto border-t border-grafite p-3">
           <div className="flex items-center gap-2.5">

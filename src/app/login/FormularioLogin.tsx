@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useFormState, useFormStatus } from "react-dom";
 import { login, type EstadoLogin } from "@/actions/login";
 import { Campo } from "@/components/ui/Campo";
@@ -43,6 +44,9 @@ export function FormularioLogin() {
       />
       {estado.erro && <Aviso tipo="erro" titulo={estado.erro} escuro />}
       <BotaoEntrar />
+      <Link href="/primeiro-acesso" className="text-center font-corpo text-sm text-bruma-luz hover:text-white">
+        Primeiro acesso? Use seu código de convite
+      </Link>
     </form>
   );
 }

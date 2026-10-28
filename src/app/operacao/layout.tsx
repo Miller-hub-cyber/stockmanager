@@ -6,7 +6,7 @@ import { AbasOperacao } from "./AbasOperacao";
 
 export default async function LayoutOperacao({ children }: { children: React.ReactNode }) {
   const usuario = await obterUsuarioAtual();
-  if (!usuario) redirect("/login");
+  if (!usuario) redirect("/");
 
   return (
     <div className="min-h-screen bg-nevoa">

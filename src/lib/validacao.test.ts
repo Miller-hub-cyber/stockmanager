@@ -7,6 +7,8 @@ import {
   esquemaFornecedor,
   esquemaVeiculo,
   esquemaDeposito,
+  esquemaConvite,
+  esquemaPrimeiroAcesso,
 } from "./validacao";
 
 const ITEM_ID = "11111111-1111-1111-1111-111111111111";
@@ -167,5 +169,33 @@ describe("esquemaDeposito", () => {
   it("exige nome com no minimo 2 caracteres", () => {
     expect(esquemaDeposito.safeParse({ nome: "A" }).success).toBe(false);
     expect(esquemaDeposito.safeParse({ nome: "Almoxarifado" }).success).toBe(true);
+  });
+});
+
+describe("esquemaConvite", () => {
+  it("normaliza e-mail para minusculas", () => {
+    const r = esquemaConvite.safeParse({ nome: "Joao Silva", email: " Joao@Empresa.COM ", perfil: "almoxarife" });
+    expect(r.success && r.data.email).toBe("joao@empresa.com");
+  });
+
+  it("rejeita perfil inexistente", () => {
+    expect(esquemaConvite.safeParse({ nome: "Joao Silva", email: "j@e.com", perfil: "dono" }).success).toBe(false);
+  });
+});
+
+describe("esquemaPrimeiroAcesso", () => {
+  const base = { email: "j@e.com", codigo: "7f3a-9c21", senha: "segredo123", confirmacao: "segredo123" };
+
+  it("aceita codigo com traco e minusculas e devolve so os 8 caracteres", () => {
+    const r = esquemaPrimeiroAcesso.safeParse(base);
+    expect(r.success && r.data.codigo).toBe("7F3A9C21");
+  });
+
+  it("rejeita codigo incompleto", () => {
+    expect(esquemaPrimeiroAcesso.safeParse({ ...base, codigo: "7F3A" }).success).toBe(false);
+  });
+
+  it("rejeita senhas diferentes", () => {
+    expect(esquemaPrimeiroAcesso.safeParse({ ...base, confirmacao: "outra1234" }).success).toBe(false);
   });
 });

@@ -272,6 +272,25 @@ export interface Database {
         };
         Relationships: [];
       };
+      convites: {
+        Row: {
+          id: string;
+          empresa_id: string;
+          nome: string;
+          email: string;
+          perfil: Database["public"]["Enums"]["perfil_usuario"];
+          codigo: string;
+          criado_por: string | null;
+          criado_em: string;
+          expira_em: string;
+          usado_em: string | null;
+          cancelado_em: string | null;
+        };
+        // Escrita so via fn_convidar_usuario / fn_cancelar_convite (sem policy de insert/update).
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
       catalogo_itens: {
         Row: {
           id: string;
@@ -664,6 +683,28 @@ export interface Database {
           p_placa: string;
         };
         Returns: string;
+      };
+      fn_convidar_usuario: {
+        Args: {
+          p_nome: string;
+          p_email: string;
+          p_perfil: Database["public"]["Enums"]["perfil_usuario"];
+        };
+        Returns: string;
+      };
+      fn_cancelar_convite: {
+        Args: {
+          p_convite_id: string;
+        };
+        Returns: undefined;
+      };
+      fn_alterar_usuario: {
+        Args: {
+          p_usuario_id: string;
+          p_perfil: Database["public"]["Enums"]["perfil_usuario"];
+          p_ativo: boolean;
+        };
+        Returns: undefined;
       };
     };
     Enums: {

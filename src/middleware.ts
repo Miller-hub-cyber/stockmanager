@@ -2,7 +2,7 @@ import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import type { Database } from "@/types/database";
 
-const CAMINHOS_PUBLICOS = ["/login", "/design", "/manifest.json"];
+const CAMINHOS_PUBLICOS = ["/login", "/primeiro-acesso", "/sem-acesso", "/design", "/manifest.json"];
 
 function ehCaminhoPublico(pathname: string): boolean {
   if (pathname.startsWith("/icons/")) return true;
@@ -44,7 +44,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(destino);
   }
 
-  if (user && pathname.startsWith("/login")) {
+  if (user && (pathname.startsWith("/login") || pathname.startsWith("/primeiro-acesso"))) {
     const destino = request.nextUrl.clone();
     destino.pathname = "/";
     return NextResponse.redirect(destino);
@@ -57,7 +57,13 @@ export async function middleware(request: NextRequest) {
       .eq("id", user.id)
       .single();
 
-    if (!usuario || !["admin", "gestor"].includes(usuario.perfil)) {
+    if (!usuario) {
+      const destino = request.nextUrl.clone();
+      destino.pathname = "/sem-acesso";
+      return NextResponse.redirect(destino);
+    }
+
+    if (!["admin", "gestor"].includes(usuario.perfil)) {
       const destino = request.nextUrl.clone();
       destino.pathname = "/operacao/saida";
       return NextResponse.redirect(destino);

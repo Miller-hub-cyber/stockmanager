@@ -44,6 +44,10 @@ export function traduzirErro(mensagem: string): string {
     return "Somente o administrador pode lancar movimentacao com data passada.";
   if (mensagem.includes("DATA_FORA_DE_ORDEM"))
     return "Este item ja tem movimentacao mais recente. Lance as movimentacoes em ordem de data.";
+  if (mensagem.includes("USUARIO_JA_EXISTE"))
+    return "Ja existe um acesso com esse e-mail.";
+  if (mensagem.includes("NAO_ALTERA_PROPRIO_USUARIO"))
+    return "Voce nao pode alterar o proprio perfil ou se desativar.";
   if (mensagem.includes("itens_ncm_formato"))
     return "NCM invalido. Informe os 8 digitos.";
   if (mensagem.includes("duplicate key value violates unique constraint")) {

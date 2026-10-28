@@ -99,6 +99,35 @@ export const esquemaAlterarCategoriaItens = z.object({
   categoriaId: z.string().uuid().nullable(),
 });
 
+const PERFIS = ["admin", "gestor", "almoxarife", "consulta"] as const;
+
+export const esquemaConvite = z.object({
+  nome: z.string().trim().min(3, "Informe o nome da pessoa").max(120),
+  email: z.string().trim().toLowerCase().email("E-mail invalido"),
+  perfil: z.enum(PERFIS, { message: "Escolha o perfil" }),
+});
+
+export const esquemaAlterarUsuario = z.object({
+  perfil: z.enum(PERFIS),
+  ativo: z.boolean(),
+});
+
+/** Codigo aceito com ou sem traco e em minusculas: "7f3a-9c21" vira "7F3A9C21". */
+export const esquemaPrimeiroAcesso = z
+  .object({
+    email: z.string().trim().toLowerCase().email("E-mail invalido"),
+    codigo: z
+      .string()
+      .transform((v) => v.replace(/[^0-9a-f]/gi, "").toUpperCase())
+      .pipe(z.string().length(8, "O codigo do convite tem 8 caracteres")),
+    senha: z.string().min(8, "A senha precisa ter no minimo 8 caracteres"),
+    confirmacao: z.string(),
+  })
+  .refine((d) => d.senha === d.confirmacao, {
+    message: "As senhas nao conferem",
+    path: ["confirmacao"],
+  });
+
 export const esquemaCategoria = z.object({
   nome: z.string().min(2, "Informe o nome da categoria").max(80),
 });
