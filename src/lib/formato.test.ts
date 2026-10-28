@@ -44,6 +44,12 @@ describe("traduzirErro", () => {
     expect(mensagem).toContain("Ja existe");
   });
 
+  it("traduz as regras de data da movimentacao (0019)", () => {
+    expect(traduzirErro("DATA_FUTURA: movimentacao com data no futuro")).toContain("futuro");
+    expect(traduzirErro("DATA_RETROATIVA: somente admin")).toContain("administrador");
+    expect(traduzirErro("DATA_FORA_DE_ORDEM: ultima movimentacao do item em ...")).toContain("ordem de data");
+  });
+
   it("cai no fallback generico para mensagem desconhecida", () => {
     expect(traduzirErro("erro totalmente desconhecido")).toBe("Nao foi possivel concluir. Tente novamente.");
   });

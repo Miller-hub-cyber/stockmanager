@@ -1,11 +1,14 @@
 "use client";
 
+import { useRef } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { criarItem } from "@/actions/criarItem";
 import { atualizarItem } from "@/actions/atualizarItem";
 import { Campo, Seletor, Botao, Aviso } from "@/components/ui";
 import type { ResultadoAcao } from "@/lib/acoes-cadastro";
 import { brl } from "@/lib/formato";
+import { normalizar, type EntradaCatalogo } from "@/lib/catalogo";
+import { CampoNomeCatalogo } from "./CampoNomeCatalogo";
 
 const ESTADO_INICIAL: ResultadoAcao = { sucesso: false };
 
@@ -32,12 +35,15 @@ interface Item {
   categoria_id: string | null;
   fornecedor_id: string | null;
   codigo_barras: string | null;
+  ncm: string | null;
 }
 
 interface FormularioItemProps {
   item?: Item;
   categorias: { id: string; nome: string }[];
   fornecedores: { id: string; nome: string }[];
+  /** Biblioteca de nomes; so usada ao criar item (na edicao o nome ja existe). */
+  catalogo?: EntradaCatalogo[];
 }
 
 function BotaoSalvar() {
@@ -49,12 +55,29 @@ function BotaoSalvar() {
   );
 }
 
-export function FormularioItem({ item, categorias, fornecedores }: FormularioItemProps) {
+export function FormularioItem({ item, categorias, fornecedores, catalogo }: FormularioItemProps) {
   const acao = item ? atualizarItem.bind(null, item.id) : criarItem;
   const [estado, formAction] = useFormState(acao, ESTADO_INICIAL);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  // Campos nao controlados: a sugestao so pre-preenche, o usuario pode mudar depois.
+  function preencherDoCatalogo(entrada: EntradaCatalogo) {
+    const campos = formRef.current?.elements;
+    if (!campos) return;
+    const definir = (nome: string, valor: string) => {
+      const campo = campos.namedItem(nome);
+      if (campo instanceof HTMLInputElement || campo instanceof HTMLSelectElement) campo.value = valor;
+    };
+    definir("tipo", entrada.tipo);
+    definir("unidade", entrada.unidade);
+    definir("ncm", entrada.ncm ?? "");
+    // Categoria da empresa com o mesmo nome do grupo do catalogo, se existir.
+    const categoria = categorias.find((c) => normalizar(c.nome) === normalizar(entrada.grupo));
+    if (categoria) definir("categoriaId", categoria.id);
+  }
 
   return (
-    <form action={formAction} className="flex flex-col gap-4">
+    <form ref={formRef} action={formAction} className="flex flex-col gap-4">
       <div className="grid grid-cols-2 gap-4">
         <Campo id="sku" name="sku" rotulo="SKU" defaultValue={item?.sku} required />
         <Campo
@@ -65,7 +88,11 @@ export function FormularioItem({ item, categorias, fornecedores }: FormularioIte
           required
         />
       </div>
-      <Campo id="nome" name="nome" rotulo="Nome do item" defaultValue={item?.nome} required />
+      {!item && catalogo ? (
+        <CampoNomeCatalogo catalogo={catalogo} aoEscolher={preencherDoCatalogo} />
+      ) : (
+        <Campo id="nome" name="nome" rotulo="Nome do item" defaultValue={item?.nome} required />
+      )}
       <Campo
         id="descricao"
         name="descricao"
@@ -87,6 +114,15 @@ export function FormularioItem({ item, categorias, fornecedores }: FormularioIte
           defaultValue={item?.codigo_barras ?? ""}
         />
       </div>
+      <Campo
+        id="ncm"
+        name="ncm"
+        rotulo="NCM (opcional)"
+        inputMode="numeric"
+        placeholder="0000.00.00"
+        dica="Código fiscal de 8 dígitos. O da biblioteca é sugestão: confirme com a contabilidade."
+        defaultValue={item?.ncm ?? ""}
+      />
       <div className="grid grid-cols-2 gap-4">
         <Seletor
           id="categoriaId"

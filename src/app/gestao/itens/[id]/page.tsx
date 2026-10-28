@@ -12,7 +12,7 @@ export default async function PaginaEditarItem({ params }: { params: { id: strin
       supabase
         .from("itens")
         .select(
-          "id, sku, nome, descricao, unidade, tipo, estoque_minimo, ponto_pedido, custo_medio, categoria_id, fornecedor_id, codigo_barras"
+          "id, sku, nome, descricao, unidade, tipo, estoque_minimo, ponto_pedido, custo_medio, categoria_id, fornecedor_id, codigo_barras, ncm"
         )
         .eq("id", params.id)
         .single(),

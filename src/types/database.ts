@@ -225,6 +225,7 @@ export interface Database {
           ponto_pedido: number;
           custo_medio: number;
           codigo_barras: string | null;
+          ncm: string | null;
           controla_serie: boolean;
           ativo: boolean;
           criado_em: string;
@@ -244,6 +245,7 @@ export interface Database {
           ponto_pedido?: number;
           custo_medio?: number;
           codigo_barras?: string | null;
+          ncm?: string | null;
           controla_serie?: boolean;
           ativo?: boolean;
           criado_em?: string;
@@ -263,8 +265,39 @@ export interface Database {
           ponto_pedido?: number;
           custo_medio?: number;
           codigo_barras?: string | null;
+          ncm?: string | null;
           controla_serie?: boolean;
           ativo?: boolean;
+          criado_em?: string;
+        };
+        Relationships: [];
+      };
+      catalogo_itens: {
+        Row: {
+          id: string;
+          nome: string;
+          grupo: string;
+          tipo: Database["public"]["Enums"]["tipo_item"];
+          unidade: string;
+          ncm: string | null;
+          criado_em: string;
+        };
+        Insert: {
+          id?: string;
+          nome: string;
+          grupo: string;
+          tipo: Database["public"]["Enums"]["tipo_item"];
+          unidade?: string;
+          ncm?: string | null;
+          criado_em?: string;
+        };
+        Update: {
+          id?: string;
+          nome?: string;
+          grupo?: string;
+          tipo?: Database["public"]["Enums"]["tipo_item"];
+          unidade?: string;
+          ncm?: string | null;
           criado_em?: string;
         };
         Relationships: [];

@@ -82,6 +82,11 @@ export const esquemaItem = z.object({
   categoriaId: z.string().uuid().nullable().optional(),
   fornecedorId: z.string().uuid().nullable().optional(),
   codigoBarras: opcional(64),
+  // Aceita "8421.23.00" ou "84212300": pontos e espacos saem antes de validar.
+  ncm: z.preprocess(
+    (v) => (typeof v === "string" ? v.replace(/\D/g, "") || undefined : v),
+    z.string().regex(/^\d{8}$/, "NCM deve ter 8 digitos").optional()
+  ),
 });
 
 /** Itens marcados na lista de /gestao/itens para uma acao em lote. */

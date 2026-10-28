@@ -105,6 +105,18 @@ describe("esquemaItem", () => {
       expect(resultado.data.descricao).toBeUndefined();
     }
   });
+
+  it("aceita NCM com pontos e grava so os 8 digitos", () => {
+    const resultado = esquemaItem.safeParse({ ...dadosValidos, ncm: "8421.23.00" });
+    expect(resultado.success).toBe(true);
+    if (resultado.success) expect(resultado.data.ncm).toBe("84212300");
+  });
+
+  it("NCM vazio vira undefined e NCM incompleto e rejeitado", () => {
+    const vazio = esquemaItem.safeParse({ ...dadosValidos, ncm: "" });
+    expect(vazio.success && vazio.data.ncm).toBeUndefined();
+    expect(esquemaItem.safeParse({ ...dadosValidos, ncm: "8421" }).success).toBe(false);
+  });
 });
 
 describe("esquemaLogin", () => {

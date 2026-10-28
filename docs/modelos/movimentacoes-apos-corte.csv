@@ -1,0 +1,4 @@
+﻿Data;Tipo;SKU;Item;Quantidade;Custo unitario;Fornecedor;Frota ou placa;Centro de custo;Observacao
+02/10/2026;entrada;FLT-0042;Filtro de oleo do motor;10;48,90;Distribuidora Norte;;;NF 1234
+05/10/2026;saida;FLT-0042;Filtro de oleo do motor;2;;;ABC1D23;;Troca de oleo
+06/10/2026;saida;LUV-0001;Luva de vaqueta;3;;;;Oficina;

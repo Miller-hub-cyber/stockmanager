@@ -20,6 +20,7 @@ export async function criarItem(_estado: ResultadoAcao, formData: FormData): Pro
     categoriaId: formData.get("categoriaId") || undefined,
     fornecedorId: formData.get("fornecedorId") || undefined,
     codigoBarras: formData.get("codigoBarras"),
+    ncm: formData.get("ncm"),
   });
   if (!validado.success) {
     return { sucesso: false, erro: validado.error.issues[0]?.message ?? "Dados invalidos." };
@@ -37,6 +38,7 @@ export async function criarItem(_estado: ResultadoAcao, formData: FormData): Pro
     categoria_id: validado.data.categoriaId ?? null,
     fornecedor_id: validado.data.fornecedorId ?? null,
     codigo_barras: validado.data.codigoBarras ?? null,
+    ncm: validado.data.ncm ?? null,
   });
   if (!resultado.sucesso) return resultado;
   revalidatePath("/gestao/itens");

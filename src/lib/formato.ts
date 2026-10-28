@@ -38,6 +38,14 @@ export function traduzirErro(mensagem: string): string {
     return "Informe o numero da frota ou placa.";
   if (mensagem.includes("SEM_PERMISSAO"))
     return "Voce nao tem permissao para esta acao.";
+  if (mensagem.includes("DATA_FUTURA"))
+    return "A data da movimentacao nao pode estar no futuro.";
+  if (mensagem.includes("DATA_RETROATIVA"))
+    return "Somente o administrador pode lancar movimentacao com data passada.";
+  if (mensagem.includes("DATA_FORA_DE_ORDEM"))
+    return "Este item ja tem movimentacao mais recente. Lance as movimentacoes em ordem de data.";
+  if (mensagem.includes("itens_ncm_formato"))
+    return "NCM invalido. Informe os 8 digitos.";
   if (mensagem.includes("duplicate key value violates unique constraint")) {
     if (mensagem.includes("itens_empresa_id_sku_key")) return "Ja existe um item cadastrado com esse SKU.";
     if (mensagem.includes("veiculos_empresa_id_placa_key"))
