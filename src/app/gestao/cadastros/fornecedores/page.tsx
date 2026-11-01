@@ -5,7 +5,7 @@ import { Tabela, TabelaCabecalho, TabelaLinha, TabelaCelula, Botao, BotaoConfirm
 import { cores } from "@/lib/tokens";
 
 export default async function PaginaFornecedores() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: fornecedores } = await supabase
     .from("fornecedores")
     .select("id, nome, telefone, email, prazo_entrega_dias, ativo")

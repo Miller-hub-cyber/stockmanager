@@ -6,7 +6,7 @@ import { Tabela, TabelaCabecalho, TabelaLinha, TabelaCelula, Botao, BotaoConfirm
 import { cores } from "@/lib/tokens";
 
 export default async function PaginaVeiculos() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: veiculos } = await supabase
     .from("veiculos")
     .select("id, placa, modelo, km_atual, ativo")

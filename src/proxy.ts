@@ -24,7 +24,7 @@ function redirecionarPara(request: NextRequest, pathname: string): NextResponse 
   return NextResponse.redirect(destino);
 }
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const publico = ehCaminhoPublico(pathname);
 

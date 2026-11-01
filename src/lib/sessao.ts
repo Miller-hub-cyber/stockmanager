@@ -16,7 +16,7 @@ export interface UsuarioAtual {
  * Supabase e consultado uma vez so.
  */
 export const obterUsuarioAtual = cache(async (): Promise<UsuarioAtual | null> => {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

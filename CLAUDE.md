@@ -13,7 +13,7 @@ Formato de entrega: **PWA** (Next.js instalável na tela inicial). Não existe a
 
 ## 2. Stack
 
-- Next.js 14, App Router, Server Components e Server Actions
+- Next.js 16 (build com webpack, exigido pelo next-pwa), App Router, Server Components e Server Actions
 - TypeScript estrito
 - Tailwind CSS + lucide-react
 - Supabase: Postgres, Auth, PostgREST, RLS

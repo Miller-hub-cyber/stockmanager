@@ -3,8 +3,9 @@ import { createClient } from "@/lib/supabase/server";
 import { FormularioFornecedor } from "../FormularioFornecedor";
 import { brl, quantidade, data as formatarData } from "@/lib/formato";
 
-export default async function PaginaEditarFornecedor({ params }: { params: { id: string } }) {
-  const supabase = createClient();
+export default async function PaginaEditarFornecedor(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
+  const supabase = await createClient();
 
   const [{ data: fornecedor }, { data: documentos }] = await Promise.all([
     supabase

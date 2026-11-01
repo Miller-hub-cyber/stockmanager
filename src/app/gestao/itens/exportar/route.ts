@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
   const ids = esquemaIds.safeParse((request.nextUrl.searchParams.get("ids") ?? "").split(",").filter(Boolean));
   if (!ids.success) return new Response("Selecione ao menos um item para exportar.", { status: 400 });
 
-  const supabase = createClient();
+  const supabase = await createClient();
   const [itens, saldos, categorias] = await Promise.all([
     supabase
       .from("itens")

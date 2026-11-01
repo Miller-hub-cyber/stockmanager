@@ -20,7 +20,7 @@ const CHIPS_PERIODO: { opcao: OpcaoPeriodo; rotulo: string }[] = [
 ];
 
 interface Props {
-  searchParams: { [chave: string]: string | string[] | undefined };
+  searchParams: Promise<{ [chave: string]: string | string[] | undefined }>;
 }
 
 type Resultado<T> = PromiseLike<{ data: T | null; error: { message: string } | null }>;
@@ -54,9 +54,10 @@ const exportar = (chave: ChaveRelatorio, filtros: FiltrosExportacao = {}) => ({
   xlsx: rotaExportacao(chave, { ...filtros, formato: "xlsx" }),
 });
 
-export default async function PaginaRelatorios({ searchParams }: Props) {
+export default async function PaginaRelatorios(props: Props) {
+  const searchParams = await props.searchParams;
   const usuario = await obterUsuarioAtual();
-  const supabase = createClient();
+  const supabase = await createClient();
   const periodo = resolverPeriodo(searchParams, diaBelem(new Date()));
   const { de, ate } = periodo;
 

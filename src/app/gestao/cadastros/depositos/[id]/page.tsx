@@ -2,8 +2,9 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { FormularioDeposito } from "../FormularioDeposito";
 
-export default async function PaginaEditarDeposito({ params }: { params: { id: string } }) {
-  const supabase = createClient();
+export default async function PaginaEditarDeposito(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
+  const supabase = await createClient();
   const { data: deposito } = await supabase
     .from("depositos")
     .select("id, nome, descricao")

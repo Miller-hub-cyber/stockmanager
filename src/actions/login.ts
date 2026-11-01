@@ -21,7 +21,7 @@ export async function login(_estado: EstadoLogin, formData: FormData): Promise<E
     return { erro: validado.error.issues[0]?.message ?? "Dados invalidos." };
   }
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data: sessao, error: erroLogin } = await supabase.auth.signInWithPassword({
     email: validado.data.email,

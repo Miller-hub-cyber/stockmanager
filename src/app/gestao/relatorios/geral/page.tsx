@@ -1,10 +1,11 @@
 import { RelatorioMovimentacoes } from "../_componentes/RelatorioMovimentacoes";
 
 interface Props {
-  searchParams: { [chave: string]: string | string[] | undefined };
+  searchParams: Promise<{ [chave: string]: string | string[] | undefined }>;
 }
 
-export default function PaginaRelatorioGeral({ searchParams }: Props) {
+export default async function PaginaRelatorioGeral(props: Props) {
+  const searchParams = await props.searchParams;
   return (
     <RelatorioMovimentacoes
       modo="geral"

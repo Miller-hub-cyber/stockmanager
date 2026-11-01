@@ -17,7 +17,7 @@ export async function desativarItens(ids: string[]): Promise<ResultadoAcao> {
   }
 
   // O RLS pode filtrar linhas sem devolver erro; so conta o que voltou alterado.
-  const { data, error } = await createClient()
+  const { data, error } = await (await createClient())
     .from("itens")
     .update({ ativo: false })
     .in("id", validado.data.ids)

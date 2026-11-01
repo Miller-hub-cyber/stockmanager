@@ -29,7 +29,7 @@ export async function registrarExportacao(
   if (request.headers.has("rsc") || request.headers.has("next-router-prefetch")) return;
 
   try {
-    const { error } = await createClient()
+    const { error } = await (await createClient())
       .from("exportacoes")
       .insert({
         empresa_id: usuario.empresaId,

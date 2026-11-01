@@ -23,7 +23,7 @@ export async function registrarSaidaLote(dados: unknown): Promise<ResultadoMovim
     return { sucesso: false, erro: validado.error.issues[0]?.message ?? "Dados invalidos." };
   }
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   // Frota digitada na hora (ainda sem cadastro): resolve para um veiculo_id de
   // verdade via funcao security definer, ja que almoxarife nao tem INSERT direto

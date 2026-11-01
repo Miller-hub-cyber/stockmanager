@@ -7,7 +7,7 @@ import { listarExportacoes } from "@/lib/exportacoes";
 const LIMITE = 200;
 
 export default async function PaginaExportacoes() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const exportacoes = await listarExportacoes(supabase, { limite: LIMITE, comUsuario: true });
 
   return (

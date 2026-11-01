@@ -2,8 +2,9 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { FormularioCategoria } from "../FormularioCategoria";
 
-export default async function PaginaEditarCategoria({ params }: { params: { id: string } }) {
-  const supabase = createClient();
+export default async function PaginaEditarCategoria(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
+  const supabase = await createClient();
   const { data: categoria } = await supabase
     .from("categorias")
     .select("id, nome")

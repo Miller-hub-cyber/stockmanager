@@ -33,13 +33,13 @@ vi.mock("@supabase/ssr", () => ({
 async function acessar(caminho: string) {
   vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://teste.supabase.co");
   vi.stubEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY", "chave");
-  const { middleware } = await import("./middleware");
-  return middleware(new NextRequest(new URL(caminho, "http://localhost")));
+  const { proxy } = await import("./proxy");
+  return proxy(new NextRequest(new URL(caminho, "http://localhost")));
 }
 
 const destino = (r: Response) => r.headers.get("location")?.replace("http://localhost", "") ?? null;
 
-describe("middleware", () => {
+describe("proxy", () => {
   beforeEach(() => {
     signOut.mockClear();
     cenario.logado = true;

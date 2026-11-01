@@ -3,7 +3,7 @@ import { Botao, Tabela, TabelaCabecalho, TabelaLinha, TabelaCelula } from "@/com
 import { brl, quantidade, data as formatarData } from "@/lib/formato";
 
 export default async function PaginaItensParados() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: linhas } = await supabase
     .from("v_itens_parados")
     .select("id, sku, nome, saldo, valor_parado, ultima_saida, dias_sem_saida")

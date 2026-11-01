@@ -39,7 +39,7 @@ function contagem<T extends { ativo: boolean }>(linhas: T[] | null) {
 }
 
 export default async function PaginaCadastros() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const [categorias, depositos, fornecedores, centros, veiculos, itensSemCategoria, itensComCategoria] =
     await Promise.all([

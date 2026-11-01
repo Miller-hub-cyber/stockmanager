@@ -53,7 +53,7 @@ export async function importarItens(
     return { sucesso: false, erro: "O arquivo nao tem linhas de dados." };
   }
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   // Passo 1: valida todas as linhas antes de gravar qualquer coisa (sem chamada ao banco).
   const validas: LinhaValida[] = [];

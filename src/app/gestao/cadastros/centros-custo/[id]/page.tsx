@@ -2,8 +2,9 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { FormularioCentroCusto } from "../FormularioCentroCusto";
 
-export default async function PaginaEditarCentroCusto({ params }: { params: { id: string } }) {
-  const supabase = createClient();
+export default async function PaginaEditarCentroCusto(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
+  const supabase = await createClient();
   const { data: centro } = await supabase
     .from("centros_custo")
     .select("id, nome, codigo")

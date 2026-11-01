@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
     return new Response("Não autorizado", { status: 403 });
   }
 
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data } = await supabase
     .from("v_itens_parados")
     .select("sku, nome, saldo, valor_parado, ultima_saida, dias_sem_saida")

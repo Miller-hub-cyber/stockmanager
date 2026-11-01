@@ -4,8 +4,9 @@ import { FormularioVeiculo } from "../FormularioVeiculo";
 import { Indicador } from "@/components/ui";
 import { brl, quantidade, dataHora } from "@/lib/formato";
 
-export default async function PaginaEditarVeiculo({ params }: { params: { id: string } }) {
-  const supabase = createClient();
+export default async function PaginaEditarVeiculo(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
+  const supabase = await createClient();
 
   const [{ data: veiculo }, { data: consumo }, { data: movimentacoesRecentes }] = await Promise.all([
     supabase.from("veiculos").select("id, placa, modelo, ano, km_atual").eq("id", params.id).single(),

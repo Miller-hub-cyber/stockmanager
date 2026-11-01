@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { OperacaoSaida } from "./OperacaoSaida";
 
 export default async function PaginaSaida() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const [{ data: deposito }, { data: veiculos }, { data: centros }] = await Promise.all([
     supabase.from("depositos").select("id, nome").eq("ativo", true).order("nome").limit(1).maybeSingle(),

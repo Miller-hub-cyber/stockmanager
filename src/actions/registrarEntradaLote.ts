@@ -23,7 +23,7 @@ export async function registrarEntradaLote(dados: unknown): Promise<ResultadoMov
     return { sucesso: false, erro: validado.error.issues[0]?.message ?? "Dados invalidos." };
   }
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   // Frota digitada na hora (ainda sem cadastro): mesma resolucao da saida (0009).
   let veiculoId = validado.data.veiculoId ?? null;

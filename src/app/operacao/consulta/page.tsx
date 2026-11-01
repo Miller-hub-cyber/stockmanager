@@ -4,7 +4,7 @@ import { BotaoEstornar } from "./BotaoEstornar";
 import { brl, quantidade as formatarQuantidade, dataHora } from "@/lib/formato";
 
 export default async function PaginaConsulta() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data: deposito } = await supabase
     .from("depositos")

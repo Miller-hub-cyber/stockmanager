@@ -3,11 +3,12 @@ import { Botao, FormularioFiltro, Seletor, Tabela, TabelaCabecalho, TabelaLinha,
 import { brl, quantidade, dataHora } from "@/lib/formato";
 
 interface Props {
-  searchParams: { itemId?: string };
+  searchParams: Promise<{ itemId?: string }>;
 }
 
-export default async function PaginaKardex({ searchParams }: Props) {
-  const supabase = createClient();
+export default async function PaginaKardex(props: Props) {
+  const searchParams = await props.searchParams;
+  const supabase = await createClient();
   const { data: itens } = await supabase.from("itens").select("id, sku, nome").order("nome");
 
   const itemId = searchParams.itemId;

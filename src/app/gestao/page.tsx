@@ -39,7 +39,7 @@ function primeiroDiaDoMes(): Date {
 
 export default async function PaginaGestao() {
   const usuario = await obterUsuarioAtual();
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const inicioHoje = `${diaBelem(new Date())}T00:00:00-03:00`;
   const inicioMes = primeiroDiaDoMes();
