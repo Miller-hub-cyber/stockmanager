@@ -19,20 +19,16 @@ Passo a passo para colocar o sistema no ar. Siga na ordem: cada etapa depende da
 
 ## 2. Usuários
 
-Enquanto não existir a tela `/gestao/usuarios`, cada pessoa é criada assim:
+Cada pessoa é criada em duas partes:
 
-1. **Add user → Create new user**, com senha e Auto Confirm marcado.
-2. Preencha e rode `supabase/producao/02_novo_usuario.sql`.
+1. No painel do Supabase: **Add user → Create new user**, com senha e Auto Confirm marcado.
+2. No sistema, com o perfil `admin`: abra **Usuários** (`/gestao/usuarios`), informe nome, o mesmo e-mail e o perfil.
+
+O login fica no painel porque criá-lo pelo app exigiria a service role key no servidor. O script `02_novo_usuario.sql` continua disponível como alternativa.
+
+Na mesma tela, o admin muda o perfil e desativa ou reativa pessoas. Ninguém altera o próprio acesso, para o único admin não se trancar para fora. A desativação vale na hora: no próximo clique, a sessão é encerrada e a pessoa volta para o login.
 
 **Não use "Invite user".** O sistema não tem tela para definir senha a partir do convite, então a pessoa fica sem conseguir entrar. Pelo mesmo motivo não existe "esqueci minha senha": a troca é feita pelo painel do Supabase.
-
-Para desativar alguém, rode no SQL Editor:
-
-```sql
-update usuarios set ativo = false where email = 'pessoa@empresa.com.br';
-```
-
-O bloqueio vale na hora: no próximo clique, a sessão é encerrada e a pessoa volta para o login.
 
 ## 3. Deploy na Vercel
 
@@ -66,12 +62,12 @@ Faça uma saída completa pela câmera e cronometre. A meta é menos de 20 segun
 
 ## 6. Banco de teste
 
-O banco de teste está atrasado: a 0015 falhava e a 0016 nunca foi aplicada, então a tela de exportações recentes não funciona nele. Para igualar à produção, rode no SQL Editor, nesta ordem, `0015`, `0016`, `0017`, `0018` e `0019`.
+O banco de teste está atrasado: a 0015 falhava e a 0016 nunca foi aplicada, então a tela de exportações recentes não funciona nele. Para igualar à produção, rode no SQL Editor, nesta ordem, `0015`, `0016`, `0017`, `0018`, `0019` e `0020`.
 
 A 0015 apaga de vez `funcionarios`, `epi_entregas`, `numero_os` e `numero_nf`. O código atual já não usa nada disso.
 
 ## 7. Pendências conhecidas
 
 - `/design` é uma página pública com o catálogo visual do sistema, sem dados.
-- **Migrar o Next.js é a pendência mais importante.** A 14.2.35 é a última da linha 14, e o `npm audit` ainda aponta falhas críticas e altas que só têm correção no Next 15 ou 16. As críticas exigem servidor Windows ou a rota `/_next/image`, que foi desligada, e a Vercel não roda em Windows. As altas de negação de serviço e SSRF continuam valendo. A migração muda o `CLAUDE.md` (a stack fixa o Next 14) e pede teste de todas as telas com login, então deve ser uma tarefa própria.
-- `zod`, `next-pwa` e `exceljs` também só corrigem o que o audit aponta trocando de versão principal. No `next-pwa` isso afeta apenas o build, não o site no ar.
+- O `npm audit` ainda aponta falhas altas em dependências do `next-pwa`. Elas afetam apenas o build, não o site no ar. O pacote não tem versão nova, então resolver isso significa trocá-lo por outra biblioteca de PWA.
+- O Next 16 avisa que o suporte ao React 18 acaba no Next 17. Subir para o React 19 fica para quando essa migração for feita.

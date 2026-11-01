@@ -44,6 +44,10 @@ describe("traduzirErro", () => {
     expect(mensagem).toContain("Ja existe");
   });
 
+  it("orienta a criar o login quando o e-mail nao existe", () => {
+    expect(traduzirErro("USUARIO_SEM_LOGIN")).toContain("painel do Supabase");
+  });
+
   it("traduz estorno repetido barrado pelo indice unico", () => {
     const mensagem = traduzirErro('duplicate key value violates unique constraint "idx_mov_estorno_unico"');
     expect(mensagem).toContain("ja foi estornada");

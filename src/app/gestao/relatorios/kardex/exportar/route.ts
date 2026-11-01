@@ -7,7 +7,7 @@ import { dataHora } from "@/lib/formato";
 import { abaKardex } from "@/lib/relatorio-xlsx";
 import { responderExportacao } from "../../_componentes/exportar";
 
-const uuid = z.string().uuid();
+const uuid = z.guid();
 
 export async function GET(request: NextRequest) {
   const usuario = await obterUsuarioAtual();

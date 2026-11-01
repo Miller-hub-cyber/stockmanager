@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { LayoutDashboard, Package, ShoppingCart, FileBarChart, FolderCog } from "lucide-react";
+import { LayoutDashboard, Package, ShoppingCart, FileBarChart, FolderCog, Users } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { useCaminhoOtimista } from "@/lib/useCaminhoOtimista";
 
@@ -16,9 +16,12 @@ const ITENS_MENU = [
 /** Altura do item (h-10) + gap-1: distância que o destaque percorre por item. */
 const PASSO_ITEM_PX = 44;
 
-export function MenuLateral() {
+const ITEM_USUARIOS = { href: "/gestao/usuarios", rotulo: "Usuários", Icone: Users };
+
+export function MenuLateral({ admin }: { admin: boolean }) {
   const [caminho, marcarDestino] = useCaminhoOtimista();
-  const ativo = ITENS_MENU.findIndex(({ href }) =>
+  const itens = admin ? [...ITENS_MENU, ITEM_USUARIOS] : ITENS_MENU;
+  const ativo = itens.findIndex(({ href }) =>
     href === "/gestao" ? caminho === "/gestao" : caminho.startsWith(href)
   );
 
@@ -36,7 +39,7 @@ export function MenuLateral() {
         <span className="absolute inset-y-2 left-0 w-[3px] rounded-sm bg-laranja" />
       </span>
 
-      {ITENS_MENU.map(({ href, rotulo, Icone }, indice) => {
+      {itens.map(({ href, rotulo, Icone }, indice) => {
         const selecionado = indice === ativo;
         return (
           <Link

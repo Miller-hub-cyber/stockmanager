@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
+  esquemaVincularUsuario,
+  esquemaAtualizarUsuario,
   esquemaSaida,
   esquemaEntrada,
   esquemaItem,
@@ -155,5 +157,31 @@ describe("esquemaDeposito", () => {
   it("exige nome com no minimo 2 caracteres", () => {
     expect(esquemaDeposito.safeParse({ nome: "A" }).success).toBe(false);
     expect(esquemaDeposito.safeParse({ nome: "Almoxarifado" }).success).toBe(true);
+  });
+});
+
+describe("esquemaVincularUsuario", () => {
+  const base = { nome: "Maria", email: "maria@empresa.com.br", perfil: "almoxarife" };
+
+  it("aceita nome, e-mail e perfil validos", () => {
+    expect(esquemaVincularUsuario.safeParse(base).success).toBe(true);
+  });
+
+  it("rejeita e-mail invalido", () => {
+    expect(esquemaVincularUsuario.safeParse({ ...base, email: "maria" }).success).toBe(false);
+  });
+
+  it("rejeita perfil fora da lista", () => {
+    expect(esquemaVincularUsuario.safeParse({ ...base, perfil: "dono" }).success).toBe(false);
+  });
+});
+
+describe("esquemaAtualizarUsuario", () => {
+  it("aceita o status vindo do formulario como texto", () => {
+    expect(esquemaAtualizarUsuario.safeParse({ perfil: "gestor", ativo: "false" }).success).toBe(true);
+  });
+
+  it("rejeita status que nao seja true ou false", () => {
+    expect(esquemaAtualizarUsuario.safeParse({ perfil: "gestor", ativo: "talvez" }).success).toBe(false);
   });
 });

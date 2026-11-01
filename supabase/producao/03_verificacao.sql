@@ -85,7 +85,8 @@ declare
   consulta_a uuid := gen_random_uuid();
   inativo_a uuid := gen_random_uuid();
   admin_b   uuid := gen_random_uuid();
-  dep_1     uuid := gen_random_uuid();
+  novo      uuid := gen_random_uuid();
+  dep_1    uuid := gen_random_uuid();
   dep_2     uuid := gen_random_uuid();
   item_1    uuid := gen_random_uuid();
   item_2    uuid := gen_random_uuid();
@@ -274,6 +275,53 @@ begin
     c := c || 'usuario da empresa continua lendo v_valor_estoque'::text;
     r := r || pg_temp.deve_contar('authenticated', admin_a,
       'select 1 from v_valor_estoque where valor > 0', 1);
+
+    -- Gestao de usuarios -----------------------------------------------
+    insert into auth.users (id, email) values (novo, 'verif-novo@teste.invalid');
+
+    c := c || 'almoxarife nao vincula usuario'::text;
+    r := r || pg_temp.deve_falhar('authenticated', almox_a,
+      $s$select fn_vincular_usuario('verif-novo@teste.invalid', 'Novo', 'almoxarife')$s$, 'SEM_PERMISSAO');
+
+    c := c || 'sem login nao vincula usuario'::text;
+    r := r || pg_temp.deve_falhar('anon', null,
+      $s$select fn_vincular_usuario('verif-novo@teste.invalid', 'Novo', 'admin')$s$, 'permission denied');
+
+    c := c || 'admin nao vincula e-mail sem login criado'::text;
+    r := r || pg_temp.deve_falhar('authenticated', admin_a,
+      $s$select fn_vincular_usuario('verif-nao-existe@teste.invalid', 'X', 'almoxarife')$s$, 'USUARIO_SEM_LOGIN');
+
+    c := c || 'admin nao puxa usuario de outra empresa'::text;
+    r := r || pg_temp.deve_falhar('authenticated', admin_a,
+      $s$select fn_vincular_usuario('verif-admin-b@teste.invalid', 'X', 'almoxarife')$s$, 'USUARIO_OUTRA_EMPRESA');
+
+    c := c || 'admin vincula usuario na propria empresa'::text;
+    perform pg_temp.como('authenticated', admin_a,
+      $s$select fn_vincular_usuario(' Verif-Novo@teste.invalid ', 'Novo', 'consulta')$s$);
+    r := r || case when (select empresa_id from usuarios where id = novo) = empresa_a
+                   then 'ok' else 'FALHOU: nao vinculou na empresa do admin' end;
+
+    c := c || 'admin nao vincula o mesmo usuario duas vezes'::text;
+    r := r || pg_temp.deve_falhar('authenticated', admin_a,
+      $s$select fn_vincular_usuario('verif-novo@teste.invalid', 'Novo', 'consulta')$s$, 'USUARIO_JA_VINCULADO');
+
+    c := c || 'admin altera perfil e status de outro usuario'::text;
+    perform pg_temp.como('authenticated', admin_a, format(
+      $s$select fn_atualizar_usuario(%L, 'gestor', false)$s$, novo));
+    r := r || case when (select perfil = 'gestor' and not ativo from usuarios where id = novo)
+                   then 'ok' else 'FALHOU: nao alterou' end;
+
+    c := c || 'admin nao altera o proprio acesso'::text;
+    r := r || pg_temp.deve_falhar('authenticated', admin_a, format(
+      $s$select fn_atualizar_usuario(%L, 'admin', false)$s$, admin_a), 'ALTERACAO_PROPRIA');
+
+    c := c || 'admin nao altera usuario de outra empresa'::text;
+    r := r || pg_temp.deve_falhar('authenticated', admin_b, format(
+      $s$select fn_atualizar_usuario(%L, 'consulta', false)$s$, almox_a), 'USUARIO_NAO_ENCONTRADO');
+
+    c := c || 'almoxarife nao altera usuario'::text;
+    r := r || pg_temp.deve_falhar('authenticated', almox_a, format(
+      $s$select fn_atualizar_usuario(%L, 'admin', true)$s$, consulta_a), 'SEM_PERMISSAO');
 
     -- Usuario desativado -----------------------------------------------
     c := c || 'usuario desativado nao le dados da empresa'::text;

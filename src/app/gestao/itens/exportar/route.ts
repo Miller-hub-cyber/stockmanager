@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { obterUsuarioAtual } from "@/lib/sessao";
 import { paraCsv, respostaCsv } from "@/lib/csv";
 
-const esquemaIds = z.array(z.string().uuid()).min(1).max(500);
+const esquemaIds = z.array(z.guid()).min(1).max(500);
 
 const decimal = (n: number, casas: number) => n.toFixed(casas).replace(".", ",");
 

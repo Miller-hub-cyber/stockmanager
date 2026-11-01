@@ -28,7 +28,7 @@ const COLUNAS =
   "id, criado_em, tipo, sku, item, unidade, quantidade, custo_unitario, valor, placa, centro_custo, fornecedor, usuario, motivo, estorno_de, estornada";
 
 const dataIso = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
-const uuid = z.string().uuid();
+const uuid = z.guid();
 
 /** Valida cada filtro individualmente: valor invalido na URL e ignorado, nao quebra a pagina. */
 export function lerFiltros(bruto: { [chave: string]: string | string[] | undefined }): FiltrosRelatorio {

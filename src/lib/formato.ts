@@ -36,6 +36,12 @@ export function traduzirErro(mensagem: string): string {
     return "O saldo resulta das movimentacoes e nao pode ser editado.";
   if (mensagem.includes("PLACA_INVALIDA"))
     return "Informe o numero da frota ou placa.";
+  if (mensagem.includes("USUARIO_SEM_LOGIN"))
+    return "Nenhum login com esse e-mail. Crie o login no painel do Supabase primeiro.";
+  if (mensagem.includes("USUARIO_JA_VINCULADO")) return "Esse e-mail ja tem acesso liberado.";
+  if (mensagem.includes("USUARIO_OUTRA_EMPRESA")) return "Esse e-mail pertence a outra empresa.";
+  if (mensagem.includes("USUARIO_NAO_ENCONTRADO")) return "Usuario nao encontrado.";
+  if (mensagem.includes("ALTERACAO_PROPRIA")) return "Voce nao pode alterar o proprio acesso.";
   if (mensagem.includes("SEM_PERMISSAO"))
     return "Voce nao tem permissao para esta acao.";
   if (mensagem.includes("duplicate key value violates unique constraint")) {
