@@ -44,6 +44,11 @@ describe("traduzirErro", () => {
     expect(mensagem).toContain("Ja existe");
   });
 
+  it("traduz estorno repetido barrado pelo indice unico", () => {
+    const mensagem = traduzirErro('duplicate key value violates unique constraint "idx_mov_estorno_unico"');
+    expect(mensagem).toContain("ja foi estornada");
+  });
+
   it("cai no fallback generico para mensagem desconhecida", () => {
     expect(traduzirErro("erro totalmente desconhecido")).toBe("Nao foi possivel concluir. Tente novamente.");
   });

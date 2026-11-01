@@ -13,3 +13,6 @@ next-env.d.ts
 public/sw.js
 public/workbox-*.js
 tsconfig.tsbuildinfo
+
+# Gerado por supabase/producao/gerar-schema.mjs
+supabase/producao/00_schema.sql

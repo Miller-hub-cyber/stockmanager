@@ -69,14 +69,26 @@ export async function middleware(request: NextRequest) {
     return redirecionarPara(request, "/");
   }
 
-  if (user && pathname.startsWith("/gestao")) {
+  if (user && !publico) {
     const { data: usuario } = await supabase
       .from("usuarios")
-      .select("perfil")
+      .select("perfil, ativo")
       .eq("id", user.id)
       .single();
 
-    if (!usuario || !["admin", "gestor"].includes(usuario.perfil)) {
+    // A RLS ja barra o usuario desativado. Encerrar a sessao aqui evita que
+    // ele fique em telas vazias ate o token expirar.
+    if (usuario && !usuario.ativo) {
+      await supabase.auth.signOut();
+      const destino = redirecionarPara(request, "/login");
+      resposta.cookies.getAll().forEach((cookie) => destino.cookies.set(cookie));
+      return destino;
+    }
+
+    if (
+      pathname.startsWith("/gestao") &&
+      (!usuario || !["admin", "gestor"].includes(usuario.perfil))
+    ) {
       return redirecionarPara(request, "/operacao/saida");
     }
   }
@@ -85,5 +97,9 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)"],
+  // sw.js e workbox ficam fora: o navegador recusa service worker atras de
+  // redirecionamento, e sem sessao o middleware mandaria os dois para /login.
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|sw\\.js|workbox-.*\\.js|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+  ],
 };

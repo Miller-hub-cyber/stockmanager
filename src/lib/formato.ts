@@ -24,7 +24,7 @@ export const mesAno = (dataIso: string) =>
 export function traduzirErro(mensagem: string): string {
   if (mensagem.includes("SALDO_INSUFICIENTE")) {
     const m = mensagem.match(/disponivel ([\d.,]+)/i);
-    return `Saldo insuficiente${m ? `. Disponivel: ${m[1]}` : ""}. Faca o ajuste por inventario antes de registrar.`;
+    return `Saldo insuficiente${m ? `. Disponivel: ${m[1]}` : ""}. Confira a quantidade antes de registrar.`;
   }
   if (mensagem.includes("MOVIMENTACAO_IMUTAVEL"))
     return "Movimentacao nao pode ser alterada. Registre um estorno.";
@@ -42,6 +42,7 @@ export function traduzirErro(mensagem: string): string {
     if (mensagem.includes("itens_empresa_id_sku_key")) return "Ja existe um item cadastrado com esse SKU.";
     if (mensagem.includes("veiculos_empresa_id_placa_key"))
       return "Ja existe um veiculo cadastrado com essa placa.";
+    if (mensagem.includes("idx_mov_estorno_unico")) return "Esta movimentacao ja foi estornada.";
     return "Ja existe um registro cadastrado com esses dados.";
   }
   if (mensagem.includes("violates foreign key constraint"))
