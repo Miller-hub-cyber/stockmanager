@@ -8,7 +8,7 @@ export default async function PaginaFornecedores() {
   const supabase = await createClient();
   const { data: fornecedores } = await supabase
     .from("fornecedores")
-    .select("id, nome, telefone, email, prazo_entrega_dias, ativo")
+    .select("id, nome, prazo_entrega_dias, ativo")
     .order("nome");
   const lista = fornecedores ?? [];
 
@@ -19,8 +19,15 @@ export default async function PaginaFornecedores() {
           <h1 className="titulo-tela">Fornecedores</h1>
           <p className="mt-1 font-corpo text-sm text-bruma-texto">Origem das entradas de estoque.</p>
         </div>
-        <div className="w-48">
-          <Botao href="/gestao/cadastros/fornecedores/novo">Novo fornecedor</Botao>
+        <div className="flex gap-3">
+          <div className="w-44">
+            <Botao href="/gestao/cadastros/fornecedores/exportar" variante="secundario">
+              Exportar para Excel
+            </Botao>
+          </div>
+          <div className="w-48">
+            <Botao href="/gestao/cadastros/fornecedores/novo">Novo fornecedor</Botao>
+          </div>
         </div>
       </div>
 
@@ -36,9 +43,6 @@ export default async function PaginaFornecedores() {
         <Tabela>
           <TabelaCabecalho>
             <TabelaCelula cabecalho>Nome</TabelaCelula>
-            <TabelaCelula cabecalho className="w-[150px] flex-none">
-              Contato
-            </TabelaCelula>
             <TabelaCelula cabecalho align="direita" className="w-[120px] flex-none">
               Prazo entrega
             </TabelaCelula>
@@ -52,9 +56,6 @@ export default async function PaginaFornecedores() {
           {lista.map((fornecedor) => (
             <TabelaLinha key={fornecedor.id}>
               <TabelaCelula>{fornecedor.nome}</TabelaCelula>
-              <TabelaCelula className="w-[150px] flex-none text-bruma-texto">
-                {fornecedor.telefone ?? fornecedor.email ?? "—"}
-              </TabelaCelula>
               <TabelaCelula align="direita" mono className="w-[120px] flex-none">
                 {fornecedor.prazo_entrega_dias} dias
               </TabelaCelula>
