@@ -11,7 +11,7 @@ export interface EstadoPrimeiroAcesso {
   confirmarEmail?: boolean;
 }
 
-/** Erros do Supabase Auth no signUp. A regra do convite vive em fn_aceitar_convite (0020). */
+/** Erros do Supabase Auth no signUp. A regra do convite vive em fn_aceitar_convite (0024). */
 function traduzirErroCadastro(mensagem: string): string {
   // Exception da trigger em auth.users chega so como erro generico de banco.
   if (mensagem.includes("Database error saving new user"))

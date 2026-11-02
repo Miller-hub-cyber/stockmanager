@@ -1,5 +1,5 @@
 -- =====================================================================
--- StockManager  |  0019_movimentacao_retroativa.sql
+-- StockManager  |  0023_movimentacao_retroativa.sql
 -- Controla a data (criado_em) de uma movimentacao.
 --
 -- Motivo: a carga inicial de producao usa uma data de corte. Primeiro

@@ -1,5 +1,5 @@
 -- =====================================================================
--- StockManager  |  0020_usuarios_convites.sql
+-- StockManager  |  0024_usuarios_convites.sql
 -- Acesso de novos usuarios por convite com codigo, sem service role key.
 --
 -- Fluxo:

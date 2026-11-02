@@ -1,6 +1,6 @@
 -- =====================================================================
--- StockManager  |  0018_catalogo_itens_dados.sql
--- Carga da biblioteca de nomes (ver 0017_catalogo_itens.sql).
+-- StockManager  |  0022_catalogo_itens_dados.sql
+-- Carga da biblioteca de nomes (ver 0021_catalogo_itens.sql).
 --
 -- Dado de referencia, NAO e seed de teste: roda tambem em producao.
 -- Idempotente: rodar de novo nao duplica (unique em nome).

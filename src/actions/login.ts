@@ -38,7 +38,7 @@ export async function login(_estado: EstadoLogin, formData: FormData): Promise<E
     .eq("id", sessao.user.id)
     .single();
 
-  // Inativo tambem cai aqui: o RLS de usuarios exige ativo desde 0020.
+  // Inativo tambem cai aqui: o RLS de usuarios exige ativo desde 0024.
   if (!usuario) {
     await supabase.auth.signOut();
     return { erro: "Seu acesso nao esta liberado. Fale com o administrador." };

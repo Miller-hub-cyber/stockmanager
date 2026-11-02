@@ -1,5 +1,5 @@
 -- =====================================================================
--- StockManager  |  0017_catalogo_itens.sql
+-- StockManager  |  0021_catalogo_itens.sql
 -- Biblioteca de nomes padronizados de pecas e materiais de frota.
 --
 -- O catalogo e global (sem empresa_id): e referencia, nao estoque. Ele

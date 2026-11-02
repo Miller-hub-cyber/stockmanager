@@ -30,7 +30,7 @@ export async function exigirGestorOuAdmin(): Promise<{ empresaId: string } | { e
   return { empresaId: usuario.empresaId };
 }
 
-/** Gestao de usuarios e so do admin; as funcoes do banco (0020) conferem de novo. */
+/** Gestao de usuarios e so do admin; as funcoes do banco (0024) conferem de novo. */
 export async function exigirAdmin(): Promise<{ usuarioId: string } | { erro: string }> {
   const usuario = await obterUsuarioAtual();
   if (!usuario) return { erro: "Sessao expirada. Faca login novamente." };
