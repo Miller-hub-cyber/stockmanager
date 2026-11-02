@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { obterUsuarioAtual } from "@/lib/sessao";
 import { paraCsv, respostaCsv } from "@/lib/csv";
 
-const esquemaIds = z.array(z.string().uuid()).min(1).max(500);
+const esquemaIds = z.array(z.guid()).min(1).max(500);
 
 const decimal = (n: number, casas: number) => n.toFixed(casas).replace(".", ",");
 
@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
   const ids = esquemaIds.safeParse((request.nextUrl.searchParams.get("ids") ?? "").split(",").filter(Boolean));
   if (!ids.success) return new Response("Selecione ao menos um item para exportar.", { status: 400 });
 
-  const supabase = createClient();
+  const supabase = await createClient();
   const [itens, saldos, categorias] = await Promise.all([
     supabase
       .from("itens")

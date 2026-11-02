@@ -21,7 +21,7 @@ export default async function PaginaUsuarios() {
     );
   }
 
-  const supabase = createClient();
+  const supabase = await createClient();
   const [{ data: usuarios }, { data: convites }] = await Promise.all([
     supabase.from("usuarios").select("id, nome, email, perfil, ativo").order("ativo", { ascending: false }).order("nome"),
     supabase
@@ -34,7 +34,7 @@ export default async function PaginaUsuarios() {
   ]);
 
   // Endereco que vai na mensagem do convite: o mesmo pelo qual o admin esta acessando.
-  const h = headers();
+  const h = await headers();
   const host = h.get("x-forwarded-host") ?? h.get("host") ?? "";
   const protocolo = h.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
   const enderecoApp = `${protocolo}://${host}`;

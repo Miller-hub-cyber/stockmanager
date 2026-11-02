@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
 
   // O relatório é mensal: o período entra como os meses que ele toca.
   const { de, ate } = lerFiltros(Object.fromEntries(request.nextUrl.searchParams));
-  const supabase = createClient();
+  const supabase = await createClient();
   let consulta = supabase.from("v_consumo_por_centro").select("centro_custo, mes, custo_total");
   if (de) consulta = consulta.gte("mes", inicioDoMes(de));
   if (ate) consulta = consulta.lte("mes", ate);

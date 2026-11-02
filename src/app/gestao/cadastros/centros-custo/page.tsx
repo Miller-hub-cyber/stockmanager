@@ -5,7 +5,7 @@ import { Tabela, TabelaCabecalho, TabelaLinha, TabelaCelula, Botao, BotaoConfirm
 import { cores } from "@/lib/tokens";
 
 export default async function PaginaCentrosCusto() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: centros } = await supabase
     .from("centros_custo")
     .select("id, nome, codigo, ativo")

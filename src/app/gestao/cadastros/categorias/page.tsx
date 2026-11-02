@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { Tabela, TabelaCabecalho, TabelaLinha, TabelaCelula, Botao } from "@/components/ui";
 
 export default async function PaginaCategorias() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: categorias } = await supabase.from("categorias").select("id, nome").order("nome");
   const lista = categorias ?? [];
 

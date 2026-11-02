@@ -79,7 +79,7 @@ interface Props {
 }
 
 export async function RelatorioMovimentacoes({ modo, titulo, descricao, rota, searchParams }: Props) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const filtros = lerFiltros(searchParams);
 
   let linhasBrutas: LinhaMovimentacao[] = [];

@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { FormularioItem } from "../FormularioItem";
 
 export default async function PaginaNovoItem() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const [{ data: categorias }, { data: fornecedores }, { data: catalogo }] = await Promise.all([
     supabase.from("categorias").select("id, nome").order("nome"),
     supabase.from("fornecedores").select("id, nome").eq("ativo", true).order("nome"),

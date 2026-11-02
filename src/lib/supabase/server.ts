@@ -6,8 +6,8 @@ import type { Database } from "@/types/database";
  * Cliente Supabase para Server Components, Server Actions e Route Handlers.
  * Crie um novo a cada requisicao — nunca reutilize a instancia entre chamadas.
  */
-export function createClient() {
-  const cookieStore = cookies();
+export async function createClient() {
+  const cookieStore = await cookies();
 
   return createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,

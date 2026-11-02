@@ -22,7 +22,7 @@ export async function alterarUsuario(
     return { sucesso: false, erro: validado.error.issues[0]?.message ?? "Dados invalidos." };
   }
 
-  const supabase = createClient();
+  const supabase = await createClient();
   const { error } = await supabase.rpc("fn_alterar_usuario", {
     p_usuario_id: id,
     p_perfil: validado.data.perfil,

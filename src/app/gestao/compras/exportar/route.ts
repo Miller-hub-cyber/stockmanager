@@ -8,7 +8,7 @@ export async function GET() {
     return new Response("Não autorizado", { status: 403 });
   }
 
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: itens } = await supabase
     .from("v_itens_a_comprar")
     .select("sku, nome, unidade, saldo, ponto_pedido, custo_medio, fornecedor, sugestao_compra, situacao")

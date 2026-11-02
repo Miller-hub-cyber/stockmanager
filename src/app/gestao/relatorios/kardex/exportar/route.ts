@@ -7,7 +7,7 @@ import { dataHora } from "@/lib/formato";
 import { abaKardex } from "@/lib/relatorio-xlsx";
 import { responderExportacao } from "../../_componentes/exportar";
 
-const uuid = z.string().uuid();
+const uuid = z.guid();
 
 export async function GET(request: NextRequest) {
   const usuario = await obterUsuarioAtual();
@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
     return new Response("Informe o item (itemId) para exportar.", { status: 400 });
   }
 
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data } = await supabase
     .from("v_kardex")
     .select("sku, item, criado_em, tipo, quantidade, custo_unitario, valor, motivo, usuario, destino")

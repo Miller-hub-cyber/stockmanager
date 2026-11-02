@@ -10,11 +10,11 @@ export const esquemaLogin = z.object({
 });
 
 export const esquemaSaida = z.object({
-  itemId: z.string().uuid(),
-  depositoId: z.string().uuid(),
+  itemId: z.guid(),
+  depositoId: z.guid(),
   quantidade: z.coerce.number().positive("Informe uma quantidade maior que zero"),
-  centroCustoId: z.string().uuid().nullable().optional(),
-  veiculoId: z.string().uuid().nullable().optional(),
+  centroCustoId: z.guid().nullable().optional(),
+  veiculoId: z.guid().nullable().optional(),
   kmVeiculo: z.coerce.number().nonnegative().nullable().optional(),
   motivo: z.string().max(200).optional(),
 }).refine(
@@ -23,42 +23,42 @@ export const esquemaSaida = z.object({
 );
 
 export const esquemaEntrada = z.object({
-  itemId: z.string().uuid(),
-  depositoId: z.string().uuid(),
+  itemId: z.guid(),
+  depositoId: z.guid(),
   quantidade: z.coerce.number().positive(),
   custoUnitario: z.coerce.number().nonnegative(),
-  fornecedorId: z.string().uuid().nullable().optional(),
+  fornecedorId: z.guid().nullable().optional(),
   // Etiqueta informativa (para qual frota o lote se destina). Nao aciona regra de saldo/negocio.
-  veiculoId: z.string().uuid().nullable().optional(),
+  veiculoId: z.guid().nullable().optional(),
 });
 
 const itemEntradaLote = z.object({
-  itemId: z.string().uuid(),
+  itemId: z.guid(),
   quantidade: z.coerce.number().positive("Informe uma quantidade maior que zero"),
   custoUnitario: z.coerce.number().nonnegative(),
 });
 
 /** Varios itens na mesma entrada: fornecedor e veiculo sao unicos para o lote todo. */
 export const esquemaEntradaLote = z.object({
-  depositoId: z.string().uuid(),
-  fornecedorId: z.string().uuid().nullable().optional(),
-  veiculoId: z.string().uuid().nullable().optional(),
+  depositoId: z.guid(),
+  fornecedorId: z.guid().nullable().optional(),
+  veiculoId: z.guid().nullable().optional(),
   // Frota digitada na hora, quando o veiculo ainda nao esta cadastrado (fn_obter_ou_criar_veiculo).
   veiculoPlaca: z.string().trim().min(1).max(20).optional(),
   itens: z.array(itemEntradaLote).min(1, "Adicione ao menos um item"),
 });
 
 const itemSaidaLote = z.object({
-  itemId: z.string().uuid(),
+  itemId: z.guid(),
   quantidade: z.coerce.number().positive("Informe uma quantidade maior que zero"),
 });
 
 /** Varios itens na mesma saida: destino e km sao unicos para o lote todo. */
 export const esquemaSaidaLote = z
   .object({
-    depositoId: z.string().uuid(),
-    centroCustoId: z.string().uuid().nullable().optional(),
-    veiculoId: z.string().uuid().nullable().optional(),
+    depositoId: z.guid(),
+    centroCustoId: z.guid().nullable().optional(),
+    veiculoId: z.guid().nullable().optional(),
     // Numero de frota/placa digitado na hora, quando o veiculo ainda nao esta cadastrado.
     // Resolvido para um veiculoId de verdade em registrarSaidaLote (fn_obter_ou_criar_veiculo).
     veiculoPlaca: z.string().trim().min(1).max(20).optional(),
@@ -79,8 +79,8 @@ export const esquemaItem = z.object({
   tipo: z.enum(["peca", "consumivel", "epi", "ferramenta", "pneu", "lubrificante", "outro"]),
   estoqueMinimo: z.coerce.number().nonnegative(),
   pontoPedido: z.coerce.number().nonnegative(),
-  categoriaId: z.string().uuid().nullable().optional(),
-  fornecedorId: z.string().uuid().nullable().optional(),
+  categoriaId: z.guid().nullable().optional(),
+  fornecedorId: z.guid().nullable().optional(),
   codigoBarras: opcional(64),
   // Aceita "8421.23.00" ou "84212300": pontos e espacos saem antes de validar.
   ncm: z.preprocess(
@@ -90,13 +90,13 @@ export const esquemaItem = z.object({
 });
 
 /** Itens marcados na lista de /gestao/itens para uma acao em lote. */
-const idsItensEmLote = z.array(z.string().uuid()).min(1, "Selecione ao menos um item").max(500);
+const idsItensEmLote = z.array(z.guid()).min(1, "Selecione ao menos um item").max(500);
 
 export const esquemaDesativarItens = z.object({ ids: idsItensEmLote });
 
 export const esquemaAlterarCategoriaItens = z.object({
   ids: idsItensEmLote,
-  categoriaId: z.string().uuid().nullable(),
+  categoriaId: z.guid().nullable(),
 });
 
 const PERFIS = ["admin", "gestor", "almoxarife", "consulta"] as const;
@@ -168,7 +168,7 @@ export const esquemaLinhaImportacaoItem = z.object({
   tipo: z.preprocess(
     (v) => (v === "" || v === undefined ? "consumivel" : v),
     z.enum(["peca", "consumivel", "epi", "ferramenta", "pneu", "lubrificante", "outro"], {
-      errorMap: () => ({ message: "Tipo invalido" }),
+      error: "Tipo invalido",
     })
   ),
   categoria: opcional(80),

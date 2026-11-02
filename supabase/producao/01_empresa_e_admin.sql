@@ -1,7 +1,7 @@
 -- =====================================================================
--- StockManager  |  producao/configurar_empresa.sql
+-- StockManager  |  producao/01_empresa_e_admin.sql
 -- Primeira configuracao do banco de PRODUCAO. Roda uma unica vez, no
--- SQL Editor, depois das migrations (ver docs/producao.md).
+-- SQL Editor, depois das migrations (ver docs/implantacao-producao.md).
 --
 -- Substitui 0005_seed.sql e 0007_seed_usuario.sql, que sao de teste e
 -- NAO devem rodar em producao.

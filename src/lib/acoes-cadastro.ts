@@ -53,7 +53,7 @@ export async function inserirRegistro<T extends TabelaCadastro>(
   tabela: T,
   dados: Database["public"]["Tables"][T]["Insert"]
 ): Promise<ResultadoAcao> {
-  const supabase = createClient();
+  const supabase = await createClient();
   // A uniao de tabelas nao deixa o insert generico tipar o parametro certo
   // sozinho; cada Server Action que chama isto ja valida o formato real.
   const { error } = await supabase.from(tabela).insert(dados as never);
@@ -66,7 +66,7 @@ export async function atualizarRegistro<T extends TabelaCadastro>(
   id: string,
   dados: Database["public"]["Tables"][T]["Update"]
 ): Promise<ResultadoAcao> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { error } = await supabase
     .from(tabela)
     .update(dados as never)
@@ -76,7 +76,7 @@ export async function atualizarRegistro<T extends TabelaCadastro>(
 }
 
 export async function desativarRegistro(tabela: TabelaCadastro, id: string): Promise<ResultadoAcao> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { error } = await supabase
     .from(tabela)
     .update({ ativo: false } as never)

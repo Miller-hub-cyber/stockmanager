@@ -85,7 +85,7 @@ export async function exportarMovimentacoes(modo: ModoRelatorio, request: NextRe
   }
 
   const filtros = lerFiltros(Object.fromEntries(request.nextUrl.searchParams));
-  const supabase = createClient();
+  const supabase = await createClient();
 
   try {
     const linhas = await buscarTodasMovimentacoes(supabase, modo, filtros);

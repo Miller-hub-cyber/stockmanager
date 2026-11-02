@@ -7,15 +7,16 @@ import { lerFiltros } from "@/lib/relatorio-movimentacoes";
 import { rotaExportacao, rotaRelatorio } from "@/lib/relatorios";
 
 interface Props {
-  searchParams: { [chave: string]: string | string[] | undefined };
+  searchParams: Promise<{ [chave: string]: string | string[] | undefined }>;
 }
 
-export default async function PaginaConsumoVeiculo({ searchParams }: Props) {
+export default async function PaginaConsumoVeiculo(props: Props) {
+  const searchParams = await props.searchParams;
   // O relatório é mensal: o período entra como os meses que ele toca.
   const { de, ate } = lerFiltros(searchParams);
   const filtrado = Boolean(de || ate);
 
-  const supabase = createClient();
+  const supabase = await createClient();
   let consulta = supabase.from("v_consumo_por_veiculo").select("veiculo_id, placa, modelo, mes, custo_total, movimentos");
   if (de) consulta = consulta.gte("mes", inicioDoMes(de));
   if (ate) consulta = consulta.lte("mes", ate);

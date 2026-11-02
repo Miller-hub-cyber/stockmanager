@@ -39,7 +39,7 @@ export async function primeiroAcesso(
     return { erro: validado.error.issues[0]?.message ?? "Dados invalidos." };
   }
 
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data, error } = await supabase.auth.signUp({
     email: validado.data.email,
     password: validado.data.senha,

@@ -25,7 +25,7 @@ export async function convidarUsuario(_estado: ResultadoConvite, formData: FormD
     return { sucesso: false, erro: validado.error.issues[0]?.message ?? "Dados invalidos." };
   }
 
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: codigo, error } = await supabase.rpc("fn_convidar_usuario", {
     p_nome: validado.data.nome,
     p_email: validado.data.email,

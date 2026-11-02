@@ -1,6 +1,6 @@
 # Banco de produção e carga inicial
 
-Etapa 1 do go-live. Os passos manuais (criar o projeto, rodar SQL) são feitos no painel do Supabase.
+Como o banco de produção funciona e como preparar as planilhas da carga inicial. O passo a passo para criar o banco, liberar usuários e fazer o deploy está em [`implantacao-producao.md`](implantacao-producao.md).
 
 ## Como o banco funciona
 
@@ -12,28 +12,6 @@ Etapa 1 do go-live. Os passos manuais (criar o projeto, rodar SQL) são feitos n
 
   Só o admin, ou um script rodado direto no banco, pode lançar movimentação com data passada. O banco recusa data no futuro e recusa uma data anterior à última movimentação do mesmo item, para não bagunçar o custo médio (migration `0023`).
 - **Biblioteca de nomes.** `catalogo_itens` tem cerca de 300 nomes padronizados de peças e materiais, com categoria, unidade e NCM sugerido (migrations `0021` e `0022`). Ao cadastrar um item em Gestão → Itens → Novo, o nome é sugerido enquanto se digita. **O NCM é uma sugestão e precisa ser confirmado com a contabilidade.**
-
-## Passo a passo
-
-1. **Criar o projeto** em supabase.com, de preferência no plano pago (o gratuito pausa depois de uma semana sem uso). Região: São Paulo.
-2. **Rodar as migrations** no SQL Editor, em ordem, **pulando `0005_seed.sql` e `0007_seed_usuario.sql`**:
-   `0001` `0002` `0003` `0004` `0006` `0008` … `0014`, **depois `supabase/producao/antes_da_0015.sql`**, depois `0015` … `0019`.
-   Sem o `antes_da_0015.sql`, a `0015` falha em banco novo (o motivo está explicado no próprio arquivo).
-3. **Criar o usuário admin** em Authentication → Users → Add user.
-4. **Rodar `supabase/producao/configurar_empresa.sql`** depois de preencher nome da empresa, e-mail e nome do admin. O script cria a empresa, o depósito, as categorias da biblioteca e vincula o admin.
-5. **Conferir as regras** rodando `supabase/tests/triggers.test.sql`.
-6. **Desligar a confirmação de e-mail**: Authentication → Sign In / Providers → Email → desmarcar "Confirm email". Deixe "Allow new users to sign up" ligado.
-   Quem libera o acesso é o código do convite, não o e-mail, e o e-mail gratuito do Supabase só manda poucas mensagens por hora. Com a confirmação ligada, o sistema também funciona, mas a pessoa precisa clicar no link do e-mail antes de entrar.
-
-## Usuários
-
-O admin libera acessos em **Gestão → Usuários**:
-
-1. Preenche nome, e-mail e perfil e clica em "Gerar convite".
-2. Copia a mensagem pronta, com o link e o código de 8 caracteres, e manda para a pessoa (por WhatsApp, por exemplo).
-3. A pessoa abre `/primeiro-acesso`, digita e-mail, código e cria a senha. O código vale 7 dias e só pode ser usado uma vez.
-
-Na mesma tela o admin muda o perfil ou desativa alguém. A desativação vale na hora: a pessoa perde o acesso mesmo que esteja logada. O admin não altera o próprio usuário, para a empresa nunca ficar sem administrador.
 
 ## Planilhas para a carga
 

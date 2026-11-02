@@ -50,6 +50,11 @@ describe("traduzirErro", () => {
     expect(traduzirErro("DATA_FORA_DE_ORDEM: ultima movimentacao do item em ...")).toContain("ordem de data");
   });
 
+  it("traduz estorno repetido barrado pelo indice unico", () => {
+    const mensagem = traduzirErro('duplicate key value violates unique constraint "idx_mov_estorno_unico"');
+    expect(mensagem).toContain("ja foi estornada");
+  });
+
   it("cai no fallback generico para mensagem desconhecida", () => {
     expect(traduzirErro("erro totalmente desconhecido")).toBe("Nao foi possivel concluir. Tente novamente.");
   });

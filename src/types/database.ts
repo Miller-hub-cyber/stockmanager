@@ -670,6 +670,22 @@ export interface Database {
       };
     };
     Functions: {
+      fn_vincular_usuario: {
+        Args: {
+          p_email: string;
+          p_nome: string;
+          p_perfil: Database["public"]["Enums"]["perfil_usuario"];
+        };
+        Returns: string;
+      };
+      fn_atualizar_usuario: {
+        Args: {
+          p_usuario_id: string;
+          p_perfil: Database["public"]["Enums"]["perfil_usuario"];
+          p_ativo: boolean;
+        };
+        Returns: undefined;
+      };
       fn_estornar_movimentacao: {
         Args: {
           p_movimentacao_id: string;

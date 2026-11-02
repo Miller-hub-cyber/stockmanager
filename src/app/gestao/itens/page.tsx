@@ -13,7 +13,7 @@ const POR_PAGINA = 25;
 const ORDENS: OrdemItens[] = ["nome", "saldo", "custo"];
 
 interface Props {
-  searchParams: {
+  searchParams: Promise<{
     q?: string;
     categoria?: string;
     tipo?: string;
@@ -22,7 +22,7 @@ interface Props {
     ordem?: string;
     dir?: string;
     pagina?: string;
-  };
+  }>;
 }
 
 /** Sem acento e em minúsculas: "oleo" encontra "Óleo 15W40". */
@@ -40,7 +40,7 @@ function paginasVisiveis(atual: number, total: number): (number | null)[] {
 }
 
 async function carregar() {
-  const supabase = createClient();
+  const supabase = await createClient();
   try {
     const [categorias, itens, saldos] = await Promise.all([
       lerTudo((de, ate) => supabase.from("categorias").select("id, nome").order("nome").range(de, ate)),
@@ -61,7 +61,8 @@ async function carregar() {
   }
 }
 
-export default async function PaginaItens({ searchParams }: Props) {
+export default async function PaginaItens(props: Props) {
+  const searchParams = await props.searchParams;
   const { q, categoria, tipo } = searchParams;
   const estoque = searchParams.estoque === "abaixo" || searchParams.estoque === "zerado" ? searchParams.estoque : undefined;
   const inativos = searchParams.inativos === "1";

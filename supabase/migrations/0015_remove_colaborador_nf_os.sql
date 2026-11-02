@@ -34,7 +34,9 @@ select m.id,
 
 -- v_movimentacoes_detalhe (0013) expunha funcionario_id, mecanico, numero_nf
 -- e numero_os; o join com documentos permanece por causa do fornecedor.
-create or replace view v_movimentacoes_detalhe
+-- Drop antes do create: "create or replace" nao remove coluna de view.
+drop view if exists v_movimentacoes_detalhe;
+create view v_movimentacoes_detalhe
 with (security_invoker = true) as
 select m.id,
        m.empresa_id,

@@ -59,7 +59,6 @@ export function LeitorCodigoBarras({ onDetectado, onFechar }: LeitorCodigoBarras
         </button>
       </div>
       <div className="relative mt-4 w-full max-w-md overflow-hidden rounded border border-grafite">
-        {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
         <video ref={videoRef} className="w-full" muted playsInline />
         {/* Linha de mira: só guia o almoxarife, a leitura usa o quadro inteiro. */}
         <div

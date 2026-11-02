@@ -5,8 +5,9 @@ import { Indicador, PontoEstado } from "@/components/ui";
 import { estadoItem } from "@/lib/tokens";
 import { brl, quantidade, dataHora } from "@/lib/formato";
 
-export default async function PaginaEditarItem({ params }: { params: { id: string } }) {
-  const supabase = createClient();
+export default async function PaginaEditarItem(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
+  const supabase = await createClient();
   const [{ data: item }, { data: categorias }, { data: fornecedores }, { data: saldos }, { data: kardex }] =
     await Promise.all([
       supabase

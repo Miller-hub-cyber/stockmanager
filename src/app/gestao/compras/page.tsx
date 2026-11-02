@@ -4,7 +4,7 @@ import { brl, quantidade } from "@/lib/formato";
 import { cores } from "@/lib/tokens";
 
 export default async function PaginaCompras() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: itens } = await supabase
     .from("v_itens_a_comprar")
     .select("id, sku, nome, unidade, saldo, ponto_pedido, custo_medio, fornecedor, sugestao_compra, situacao")

@@ -17,7 +17,7 @@ export async function alterarCategoriaItens(ids: string[], categoriaId: string |
   }
 
   // O RLS pode filtrar linhas sem devolver erro; so conta o que voltou alterado.
-  const { data, error } = await createClient()
+  const { data, error } = await (await createClient())
     .from("itens")
     .update({ categoria_id: validado.data.categoriaId })
     .in("id", validado.data.ids)

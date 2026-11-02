@@ -3,7 +3,7 @@ import { Botao, Tabela, TabelaCabecalho, TabelaLinha, TabelaCelula } from "@/com
 import { brl, quantidade } from "@/lib/formato";
 
 export default async function PaginaValorEstoque() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: linhas } = await supabase
     .from("v_valor_estoque")
     .select("categoria, itens, unidades, valor")

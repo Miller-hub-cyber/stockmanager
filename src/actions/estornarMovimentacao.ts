@@ -17,7 +17,7 @@ export async function estornarMovimentacao(movimentacaoId: string): Promise<Resu
     return { sucesso: false, erro: "Voce nao tem permissao para estornar movimentacoes." };
   }
 
-  const supabase = createClient();
+  const supabase = await createClient();
   const { error } = await supabase.rpc("fn_estornar_movimentacao", {
     p_movimentacao_id: movimentacaoId,
     p_usuario_id: usuario.id,

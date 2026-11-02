@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { FormularioImportarItens } from "./FormularioImportarItens";
 
 export default async function PaginaImportarItens() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: depositos } = await supabase.from("depositos").select("id, nome").eq("ativo", true).order("nome");
 
   return (
