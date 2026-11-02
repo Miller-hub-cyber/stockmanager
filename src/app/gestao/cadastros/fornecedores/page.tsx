@@ -19,15 +19,8 @@ export default async function PaginaFornecedores() {
           <h1 className="titulo-tela">Fornecedores</h1>
           <p className="mt-1 font-corpo text-sm text-bruma-texto">Origem das entradas de estoque.</p>
         </div>
-        <div className="flex gap-3">
-          <div className="w-44">
-            <Botao href="/gestao/cadastros/fornecedores/exportar" variante="secundario">
-              Exportar para Excel
-            </Botao>
-          </div>
-          <div className="w-48">
-            <Botao href="/gestao/cadastros/fornecedores/novo">Novo fornecedor</Botao>
-          </div>
+        <div className="w-48">
+          <Botao href="/gestao/cadastros/fornecedores/novo">Novo fornecedor</Botao>
         </div>
       </div>
 
