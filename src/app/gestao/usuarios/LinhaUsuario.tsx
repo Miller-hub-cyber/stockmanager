@@ -1,6 +1,7 @@
 "use client";
 
-import { useFormState, useFormStatus } from "react-dom";
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
 import { alterarUsuario } from "@/actions/alterarUsuario";
 import type { ResultadoAcao } from "@/lib/acoes-cadastro";
 import type { PerfilUsuario } from "@/lib/perfil";
@@ -31,7 +32,7 @@ function BotaoSalvar() {
 const estiloSeletor = "h-9 rounded border border-bruma bg-white px-2 font-corpo text-sm text-tinta";
 
 export function LinhaUsuario({ usuario, ehVoce }: LinhaUsuarioProps) {
-  const [estado, formAction] = useFormState(alterarUsuario.bind(null, usuario.id), ESTADO_INICIAL);
+  const [estado, formAction] = useActionState(alterarUsuario.bind(null, usuario.id), ESTADO_INICIAL);
 
   return (
     <form

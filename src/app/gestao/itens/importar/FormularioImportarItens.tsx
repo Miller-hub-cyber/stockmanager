@@ -1,6 +1,7 @@
 "use client";
 
-import { useFormState, useFormStatus } from "react-dom";
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
 import { importarItens, type ResultadoImportacao } from "@/actions/importarItens";
 import { Botao, Seletor, Aviso } from "@/components/ui";
 
@@ -21,7 +22,7 @@ function BotaoImportar() {
 }
 
 export function FormularioImportarItens({ depositos }: { depositos: Deposito[] }) {
-  const [estado, acao] = useFormState(importarItens, ESTADO_INICIAL);
+  const [estado, acao] = useActionState(importarItens, ESTADO_INICIAL);
 
   return (
     <form action={acao} className="flex flex-col gap-4">

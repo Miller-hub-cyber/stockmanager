@@ -1,6 +1,7 @@
 "use client";
 
-import { useFormState, useFormStatus } from "react-dom";
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
 import { criarCategoria } from "@/actions/criarCategoria";
 import { atualizarCategoria } from "@/actions/atualizarCategoria";
 import { Campo, Botao, Aviso } from "@/components/ui";
@@ -24,7 +25,7 @@ function BotaoSalvar() {
 
 export function FormularioCategoria({ categoria }: { categoria?: Categoria }) {
   const acao = categoria ? atualizarCategoria.bind(null, categoria.id) : criarCategoria;
-  const [estado, formAction] = useFormState(acao, ESTADO_INICIAL);
+  const [estado, formAction] = useActionState(acao, ESTADO_INICIAL);
 
   return (
     <form action={formAction} className="flex flex-col gap-4">

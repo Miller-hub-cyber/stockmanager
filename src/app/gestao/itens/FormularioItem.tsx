@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { useFormState, useFormStatus } from "react-dom";
+import { useRef, useActionState } from "react";
+import { useFormStatus } from "react-dom";
 import { criarItem } from "@/actions/criarItem";
 import { atualizarItem } from "@/actions/atualizarItem";
 import { Campo, Seletor, Botao, Aviso } from "@/components/ui";
@@ -57,7 +57,7 @@ function BotaoSalvar() {
 
 export function FormularioItem({ item, categorias, fornecedores, catalogo }: FormularioItemProps) {
   const acao = item ? atualizarItem.bind(null, item.id) : criarItem;
-  const [estado, formAction] = useFormState(acao, ESTADO_INICIAL);
+  const [estado, formAction] = useActionState(acao, ESTADO_INICIAL);
   const formRef = useRef<HTMLFormElement>(null);
 
   // Campos nao controlados: a sugestao so pre-preenche, o usuario pode mudar depois.

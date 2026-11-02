@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useFormState, useFormStatus } from "react-dom";
+import { useState, useActionState } from "react";
+import { useFormStatus } from "react-dom";
 import { Copy, Check } from "lucide-react";
 import { convidarUsuario, type ResultadoConvite } from "@/actions/convidarUsuario";
 import { Campo, Seletor, Botao, Aviso } from "@/components/ui";
@@ -22,7 +22,7 @@ function BotaoGerar() {
 }
 
 export function FormularioConvite({ enderecoApp }: { enderecoApp: string }) {
-  const [estado, formAction] = useFormState(convidarUsuario, ESTADO_INICIAL);
+  const [estado, formAction] = useActionState(convidarUsuario, ESTADO_INICIAL);
   const [copiado, setCopiado] = useState(false);
 
   const convite = estado.sucesso ? estado.convite : undefined;
@@ -43,22 +43,10 @@ export function FormularioConvite({ enderecoApp }: { enderecoApp: string }) {
     }
   }
 
+  // Codigo acima do formulario: o formulario e limpo apos o envio, e com o
+  // codigo embaixo do botao parecia que nada tinha acontecido.
   return (
     <div className="flex flex-col gap-4">
-      <form action={formAction} className="flex flex-col gap-4">
-        <Campo id="nome" name="nome" rotulo="Nome" required />
-        <Campo id="email" name="email" type="email" rotulo="E-mail" required />
-        <Seletor id="perfil" name="perfil" rotulo="Perfil" defaultValue="almoxarife">
-          {PERFIS.map((p) => (
-            <option key={p.valor} value={p.valor}>
-              {p.rotulo} — {p.descricao}
-            </option>
-          ))}
-        </Seletor>
-        {estado.erro && <Aviso tipo="erro" titulo={estado.erro} />}
-        <BotaoGerar />
-      </form>
-
       {convite && (
         <div className="rounded border border-giz bg-nevoa p-4">
           <p className="font-display text-rotulo uppercase text-bruma-texto">Código de {convite.nome}</p>
@@ -73,6 +61,20 @@ export function FormularioConvite({ enderecoApp }: { enderecoApp: string }) {
           </div>
         </div>
       )}
+
+      <form action={formAction} className="flex flex-col gap-4">
+        <Campo id="nome" name="nome" rotulo="Nome" required />
+        <Campo id="email" name="email" type="email" rotulo="E-mail" required />
+        <Seletor id="perfil" name="perfil" rotulo="Perfil" defaultValue="almoxarife">
+          {PERFIS.map((p) => (
+            <option key={p.valor} value={p.valor}>
+              {p.rotulo} — {p.descricao}
+            </option>
+          ))}
+        </Seletor>
+        {estado.erro && <Aviso tipo="erro" titulo={estado.erro} />}
+        <BotaoGerar />
+      </form>
     </div>
   );
 }

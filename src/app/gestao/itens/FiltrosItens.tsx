@@ -38,7 +38,7 @@ export function FiltrosItens({ categorias, filtros }: FiltrosItensProps) {
   const [pendente, iniciarTransicao] = useTransition();
   const [atuais, definirAtuais] = useState(filtros);
   const [busca, definirBusca] = useState(filtros.q);
-  const espera = useRef<ReturnType<typeof setTimeout>>();
+  const espera = useRef<ReturnType<typeof setTimeout>>(undefined);
   // Último conjunto pedido ao roteador. A URL só muda quando a navegação
   // termina, então mudanças em sequência partem daqui, não de location.search.
   const enviados = useRef(filtros);

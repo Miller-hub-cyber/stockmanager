@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useFormState, useFormStatus } from "react-dom";
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
 import { primeiroAcesso, type EstadoPrimeiroAcesso } from "@/actions/primeiroAcesso";
 import { Campo } from "@/components/ui/Campo";
 import { Botao } from "@/components/ui/Botao";
@@ -19,7 +20,7 @@ function BotaoCriar() {
 }
 
 export function FormularioPrimeiroAcesso() {
-  const [estado, acao] = useFormState(primeiroAcesso, ESTADO_INICIAL);
+  const [estado, acao] = useActionState(primeiroAcesso, ESTADO_INICIAL);
 
   if (estado.confirmarEmail) {
     return (

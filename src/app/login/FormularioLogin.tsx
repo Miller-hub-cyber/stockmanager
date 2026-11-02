@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useFormState, useFormStatus } from "react-dom";
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
 import { login, type EstadoLogin } from "@/actions/login";
 import { Campo } from "@/components/ui/Campo";
 import { Botao } from "@/components/ui/Botao";
@@ -19,7 +20,7 @@ function BotaoEntrar() {
 }
 
 export function FormularioLogin() {
-  const [estado, acao] = useFormState(login, ESTADO_INICIAL);
+  const [estado, acao] = useActionState(login, ESTADO_INICIAL);
 
   return (
     <form action={acao} className="flex flex-col gap-4">

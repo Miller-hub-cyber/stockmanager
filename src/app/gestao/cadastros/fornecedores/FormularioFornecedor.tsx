@@ -1,6 +1,7 @@
 "use client";
 
-import { useFormState, useFormStatus } from "react-dom";
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
 import { criarFornecedor } from "@/actions/criarFornecedor";
 import { atualizarFornecedor } from "@/actions/atualizarFornecedor";
 import { Campo, Botao, Aviso } from "@/components/ui";
@@ -29,7 +30,7 @@ function BotaoSalvar() {
 
 export function FormularioFornecedor({ fornecedor }: { fornecedor?: Fornecedor }) {
   const acao = fornecedor ? atualizarFornecedor.bind(null, fornecedor.id) : criarFornecedor;
-  const [estado, formAction] = useFormState(acao, ESTADO_INICIAL);
+  const [estado, formAction] = useActionState(acao, ESTADO_INICIAL);
 
   return (
     <form action={formAction} className="flex flex-col gap-4">
